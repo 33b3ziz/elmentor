@@ -1,12 +1,13 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ThemeProvider } from "./components/ui/theme-provider";
 import Layout from "./components/Layout";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import Mentors from "./pages/Mentors";
-import { ThemeProvider } from "./components/ui/theme-provider";
+import Homepage from "./pages/Homepage";
+import LandingPage from "./pages/LandingPage";
+import Mentor from "./pages/Mentor";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,10 +26,11 @@ const App = () => {
           <Routes>
             <Route element={<Layout />}>
               <Route index element={<Navigate replace to="home" />} />
-              <Route path="home" element={<Home />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="home" element={<Homepage />} />
               <Route path="login" element={<Login />} />
               <Route path="sign-up" element={<SignUp />} />
-              <Route path="mentors" element={<Mentors />} />
+              <Route path="mentor/:id" element={<Mentor />} />
             </Route>
           </Routes>
         </BrowserRouter>
