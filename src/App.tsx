@@ -28,10 +28,10 @@ const App = () => {
               <Route index element={<Navigate replace to="home" />} />
               <Route path="/" element={<LandingPage />} />
               <Route path="home" element={<Homepage />} />
-              <Route path="login" element={<Login />} />
-              <Route path="sign-up" element={<SignUp />} />
               <Route path="mentor/:id" element={<Mentor />} />
             </Route>
+            <Route path="login" element={<Login />} />
+            <Route path="sign-up" element={<SignUp />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
