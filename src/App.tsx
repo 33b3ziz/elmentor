@@ -8,6 +8,9 @@ import SignUp from "./pages/SignUp";
 import Homepage from "./pages/Homepage";
 import LandingPage from "./pages/LandingPage";
 import Mentor from "./pages/Mentor";
+import Dashboard from "./pages/Dashboard";
+import Payment from "./pages/Payment";
+import { Profile } from "./pages/Profile";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,6 +32,9 @@ const App = () => {
               <Route path="/" element={<LandingPage />} />
               <Route path="home" element={<Homepage />} />
               <Route path="mentor/:id" element={<Mentor />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="payment" element={<Payment />} />
+              <Route path="profile" element={<Profile />} />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="sign-up" element={<SignUp />} />
