@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
-import { Footer } from "react-day-picker";
+
 import { Outlet } from "react-router-dom";
+import Footer from "./Footer";
 
 const Layout = () => {
   return (
