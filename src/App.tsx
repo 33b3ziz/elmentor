@@ -5,15 +5,13 @@ import { ThemeProvider } from "./components/ui/theme-provider";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import Mentors from "./pages/Mentors";
 import Contact from "./pages/Contact";
-import { ThemeProvider } from "./components/ui/theme-provider";
 import Homepage from "./pages/Homepage";
 import LandingPage from "./pages/LandingPage";
 import Mentor from "./pages/Mentor";
 import Dashboard from "./pages/Dashboard";
 import Payment from "./pages/Payment";
-import { Profile } from "./pages/Profile";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,8 +30,7 @@ const App = () => {
           <Routes>
             <Route element={<Layout />}>
               <Route index element={<Navigate replace to="home" />} />
-              <Route path="home" element={<Home />} />
-              <Route path="mentors" element={<Mentors />} />
+              <Route path="home" element={<Homepage />} />
               <Route path="contact" element={<Contact />} />
               <Route path="/" element={<LandingPage />} />
               <Route path="home" element={<Homepage />} />
