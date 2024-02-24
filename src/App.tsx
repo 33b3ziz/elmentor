@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Mentors from "./pages/Mentors";
+import Contact from "./pages/Contact";
 import { ThemeProvider } from "./components/ui/theme-provider";
 
 const queryClient = new QueryClient({
@@ -29,6 +30,7 @@ const App = () => {
               <Route path="login" element={<Login />} />
               <Route path="sign-up" element={<SignUp />} />
               <Route path="mentors" element={<Mentors />} />
+              <Route path="contact" element={<Contact />} />
             </Route>
           </Routes>
         </BrowserRouter>
