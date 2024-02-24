@@ -5,6 +5,9 @@ import { ThemeProvider } from "./components/ui/theme-provider";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import Mentors from "./pages/Mentors";
+import Contact from "./pages/Contact";
+import { ThemeProvider } from "./components/ui/theme-provider";
 import Homepage from "./pages/Homepage";
 import LandingPage from "./pages/LandingPage";
 import Mentor from "./pages/Mentor";
@@ -29,6 +32,9 @@ const App = () => {
           <Routes>
             <Route element={<Layout />}>
               <Route index element={<Navigate replace to="home" />} />
+              <Route path="home" element={<Home />} />
+              <Route path="mentors" element={<Mentors />} />
+              <Route path="contact" element={<Contact />} />
               <Route path="/" element={<LandingPage />} />
               <Route path="home" element={<Homepage />} />
               <Route path="mentor/:id" element={<Mentor />} />
