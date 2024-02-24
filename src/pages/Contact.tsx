@@ -103,6 +103,6 @@ const Contact = () => {
             </Button>
         </form>
     );
-};
+
 
 export default Contact;

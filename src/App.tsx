@@ -1,13 +1,19 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ThemeProvider } from "./components/ui/theme-provider";
 import Layout from "./components/Layout";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Mentors from "./pages/Mentors";
 import Contact from "./pages/Contact";
 import { ThemeProvider } from "./components/ui/theme-provider";
+import Homepage from "./pages/Homepage";
+import LandingPage from "./pages/LandingPage";
+import Mentor from "./pages/Mentor";
+import Dashboard from "./pages/Dashboard";
+import Payment from "./pages/Payment";
+import { Profile } from "./pages/Profile";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,11 +33,17 @@ const App = () => {
             <Route element={<Layout />}>
               <Route index element={<Navigate replace to="home" />} />
               <Route path="home" element={<Home />} />
-              <Route path="login" element={<Login />} />
-              <Route path="sign-up" element={<SignUp />} />
               <Route path="mentors" element={<Mentors />} />
               <Route path="contact" element={<Contact />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="home" element={<Homepage />} />
+              <Route path="mentor/:id" element={<Mentor />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="payment" element={<Payment />} />
+              <Route path="profile" element={<Profile />} />
             </Route>
+            <Route path="login" element={<Login />} />
+            <Route path="sign-up" element={<SignUp />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
