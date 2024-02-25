@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header = ({ auth }: HeaderProps) => {
   return (
-    <header className="flex justify-between sm:px-4">
+    <header className="flex justify-between sm:px-16">
       <Link className="logo flex items-center" to="/">
         <img src="/src/assets/logo.svg" alt="logo" className="" />
         <h1 className="text-primary font-bold text-xl ml-2">Mentor</h1>
@@ -19,20 +19,20 @@ const Header = ({ auth }: HeaderProps) => {
         <>
           <ul className="flex">
             <li className="py-2 px-4 hover:text-primary transition">
-              <a href="#home" className="active">
+              <a href="#home" className="active font-semibold">
                 Home
               </a>
             </li>
-            <li className="py-2 px-4 hover:text-primary transition">
+            <li className="py-2 px-4 hover:text-primary transition font-semibold">
               <a href="#about-us">About Us</a>
             </li>
-            <li className="py-2 px-4 hover:text-primary transition">
+            <li className="py-2 px-4 hover:text-primary transition font-semibold">
               <a href="#services">Services</a>
             </li>
-            <li className="py-2 px-4 hover:text-primary transition">
+            <li className="py-2 px-4 hover:text-primary transition font-semibold">
               <a href="#reviews">Reviews</a>
             </li>
-            <li className="py-2 px-4 hover:text-primary transition">
+            <li className="py-2 px-4 hover:text-primary transition font-semibold">
               <Link to="contact">Contact Us</Link>
             </li>
           </ul>
