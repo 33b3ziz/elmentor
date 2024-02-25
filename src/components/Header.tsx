@@ -1,14 +1,52 @@
 import { Link } from "react-router-dom";
 import ModeToggle from "./ModeToggle";
+import { Button } from "./ui/button";
 
-const Header = () => {
+interface HeaderProps {
+  auth?: boolean;
+}
+
+const Header = ({ auth }: HeaderProps) => {
   return (
     <header className="flex justify-between sm:px-4">
       <Link className="logo flex items-center" to="/">
         <img src="/src/assets/logo.svg" alt="logo" className="" />
         <h1 className="text-primary font-bold text-xl ml-2">Mentor</h1>
       </Link>
-      <ModeToggle />
+      {auth ? (
+        <ModeToggle />
+      ) : (
+        <>
+          <ul className="flex">
+            <li className="py-2 px-4 hover:text-primary transition">
+              <a href="#home" className="active">
+                Home
+              </a>
+            </li>
+            <li className="py-2 px-4 hover:text-primary transition">
+              <a href="#about-us">About Us</a>
+            </li>
+            <li className="py-2 px-4 hover:text-primary transition">
+              <a href="#services">Services</a>
+            </li>
+            <li className="py-2 px-4 hover:text-primary transition">
+              <a href="#reviews">Reviews</a>
+            </li>
+            <li className="py-2 px-4 hover:text-primary transition">
+              <Link to="contact">Contact Us</Link>
+            </li>
+          </ul>
+          <div className="flex items-center">
+            <Button className="bg-white text-primary border border-primary hover:text-white">
+              <Link to="login">Login</Link>
+            </Button>
+            <Button className="mx-4">
+              <Link to="sign-up">Sign up</Link>
+            </Button>
+            <ModeToggle />
+          </div>
+        </>
+      )}
     </header>
   );
 };
