@@ -29,8 +29,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route element={<Layout />}>
-              <Route index element={<Navigate replace to="home" />} />
-              <Route path="home" element={<Homepage />} />
+              <Route index element={<Navigate replace to="/" />} />
               <Route path="contact" element={<Contact />} />
               <Route path="/" element={<LandingPage />} />
               <Route path="home" element={<Homepage />} />
