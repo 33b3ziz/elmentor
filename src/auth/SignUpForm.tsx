@@ -59,10 +59,19 @@ const levels = [
 ];
 
 const formSchema = z.object({
-  userName: z.string().min(3).max(50),
+  userName: z
+    .string()
+    .min(3, { message: "username must be at least 3 characters" })
+    .max(50, { message: "username is too long!" }),
   email: z.string().email(),
-  password: z.string().min(8).max(50),
-  confirmPassword: z.string().min(8).max(50),
+  password: z
+    .string()
+    .min(8, { message: "password must be at least 3 characters" })
+    .max(50, { message: "password is too long!" }),
+  confirmPassword: z
+    .string()
+    .min(8, { message: "password must be at least 3 characters" })
+    .max(50, { message: "password is too long!" }),
   tracks: z.array(z.string()).refine((value) => value.some((item) => item), {
     message: "You have to select at least one item.",
   }),
