@@ -8,14 +8,14 @@ import {
 } from "react-icons/ai";
 
 import ProfilePic from '../assets/profile-pic.png'
-import EditProfile from '@/components/EditProfile';
+import EditStudentProfile from '@/components/EditStudentProfile';
 import AsAMentor from '@/components/AsAMentor';
 import Settings from '@/components/Settings';
 interface Profile {
   name: string;
 }
 
-const Profile: React.FC = () => {
+const StudentProfile: React.FC = () => {
   const [profile] = useState<Profile>({
     name: 'John Doe',
   });
@@ -45,7 +45,7 @@ const Profile: React.FC = () => {
             Edit Profile
           </div>
         </button>
-        {openEditPofile && <EditProfile onClose={() => setOpenEditPofile(false)} />}
+        {openEditPofile && <EditStudentProfile onClose={() => setOpenEditPofile(false)} />}
 
         <button className='w-full' onClick={() => setOpenAsAMentor(true)} >
           <div className='border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]'>
@@ -80,6 +80,8 @@ const Profile: React.FC = () => {
       </div>
     </div >
   );
-}
+};
 
-export default Profile;
+
+
+export default StudentProfile;
