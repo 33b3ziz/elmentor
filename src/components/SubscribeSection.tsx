@@ -7,7 +7,7 @@ const SubscribeSection = () => {
     <section
       className={`${
         theme === "dark" ? "bg-primary/70" : "bg-primary"
-      } flex flex-col gap-8 justify-center items-center py-16 mb-14 rounded-2xl`}
+      } flex flex-col gap-8 justify-center items-center px-1 py-16 mb-14 rounded-2xl`}
     >
       <h2 className="capitalize text-center font-semibold text-white text-sm sm:text-lg md:text-2xl text-wrap">
         subscribe to our newsletter & get platform news
@@ -19,7 +19,7 @@ const SubscribeSection = () => {
         <input
           type="email"
           required
-          className="w-full h-[30px] sm:h-[42px] p-2 pl-4 rounded-3xl border border-primary focus:outline-primary placeholder:text-primary placeholder:opacity-[60%]"
+          className="w-full h-[30px] sm:h-[42px] p-2 pl-4 rounded-3xl border border-primary focus:outline-primary placeholder:text-primary placeholder:opacity-[60%] placeholder:text-xs sm:placeholder:text-sm"
           placeholder="Enter your email address"
         />
         <Button
