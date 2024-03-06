@@ -1,9 +1,9 @@
-import Header from "./Header";
+import Navbar from "./Navbar";
 
 const LoginLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-dvh p-4">
-      <Header auth={true} />
+      <Navbar auth={true} />
       <section className="flex justify-center items-center sm:gap-20 h-[calc(100%-56px)] ">
         {children}
       </section>
