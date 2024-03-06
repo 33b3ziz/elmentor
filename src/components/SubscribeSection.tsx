@@ -7,9 +7,9 @@ const SubscribeSection = () => {
     <section
       className={`${
         theme === "dark" ? "bg-primary/70" : "bg-primary"
-      } flex flex-col gap-8 justify-center items-center py-10 mb-14 rounded-2xl`}
+      } flex flex-col gap-8 justify-center items-center py-16 mb-14 rounded-2xl`}
     >
-      <h2 className="capitalize text-center text-white text-sm sm:text-lg md:text-2xl text-wrap">
+      <h2 className="capitalize text-center font-semibold text-white text-sm sm:text-lg md:text-2xl text-wrap">
         subscribe to our newsletter & get platform news
       </h2>
       <form
