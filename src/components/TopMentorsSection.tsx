@@ -22,7 +22,7 @@ const TopMentorsSection = () => {
       >
         explore top mentor
       </h1>
-      <div className="flex flex-wrap justify-center gap-4 mt-16 ">
+      <div className="flex flex-wrap justify-center gap-6 mt-16 ">
         {landingMentors.map((mentor) => (
           <MentorCard
             key={mentor.name}
