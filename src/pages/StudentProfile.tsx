@@ -6,6 +6,7 @@ import {
   AiOutlineLogout,
   AiOutlineSetting,
 } from "react-icons/ai";
+
 import ProfilePic from "../assets/profile-pic.png";
 import EditProfile from "@/components/EditProfile";
 import AsAMentor from "@/components/AsAMentor";
@@ -42,6 +43,7 @@ const Profile: React.FC = () => {
           </h2>
         </div>
       </div>
+
       <div className="px-4 py-2 my-3">
         <button className="w-full" onClick={() => setOpenEditPofile(true)}>
           <div className="border p-5  flex justify-content gap-4 rounded mb-2 text-[#272444]">
@@ -52,6 +54,7 @@ const Profile: React.FC = () => {
         {openEditPofile && (
           <EditProfile onClose={() => setOpenEditPofile(false)} />
         )}
+
         <button className="w-full" onClick={() => setOpenAsAMentor(true)}>
           <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]">
             <FaExchangeAlt className="w-6 h-6 text-[#DCDCDC]" />
@@ -59,6 +62,7 @@ const Profile: React.FC = () => {
           </div>
         </button>
         {openAsAMentor && <AsAMentor onClose={() => setOpenAsAMentor(false)} />}
+
         <button className="w-full" onClick={() => setOpenSettings(true)}>
           <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]">
             <AiOutlineSetting className="w-6 h-6 text-[#DCDCDC]" />
@@ -66,12 +70,14 @@ const Profile: React.FC = () => {
           </div>
         </button>
         {openSettings && <Settings onClose={() => setOpenSettings(false)} />}
+
         <button className="w-full">
           <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]">
             <AiOutlineLogout className="w-6 h-6 text-[#DCDCDC]" />
             Share App
           </div>
         </button>
+
         <button className="w-full">
           <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]">
             <AiOutlineShareAlt className="w-6 h-6 text-[#DCDCDC]" />

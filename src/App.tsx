@@ -12,8 +12,9 @@ import LandingPage from "./pages/LandingPage";
 import Mentor from "./pages/Mentor";
 import Dashboard from "./pages/Dashboard";
 import Payment from "./pages/Payment";
-import Profile from "./pages/Profile";
 import MentorSignup from "./pages/MentorSignup";
+import StudentProfile from "./pages/StudentProfile";
+import MentorProfile from "./pages/MentorProfile";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,7 +33,6 @@ const App = () => {
           <Routes>
             <Route element={<Layout />}>
               <Route path="mentor/:id" element={<Mentor />} />
-              <Route path="contact" element={<Contact />} />
               <Route path="/" element={<LandingPage />} />
               <Route index element={<Navigate replace to="/welcome" />} />
               <Route path="contact" element={<Contact />} />
@@ -40,7 +40,8 @@ const App = () => {
               <Route path="home" element={<Homepage />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="payment" element={<Payment />} />
-              <Route path="profile" element={<Profile />} />
+              <Route path="studentprofile" element={<StudentProfile />} />
+              <Route path="mentorprofile" element={<MentorProfile />} />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="sign-up" element={<SignUp />} />
