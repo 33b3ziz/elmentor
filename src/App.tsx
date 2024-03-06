@@ -13,6 +13,7 @@ import Mentor from "./pages/Mentor";
 import Dashboard from "./pages/Dashboard";
 import Payment from "./pages/Payment";
 import Profile from "./pages/Profile";
+import MentorSignup from "./pages/MentorSignup";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,6 +44,7 @@ const App = () => {
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="sign-up" element={<SignUp />} />
+            <Route path="sign-up/mentor" element={<MentorSignup />} />
           </Routes>
         </BrowserRouter>
         <Toaster

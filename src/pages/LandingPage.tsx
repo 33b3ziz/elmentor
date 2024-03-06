@@ -9,7 +9,6 @@ const LandingPage = () => {
     <main className="px-16">
       <LandingSection />
       <TopMentorsSection />
-      <TopMentorsSection />
       <OffersSection />
       <ReviewsSection />
       <SubscribeSection />
