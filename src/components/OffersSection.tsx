@@ -19,7 +19,7 @@ const OffersSection = () => {
           theme === "dark" ? "text-white" : "text-[#272444]"
         }`}
       >
-        we offer the best set of serviced
+        we offer the best set of services
       </h1>
       <div className="flex justify-center  items-center mt-8 ">
         <div className="basis-[100%] md:basis-[55%] flex flex-col gap-8 text-center md:text-start">
@@ -83,7 +83,7 @@ const OffersSection = () => {
               </p>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row items-center  gap-4">
+          <div className="flex flex-col md:flex-row items-center gap-4">
             <div
               className={`border min-w-[80px] h-[80px] flex justify-center items-center rounded-md ${
                 theme === "dark" ? "border-primary" : "border-[#294C74]"
@@ -118,8 +118,8 @@ const OffersSection = () => {
           <img
             src="/src/assets/landing-2.webp"
             alt="landing-2"
-            width={550}
-            height={550}
+            width={600}
+            height={600}
           />
         </div>
       </div>
