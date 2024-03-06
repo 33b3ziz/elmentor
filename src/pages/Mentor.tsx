@@ -4,7 +4,7 @@ import MentorList from "@/components/MentorList";
 
 const Mentor = () => {
   return (
-    <section className="py-12">
+    <section className="py-12  px-4 md:px-12">
       <div className="relative w-full h-96 flex flex-col justify-evenly mb-6">
         <div className="w-full flex h-2/3  justify-center items-center">
           <h2 className="font-bold text-2xl md:text-4xl text-rose-100 ">
