@@ -23,7 +23,7 @@ interface profile {
 }
 
 
-const EditProfile: React.FC<propTypes> = ({ onClose }) => {
+const EditStudentProfile: React.FC<propTypes> = ({ onClose }) => {
     const [profile, setProfile] = useState<profile>({
         name: 'John Doe',
         email: 'john@example.com',
@@ -106,4 +106,4 @@ const EditProfile: React.FC<propTypes> = ({ onClose }) => {
     );
 };
 
-export default EditProfile;
+export default EditStudentProfile;
