@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-// import { useForm } from "react-hook-form";
 import { FaPen } from 'react-icons/fa';
 import ProfilePic from '../assets/profile-pic.png';
 import { Input } from '@/components/ui/input';
@@ -8,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { AiOutlineClose } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 
-// add proptype
 
 type propTypes = {
     onClose: () => void;

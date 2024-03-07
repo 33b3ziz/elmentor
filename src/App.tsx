@@ -31,7 +31,6 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route element={<Layout />}>
-
               <Route path="mentor/:id" element={<Mentor />} />
               <Route path="/" element={<LandingPage />} />
               <Route index element={<Navigate replace to="/welcome" />} />
