@@ -13,7 +13,7 @@ import Mentor from "./pages/Mentor";
 import Dashboard from "./pages/Dashboard";
 import Payment from "./pages/Payment";
 import Profile from "./pages/Profile";
-
+import SelectAvailable from "./pages/SelectAvailable";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -41,6 +41,7 @@ const App = () => {
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="sign-up" element={<SignUp />} />
+            <Route path="selectavailable" element={<SelectAvailable/>}/>
           </Routes>
         </BrowserRouter>
         <Toaster
