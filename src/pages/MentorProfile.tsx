@@ -10,7 +10,6 @@ function MentorProfile() {
             <MentorCounter />
             <MentorSection />
         </section>
-
     )
 }
 
