@@ -13,12 +13,14 @@ import Homepage from "./pages/Homepage";
 import Mentor from "./pages/Mentor";
 import Dashboard from "./pages/Dashboard";
 import Payment from "./pages/Payment";
+import SelectAvailable from "./pages/SelectAvailable";
 import MentorSignup from "./pages/MentorSignup";
 import StudentProfile from "./pages/StudentProfile";
 import MentorProfile from "./pages/MentorProfile";
 import Loader from "./components/Loader";
 
 const LandingPage = lazy(() => import("./pages/LandingPage"));
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
