@@ -1,3 +1,12 @@
+import StudentSection from "@/components/StudentSection"
+function StudentProfile() {
+  return (
+    <StudentSection />
+  )
+}
+
+export default StudentProfile
+
 import { useState } from "react";
 import { FaExchangeAlt, FaPen } from "react-icons/fa";
 import {

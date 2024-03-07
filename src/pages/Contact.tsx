@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import ContactSection from '@/components/ContactSection'import { useForm } from "react-hook-form";
 import { AiOutlineUser, AiOutlinePhone, AiOutlineMail } from "react-icons/ai";
 
 import { Label } from "@/components/ui/label";
@@ -23,7 +23,11 @@ const Contact = () => {
     console.log(data); // Handle form submission here
   };
 
+function Contact() {
   return (
+    <ContactSection />
+  )
+}
     <div className=" mx-auto bg-white  overflow-hidden my-10 text-gray-500 w-full md:w-1/3 ">
       <div className=" px-4 py-2 my-3">
         <form onSubmit={handleSubmit(onSubmit)}>
