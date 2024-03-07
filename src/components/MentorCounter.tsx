@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const MentorCounter = () => {
   return (
     <div className="flex justify-center">
@@ -15,7 +17,8 @@ const MentorCounter = () => {
           <p className="font-bold">Active student</p>
         </div>
       </div>
-    </div>
+      <Link to={"https://www.linkedin.com/"} className="flex justify-center items-center pl-10"><img src="" alt="" /></Link>
+    </div >
   );
 };
 
