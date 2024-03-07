@@ -3,11 +3,11 @@ import ModeToggle from "./ModeToggle";
 import { Button } from "./ui/button";
 import { useTheme } from "./ui/theme-provider";
 
-interface HeaderProps {
+interface NavbarProps {
   auth?: boolean;
 }
 
-const Header = ({ auth }: HeaderProps) => {
+const Navbar = ({ auth }: NavbarProps) => {
   const { theme } = useTheme();
 
   return (
@@ -49,12 +49,14 @@ const Header = ({ auth }: HeaderProps) => {
             </li>
           </ul>
           <div className="flex items-center">
-            <Button className="bg-white text-primary border border-primary hover:text-white">
-              <Link to="login">Login</Link>
-            </Button>
-            <Button className="mx-4">
-              <Link to="sign-up">Sign up</Link>
-            </Button>
+            <Link to="login">
+              <Button className="bg-white text-primary border border-primary hover:text-white">
+                Login
+              </Button>
+            </Link>
+            <Link to="sign-up">
+              <Button className="mx-4">Sign up</Button>
+            </Link>
             <ModeToggle />
           </div>
         </>
@@ -63,4 +65,4 @@ const Header = ({ auth }: HeaderProps) => {
   );
 };
 
-export default Header;
+export default Navbar;
