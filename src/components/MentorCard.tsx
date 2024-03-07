@@ -9,12 +9,12 @@ const MentorCard = (props: {
   mentorExp: string;
 }) => {
   return (
-    <div className=" md:w-72 w-48 ">
+    <div className=" md:w-[250px] w-56 rounded-lg">
       <div>
         <Link to="/">
           <img
             src={props.mentorImg}
-            className="block  md:w-72 md:h-72 w-48 h-48 rounded-t-lg object-cover"
+            className="block  md:w-72 md:h-72 w-56 h-56 rounded-t-lg object-cover"
           ></img>
         </Link>
       </div>
@@ -23,18 +23,19 @@ const MentorCard = (props: {
         <p>{props.mentorTrack}</p>
         <div className="flex justify-between ga-2 items-center">
           <span className="flex gap-1">
-            {Array.from(
-              { length: Math.floor(Number(props.MentorRate)) },
-              (_, index: number) => (
+            {Array.from({ length: 5 }, (_, index: number) =>
+              5 - index > Number(props.MentorRate) ? (
+                <FaRegStar key={index} className="text-yellow-300" />
+              ) : (
                 <FaStar key={index} className="text-yellow-300" />
               )
-            )}
-            {Array.from(
+            ).reverse()}
+            {/* {Array.from(
               { length: 5 - Math.floor(Number(props.MentorRate)) },
               (_, index: number) => (
                 <FaRegStar key={index} className="text-yellow-300" />
               )
-            )}
+            )} */}
           </span>
           <span>
             {Number(props.mentorExp) > 1
