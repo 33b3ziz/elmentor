@@ -7,7 +7,7 @@ import {
     AiOutlineSetting,
 } from "react-icons/ai";
 
-import ProfilePic from '../assets/profile-pic.png'
+import ProfilePic from '../assets/mentor-2.webp'
 import EditStudentProfile from '@/components/EditStudentProfile';
 import AsAMentor from '@/components/AsAMentor';
 import Settings from '@/components/Settings';
@@ -28,8 +28,9 @@ const StudentSection: React.FC = () => {
         <div className="max-w-md mx-auto bg-white w-full md:w-1/3  overflow-hidden my-10 text-gray-500 ">
             <div className="px-4 py-2 my-5 ">
                 <div className=" relative  w-40 h-40  flex items-center justify-center m-auto   ">
-                    <img src={ProfilePic} alt=" profile Picture " className="rounded-full w-full h-full" />
-                    <button className='p-2 absolute bottom-3 right-0 bg-white rounded-full border' >
+                    <img src={ProfilePic}
+                        alt=" profile-picture "
+                        className="rounded-full w-full h-full object-cover" />                    <button className='p-2 absolute bottom-3 right-0 bg-white rounded-full border' >
                         <FaPen className="w-4 h-4 text-gray-600 " />
                     </button>
                 </div>
@@ -78,7 +79,7 @@ const StudentSection: React.FC = () => {
                     </div>
                 </button>
             </div>
-        </div >
+        </ div>
     );
 };
 

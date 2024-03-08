@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useForm } from "react-hook-form";
 import { FaPen } from 'react-icons/fa';
-import ProfilePic from '../assets/profile-pic.png';
+import ProfilePic from '../assets/mentor-2.webp';
 import { Input } from '@/components/ui/input';
 import { Label } from '@radix-ui/react-dropdown-menu';
 import { Button } from '@/components/ui/button';
@@ -51,8 +51,9 @@ const AsAMentor: React.FC<propTypes> = ({ onClose }) => {
                     <h2 className='text-xl font-semibold py-4 text-center text-[#272444]'>Upload profile photo</h2>
                     <div className=" py-3 px-3 ">
                         <div className=" relative w-32 h-32  flex items-center justify-center mx-auto mb-2   ">
-                            <img src={ProfilePic} alt=" profile Picture " className="rounded-full w-full h-full" />
-                            <button className='p-2 absolute bottom-3 right-0 bg-white rounded-full border'>
+                            <img src={ProfilePic}
+                                alt=" profile-picture "
+                                className="rounded-full w-full h-full object-cover" />                            <button className='p-2 absolute bottom-3 right-0 bg-white rounded-full border'>
                                 <FaPen className="w-3.5 h-3.5 text-gray-600 " />
                             </button>
                         </div>

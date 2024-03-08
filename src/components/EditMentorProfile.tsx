@@ -5,7 +5,6 @@ import { Label } from '@radix-ui/react-dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { AiOutlineClose } from "react-icons/ai";
 import { Dialog, DialogTrigger } from '@radix-ui/react-dialog';
-import { FormField } from './ui/form';
 
 
 type propTypes = {
