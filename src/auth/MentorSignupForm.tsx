@@ -22,74 +22,84 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-const tracks = [
+// const tracks = [
+//   {
+//     id: "ui/ux",
+//     label: "UI/UX",
+//   },
+//   {
+//     id: "frontend",
+//     label: "Frontend",
+//   },
+//   {
+//     id: "backend",
+//     label: "Backend",
+//   },
+//   {
+//     id: "flutter",
+//     label: "Flutter",
+//   },
+//   {
+//     id: "android",
+//     label: "Android",
+//   },
+//   {
+//     id: "ios",
+//     label: "iOS",
+//   },
+// ] as const;
+
+const services = [
   {
-    id: "ui/ux",
-    label: "UI/UX",
+    id: "mentoring",
+    label: "Mentoring",
   },
   {
-    id: "frontend",
-    label: "Frontend",
+    id: "consultation",
+    label: "Consultation",
   },
   {
-    id: "backend",
-    label: "Backend",
-  },
-  {
-    id: "flutter",
-    label: "Flutter",
-  },
-  {
-    id: "android",
-    label: "Android",
-  },
-  {
-    id: "ios",
-    label: "iOS",
+    id: "mock-interview",
+    label: "Mock Interview",
   },
 ] as const;
 
-const levels = [
-  { id: "entry", label: "Entry" },
-  { id: "beginner", label: "Beginner" },
-  { id: "intermediate", label: "Intermediate" },
-  { id: "professional", label: "Professional" },
-];
+// const levels = [
+//   { id: "entry", label: "Entry" },
+//   { id: "beginner", label: "Beginner" },
+//   { id: "intermediate", label: "Intermediate" },
+//   { id: "professional", label: "Professional" },
+// ];
 
 const formSchema = z.object({
-  userName: z
+  specialization: z
     .string()
     .min(3, { message: "username must be at least 3 characters" })
     .max(50, { message: "username is too long!" }),
-  email: z.string().email(),
-  password: z
-    .string()
-    .min(8, { message: "password must be at least 3 characters" })
-    .max(50, { message: "password is too long!" }),
-  confirmPassword: z
-    .string()
-    .min(8, { message: "password must be at least 3 characters" })
-    .max(50, { message: "password is too long!" }),
-  tracks: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: "You have to select at least one item.",
+  services: z.array(z.string()).refine((value) => value.some((item) => item), {
+    message: "You have to select at least one service.",
   }),
-  levels: z.enum(["entry", "beginner", "intermediate", "professional"], {
-    required_error: "You have to select one level.",
+  experience: z.string(),
+  linkedin: z.string().url({
+    message: "Please enter a valid linkedin URL",
   }),
+  description: z.string(),
+  // levels: z.enum(["entry", "beginner", "intermediate", "professional"], {
+  //   required_error: "You have to select one level.",
+  // }),
 });
 
-const SignUpForm = () => {
+const MentorSignupForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      userName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      tracks: [],
-      levels: "entry",
+      specialization: "",
+      services: [],
+      experience: "",
+      linkedin: "",
+      description: "",
     },
   });
 
@@ -116,39 +126,124 @@ const SignUpForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-2 basis-full sm:basis-1/3 relative"
+        className="space-y-3.5 basis-full sm:basis-1/3 relative"
       >
         <h2 className="text-center font-bold">Create account</h2>
         <FormField
           control={form.control}
-          name="userName"
+          name="specialization"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Specialization</FormLabel>
               <FormControl>
                 <Input
                   placeholder="Enter your name"
                   {...field}
                   className="px-4 py-6"
+                  type="text"
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
+        <Label htmlFor="services" className="relative top-2.5">
+          Service
+        </Label>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              variant="outline"
+              className="w-full flex justify-start text-[#79859a] font-normal px-4 py-6"
+            >
+              {form.getValues("services").length
+                ? form.getValues("services").join(", ")
+                : "Enter your service"}
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Enter your track</DialogTitle>
+              <DialogDescription>
+                Choose the track you interested in.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid  py-4">
+              <FormField
+                control={form.control}
+                name="services"
+                render={() => (
+                  <FormItem>
+                    {services.map((service) => (
+                      <FormField
+                        key={service.id}
+                        control={form.control}
+                        name="services"
+                        render={({ field }) => (
+                          <FormItem key={service.id}>
+                            <div className="flex gap-4 p-4">
+                              <Checkbox
+                                id={service.id}
+                                checked={field.value?.includes(service.id)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([
+                                        ...field.value,
+                                        service.id,
+                                      ])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== service.id
+                                        )
+                                      );
+                                }}
+                              />
+                              <Label
+                                htmlFor={service.id}
+                                className="text-right"
+                              >
+                                {service.label}
+                              </Label>
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+                    ))}
+                  </FormItem>
+                )}
+              />
+            </div>
+            <DialogClose className="flex justify-end">
+              <Button type="button">Done</Button>
+            </DialogClose>
+          </DialogContent>
+        </Dialog>
+        {/* <FormField
           control={form.control}
-          name="email"
+          name="service"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Service</FormLabel>
               <FormControl>
                 <Input
                   placeholder="Enter your email"
                   {...field}
-                  type="email"
+                  type="text"
                   className="px-4 py-6"
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        /> */}
+        <FormField
+          control={form.control}
+          name="experience"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Years of Experience</FormLabel>
+              <FormControl>
+                <Input {...field} type="text" className="px-4 py-6" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -156,17 +251,12 @@ const SignUpForm = () => {
         />
         <FormField
           control={form.control}
-          name="password"
+          name="linkedin"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Linkedin URL</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="*********"
-                  {...field}
-                  type="password"
-                  className="px-4 py-6"
-                />
+                <Input {...field} type="text" className="px-4 py-6" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -174,23 +264,18 @@ const SignUpForm = () => {
         />
         <FormField
           control={form.control}
-          name="confirmPassword"
+          name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
+              <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="*********"
-                  {...field}
-                  type="password"
-                  className="px-4 py-6"
-                />
+                <Input {...field} type="text" className="px-4 py-6" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Label htmlFor="tracks" className="relative top-2.5">
+        {/* <Label htmlFor="description" className="relative top-2.5">
           Your track
         </Label>
         <Dialog>
@@ -309,12 +394,8 @@ const SignUpForm = () => {
               <Button type="button">Done</Button>
             </DialogClose>
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
 
-        <div className="flex items-center space-x-2">
-          <Checkbox id="terms" />
-          <Label htmlFor="terms">I Agree to the terms and conditions</Label>
-        </div>
         <Button type="submit" size="lg" className="w-full bg-primary">
           Sign up
         </Button>
@@ -323,87 +404,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
-
-{
-  /* <Dialog>
-          <DialogTrigger asChild formMethod="dialog">
-            <Button
-              variant="outline"
-              className="w-full flex justify-start text-[#79859a] font-normal"
-            >
-              Enter your track
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Enter your track</DialogTitle>
-              <DialogDescription>
-                Choose the track you interested in.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid  py-4">
-              <div className="grid grid-cols-4 items-center gap-4 p-3 border-b">
-                <Label htmlFor="name" className="text-right">
-                  UI/UX
-                </Label>
-                <Checkbox />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4 p-3 border-b">
-                <Label htmlFor="username" className="text-right">
-                  Frontend
-                </Label>
-                <Checkbox />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4 p-3 border-b">
-                <Label htmlFor="username" className="text-right">
-                  Backend
-                </Label>
-                <Checkbox />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4 p-3 border-b">
-                <Label htmlFor="username" className="text-right">
-                  Flutter
-                </Label>
-                <Checkbox />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4 p-3 border-b">
-                <Label htmlFor="username" className="text-right">
-                  Android
-                </Label>
-                <Checkbox />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4 p-3 border-b">
-                <Label htmlFor="username" className="text-right">
-                  iOS
-                </Label>
-                <Checkbox />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit">Save changes</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog> */
-}
-
-{
-  /* <RadioGroup defaultValue="entry" className="gap-0">
-                <div className="flex items-center space-x-2 p-4 border-t">
-                  <RadioGroupItem value="entry" id="entry" />
-                  <Label htmlFor="entry">Entry</Label>
-                </div>
-                <div className="flex items-center space-x-2 p-4 border-t">
-                  <RadioGroupItem value="beginner" id="beginner" />
-                  <Label htmlFor="beginner">Beginner</Label>
-                </div>
-                <div className="flex items-center space-x-2 p-4 border-t">
-                  <RadioGroupItem value="intermediate" id="intermediate" />
-                  <Label htmlFor="intermediate">Intermediate</Label>
-                </div>
-                <div className="flex items-center space-x-2 p-4 border-t">
-                  <RadioGroupItem value="professional" id="professional" />
-                  <Label htmlFor="professional">Professional</Label>
-                </div>
-              </RadioGroup> */
-}
+export default MentorSignupForm;
