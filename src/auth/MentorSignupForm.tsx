@@ -22,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { useNavigate } from "react-router-dom";
 // import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 // const tracks = [
@@ -103,6 +104,8 @@ const MentorSignupForm = () => {
     },
   });
 
+  const navigate = useNavigate();
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
@@ -128,7 +131,6 @@ const MentorSignupForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-3.5 basis-full sm:basis-1/3 relative"
       >
-        <h2 className="text-center font-bold">Create account</h2>
         <FormField
           control={form.control}
           name="specialization"
@@ -137,7 +139,7 @@ const MentorSignupForm = () => {
               <FormLabel>Specialization</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter your name"
+                  placeholder="Enter your specialization"
                   {...field}
                   className="px-4 py-6"
                   type="text"
@@ -269,7 +271,7 @@ const MentorSignupForm = () => {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input {...field} type="text" className="px-4 py-6" />
+                <Input {...field} type="text" className="px-4 py-6 h-12" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -396,7 +398,12 @@ const MentorSignupForm = () => {
           </DialogContent>
         </Dialog> */}
 
-        <Button type="submit" size="lg" className="w-full bg-primary">
+        <Button
+          type="submit"
+          size="lg"
+          className="w-full bg-primary"
+          onClick={() => navigate("../home")}
+        >
           Sign up
         </Button>
       </form>
