@@ -13,6 +13,7 @@ import Layout from "./components/Layout";
 import Mentor from "./pages/Mentor";
 import Dashboard from "./pages/Dashboard";
 import Payment from "./pages/Payment";
+import SelectAvailable from "./pages/SelectAvailable";
 import MentorSignup from "./pages/MentorSignup";
 import StudentProfile from "./pages/StudentProfile";
 import MentorProfile from "./pages/MentorProfile";
@@ -23,6 +24,7 @@ const Login = lazy(() => import("./pages/Login"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Homepage = lazy(() => import("./pages/Homepage"));
+
 
 const queryClient = new QueryClient({
   defaultOptions: {

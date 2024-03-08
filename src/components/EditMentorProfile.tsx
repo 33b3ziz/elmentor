@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
 import {
   Form,
   FormControl,
@@ -21,6 +20,7 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "./ui/textarea";
+
 
 // add proptype
 
@@ -45,6 +45,7 @@ const EditProfileSchema = z.object({
   linkedInURL: z.string(),
   description: z.string(),
 });
+
 
 const EditProfileMentor = () => {
   const form = useForm<z.infer<typeof EditProfileSchema>>({
