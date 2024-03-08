@@ -1,5 +1,5 @@
 import { FaStar, FaRegStar } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MentorCard = (props: {
   mentorImg: string;
@@ -8,17 +8,22 @@ const MentorCard = (props: {
   MentorRate: string;
   mentorExp: string;
 }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className=" md:w-[250px] w-56 rounded-lg">
+    <div
+      className=" md:w-[250px] w-56 rounded-[1rem]"
+      onClick={() => navigate("/mentor/1")}
+    >
       <div>
         <Link to="/">
           <img
             src={props.mentorImg}
-            className="block  md:w-72 md:h-72 w-56 h-56 rounded-t-lg object-cover"
+            className="block  md:w-72 md:h-72 w-56 h-56 rounded-t-[1rem] object-cover"
           ></img>
         </Link>
       </div>
-      <div className="rounded-b-lg border-slate-400 border p-2">
+      <div className="rounded-b-[1rem] border-slate-400 border p-2">
         <h3>{props.mentorName}</h3>
         <p>{props.mentorTrack}</p>
         <div className="flex justify-between ga-2 items-center">

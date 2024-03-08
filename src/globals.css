@@ -16,6 +16,15 @@
   background: hsl(var(--primary));
 }
 
+.dialog-content::-webkit-scrollbar {
+  width: 12px;
+  background: transparent;
+}
+
+.dialog-content::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

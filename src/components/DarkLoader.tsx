@@ -1,16 +1,10 @@
 import { useTheme } from "./ui/theme-provider";
 
-const Loader = () => {
+const DarkLoader = () => {
   const { theme } = useTheme();
 
   return (
-    <div
-      className={`w-screen h-screen flex justify-center items-center ${
-        window.matchMedia("(prefers-color-scheme: dark)") && theme === "dark"
-          ? "bg-black"
-          : "bg-white"
-      }`}
-    >
+    <div className="w-screen h-screen flex justify-center items-center bg-black">
       <img
         src={`${
           window.matchMedia("(prefers-color-scheme: dark)") && theme === "dark"
@@ -26,4 +20,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default DarkLoader;
