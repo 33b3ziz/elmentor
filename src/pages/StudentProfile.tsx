@@ -1,8 +1,8 @@
-import StudentSection from "@/components/StudentSection"
+
+import StudentSection from "@/components/StudentSection";
 function StudentProfile() {
-  return (
-    <StudentSection />
-  )
+  return <StudentSection />;
 }
 
-export default StudentProfile
+export default StudentProfile;
+

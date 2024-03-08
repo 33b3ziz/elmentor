@@ -33,7 +33,7 @@ const LandingSection = () => {
         <p
           className={`${
             theme === "dark" ? "text-primary" : "text-[#272444]"
-          } font-bold opacity-70 mt-4`}
+          } font-bold opacity-70 mt-4 `}
         >
           We will help you to get your dream job
         </p>
