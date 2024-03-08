@@ -22,7 +22,7 @@ const ReviewsSection = () => {
       >
         what our students say about us
       </h1>
-      <div className="flex flex-wrap justify-center items-center gap-4 mt-12">
+      <div className="flex flex-wrap justify-center items-center gap-6 mt-12">
         {landingReviews.map((review) => (
           <LandingReview
             key={review.id}
