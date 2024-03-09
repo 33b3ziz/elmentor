@@ -18,13 +18,13 @@ import MentorSignup from "./pages/MentorSignup";
 import StudentProfile from "./pages/StudentProfile";
 import MentorProfile from "./pages/MentorProfile";
 import Loader from "./components/Loader";
+import ForgetPassword from "./pages/ForgetPassword";
 
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const Login = lazy(() => import("./pages/Login"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Homepage = lazy(() => import("./pages/Homepage"));
-
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,10 +53,13 @@ const App = () => {
                 <Route path="payment" element={<Payment />} />
                 <Route path="studentprofile" element={<StudentProfile />} />
                 <Route path="mentorprofile" element={<MentorProfile />} />
+                <Route path="selectavailable" element={<SelectAvailable />} />
               </Route>
               <Route path="login" element={<Login />} />
-              <Route path="sign-up" element={<SignUp />} />
-              <Route path="sign-up/mentor" element={<MentorSignup />} />
+              <Route path="sign-up" element={<SignUp />}>
+                <Route path="mentor" element={<MentorSignup />} />
+              </Route>
+              <Route path="forget-password" element={<ForgetPassword />} />
             </Routes>
           </BrowserRouter>
           <Toaster
