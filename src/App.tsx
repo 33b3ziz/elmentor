@@ -25,7 +25,6 @@ const SignUp = lazy(() => import("./pages/SignUp"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Homepage = lazy(() => import("./pages/Homepage"));
 
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

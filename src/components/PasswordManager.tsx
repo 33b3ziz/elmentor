@@ -1,7 +1,7 @@
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from './ui/input';
+import { Input } from "./ui/input";
 
 import {
   Dialog,
@@ -9,33 +9,31 @@ import {
   DialogTrigger,
   DialogContent,
   DialogTitle,
-
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form"
-
-
+} from "@/components/ui/form";
 
 interface profile {
   currentPassword: string;
   newPassword: string;
   confirmNewPassword: string;
 }
-const EditProfileSchema = z.object({
-  currentPassword: z.string().min(4),
-  newPassword: z.string().min(4),
-  confirmNewPassword: z.string().min(4),
-})
+const EditProfileSchema = z
+  .object({
+    currentPassword: z.string().min(4),
+    newPassword: z.string().min(4),
+    confirmNewPassword: z.string().min(4),
+  })
   .refine((data) => data.newPassword === data.confirmNewPassword, {
     message: "Passwords don't match",
     path: ["confirmNewPassword"], // path of error
   });
-EditProfileSchema.parse({ newPassword: "asdf", confirmNewPassword: "qwer" });
+// EditProfileSchema.parse({ newPassword: "asdf", confirmNewPassword: "qwer" });
 
 const PasswordManager = () => {
   const form = useForm<z.infer<typeof EditProfileSchema>>({
@@ -44,7 +42,7 @@ const PasswordManager = () => {
       currentPassword: "",
       newPassword: "",
       confirmNewPassword: "",
-    }
+    },
   });
   const onSubmit = (data: profile) => {
     console.log(data); // Handle form submission here
@@ -57,20 +55,27 @@ const PasswordManager = () => {
       >
         <Dialog>
           <DialogTrigger asChild>
-            <button className='w-36'>Password Manager</button>
+            <button className="w-36">Password Manager</button>
           </DialogTrigger>
           <DialogContent className="dialog-content">
             <DialogHeader>
-              <DialogTitle className="text-center text-2xl pt-5">Password Manager</DialogTitle>
+              <DialogTitle className="text-center text-2xl pt-5">
+                Password Manager
+              </DialogTitle>
             </DialogHeader>
             <FormField
-              name='currentPassword'
+              name="currentPassword"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm">Current Password</FormLabel>
                   <FormControl>
-                    <Input type="password" id="currentPassword" {...field} className="py-6" />
+                    <Input
+                      type="password"
+                      id="currentPassword"
+                      {...field}
+                      className="py-6"
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -97,9 +102,16 @@ const PasswordManager = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm">Confirm New Password</FormLabel>
+                  <FormLabel className="text-sm">
+                    Confirm New Password
+                  </FormLabel>
                   <FormControl>
-                    <Input type="password" id="currentNewPassword" {...field} className="py-6 " />
+                    <Input
+                      type="password"
+                      id="currentNewPassword"
+                      {...field}
+                      className="py-6 "
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -107,7 +119,7 @@ const PasswordManager = () => {
           </DialogContent>
         </Dialog>
       </form>
-    </Form >
+    </Form>
   );
 };
 
