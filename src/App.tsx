@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Suspense, lazy } from "react";
-import { ThemeProvider, useTheme } from "./components/ui/theme-provider";
+import { ThemeProvider } from "./components/ui/theme-provider";
 import { Toaster } from "react-hot-toast";
 import Layout from "./components/Layout";
 // import Login from "./pages/Login";
@@ -18,6 +18,7 @@ import MentorSignup from "./pages/MentorSignup";
 import StudentProfile from "./pages/StudentProfile";
 import MentorProfile from "./pages/MentorProfile";
 import Loader from "./components/Loader";
+import ForgetPassword from "./pages/ForgetPassword";
 
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const Login = lazy(() => import("./pages/Login"));
@@ -52,10 +53,13 @@ const App = () => {
                 <Route path="payment" element={<Payment />} />
                 <Route path="studentprofile" element={<StudentProfile />} />
                 <Route path="mentorprofile" element={<MentorProfile />} />
+                <Route path="selectavailable" element={<SelectAvailable />} />
               </Route>
               <Route path="login" element={<Login />} />
-              <Route path="sign-up" element={<SignUp />} />
-              <Route path="sign-up/mentor" element={<MentorSignup />} />
+              <Route path="sign-up" element={<SignUp />}>
+                <Route path="mentor" element={<MentorSignup />} />
+              </Route>
+              <Route path="forget-password" element={<ForgetPassword />} />
             </Routes>
           </BrowserRouter>
           <Toaster
