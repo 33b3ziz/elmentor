@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useNavigate } from "react-router-dom";
 
 const tracks = [
   {
@@ -92,6 +93,8 @@ const SignUpForm = () => {
       levels: "entry",
     },
   });
+
+  const navigate = useNavigate();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -315,8 +318,13 @@ const SignUpForm = () => {
           <Checkbox id="terms" />
           <Label htmlFor="terms">I Agree to the terms and conditions</Label>
         </div>
-        <Button type="submit" size="lg" className="w-full bg-primary">
-          Sign up
+        <Button
+          type="submit"
+          size="lg"
+          className="w-full bg-primary"
+          onClick={() => navigate("/sign-up/mentor")}
+        >
+          Continue
         </Button>
       </form>
     </Form>

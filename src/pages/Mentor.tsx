@@ -23,7 +23,7 @@ const Mentor = () => {
       </div>
       <MentorCounter />
       <MentorDescription />
-      <h2 className="font-bold text-xl md:text-2xl text-slate-800">
+      <h2 className="font-bold text-xl md:text-2xl text-primary">
         Suggestions
       </h2>
       <MentorList mentors={mentors} />

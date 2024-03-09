@@ -14,10 +14,10 @@ const MentorDescription = () => {
         </p>
       </div>
       <div className="my-6">
-        <Button className="mr-5 text-slate-600 bg-white border-2 border-slate-600 hover:text-white">
+        <Button className="mr-5 text-primary bg-white border-2 border-primary hover:text-white">
           Message
         </Button>
-        <Button className="mr-5 text-slate-600 bg-white border-2 border-slate-600 hover:text-white">
+        <Button className="mr-5 text-primary bg-white border-2 border-primary hover:text-white">
           Book a session
         </Button>
       </div>
