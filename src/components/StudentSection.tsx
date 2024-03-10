@@ -1,64 +1,64 @@
-import React, { useState } from 'react';
-import { FaExchangeAlt } from 'react-icons/fa';
-import ProfilePic from './ProfilePic';
+import React, { useState } from "react";
+import { FaExchangeAlt } from "react-icons/fa";
+import ProfilePic from "./ProfilePic";
 import {
-    AiOutlineEdit,
-    AiOutlineShareAlt,
-    AiOutlineLogout,
-    AiOutlineSetting,
+  AiOutlineEdit,
+  AiOutlineShareAlt,
+  AiOutlineLogout,
+  AiOutlineSetting,
 } from "react-icons/ai";
 
-import EditStudentProfile from '@/components/EditStudentProfile';
-import AsAMentor from '@/components/AsAMentor';
-import Settings from '@/components/Settings';
+import EditStudentProfile from "@/components/EditStudentProfile";
+import AsAMentor from "@/components/AsAMentor";
+import Settings from "@/components/Settings";
 
 interface Profile {
-    name: string;
+  name: string;
 }
 
 const StudentSection: React.FC = () => {
-    const [profile] = useState<Profile>({
-        name: 'John Doe',
-    });
-    return (
-        <div className="max-w-md mx-auto bg-white w-full md:w-1/3  overflow-hidden my-10 text-gray-500 ">
-            <div className="px-4 py-2 my-5 ">
-                <ProfilePic />
-                <div className="ml-4 text-center ">
-                    <h2 className="text-2xl font-semibold text-[#272444] mt-2">{profile.name}</h2>
-                </div>
-            </div>
-            <div className="px-4 py-2 my-3">
-                <div className='border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]'>
-                    < AiOutlineEdit className="w-6 h-6 text-[#DCDCDC]" />
-                    <EditStudentProfile />
-                </div>
-                <div className='border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]'>
-                    < FaExchangeAlt className="w-6 h-6 text-[#DCDCDC]" />
-                    <AsAMentor />
-                </div>
-                <div className='border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]'>
-                    <  AiOutlineSetting className="w-6 h-6 text-[#DCDCDC]" />
-                    <Settings />
-                </div>
-                <button className='w-full' >
-                    <div className='border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]'>
-                        <AiOutlineLogout className="w-6 h-6 text-[#DCDCDC]" />
-                        Share App
-                    </div>
-                </button>
+  const [profile] = useState<Profile>({
+    name: "John Doe",
+  });
+  return (
+    <div className="max-w-md mx-auto bg-white w-full md:w-1/3  overflow-hidden my-10 text-gray-500 ">
+      <div className="px-4 py-2 my-5 ">
+        <ProfilePic />
+        <div className="ml-4 text-center ">
+          <h2 className="text-2xl font-semibold text-[#272444] mt-2">
+            {profile.name}
+          </h2>
+        </div>
+      </div>
+      <div className="px-4 py-2 my-3">
+        <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]">
+          <AiOutlineEdit className="w-6 h-6 text-[#DCDCDC]" />
+          <EditStudentProfile />
+        </div>
+        <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]">
+          <FaExchangeAlt className="w-6 h-6 text-[#DCDCDC]" />
+          <AsAMentor />
+        </div>
+        <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]">
+          <AiOutlineSetting className="w-6 h-6 text-[#DCDCDC]" />
+          <Settings />
+        </div>
+        <button className="w-full">
+          <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]">
+            <AiOutlineLogout className="w-6 h-6 text-[#DCDCDC]" />
+            Share App
+          </div>
+        </button>
 
-                <button className='w-full' >
-                    <div className='border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]'>
-                        <AiOutlineShareAlt className="w-6 h-6 text-[#DCDCDC]" />
-                        Log Out
-                    </div>
-                </button>
-            </div>
-        </ div >
-    );
+        <button className="w-full">
+          <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]">
+            <AiOutlineShareAlt className="w-6 h-6 text-[#DCDCDC]" />
+            Log Out
+          </div>
+        </button>
+      </div>
+    </div>
+  );
 };
-
-
 
 export default StudentSection;
