@@ -1,21 +1,27 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Form,
-  FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
+  FormControl,
 } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FaLinkedin } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
+import * as z from "zod";
 import Separator from "@/components/Separator";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).max(50),
+  remember: z.boolean().optional(),
 });
 
 const LoginForm = () => {
@@ -24,6 +30,7 @@ const LoginForm = () => {
     defaultValues: {
       email: "",
       password: "",
+      remember: false,
     },
   });
 
@@ -76,11 +83,59 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
-
+        <FormField
+          name="remember"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="flex items-center justify-between">
+              <div className="flex items-center justify-start gap-2">
+                <Checkbox
+                  id={field.name}
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+                <Label htmlFor={field.name} className="font-medium">
+                  Remember me
+                </Label>
+              </div>
+              <Link
+                to="/forget-password"
+                className="text-primary hover:text-primary/90 -translate-y-[0.3rem] font-medium"
+              >
+                Forget password ?
+              </Link>
+            </FormItem>
+          )}
+        />
         <Button type="submit" size="lg" className="w-full bg-primary">
           Login
         </Button>
         <Separator />
+        <div className="flex gap-6 items-center translate-y-6">
+          <Button
+            size="lg"
+            className="bg-background text-primary hover:text-white border border-primary flex basis-1/2 items-center justify-center"
+          >
+            <FcGoogle size={20} className="mr-2" />
+            Google
+          </Button>
+          <Button
+            size="lg"
+            className="bg-background text-primary hover:text-white border border-primary flex basis-1/2 items-center justify-center"
+          >
+            <FaLinkedin size={20} className="mr-2" />
+            LinkedIn
+          </Button>
+        </div>
+        <p className="translate-y-6 flex justify-center items-center gap-2">
+          Don’t have an account ?{" "}
+          <Link
+            className="text-primary hover:text-primary/90 text-sm font-bold"
+            to="/sign-up"
+          >
+            sign up
+          </Link>
+        </p>
       </form>
     </Form>
   );
