@@ -11,8 +11,6 @@ import {
 
 
 const Settings = () => {
-
-
     return (
         <Dialog>
             <DialogTrigger asChild>

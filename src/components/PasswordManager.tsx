@@ -19,8 +19,6 @@ import {
   FormLabel,
 } from "@/components/ui/form"
 
-
-
 interface profile {
   currentPassword: string;
   newPassword: string;
@@ -31,11 +29,11 @@ const EditProfileSchema = z.object({
   newPassword: z.string().min(4),
   confirmNewPassword: z.string().min(4),
 })
-  .refine((data) => data.newPassword === data.confirmNewPassword, {
-    message: "Passwords don't match",
-    path: ["confirmNewPassword"], // path of error
-  });
-EditProfileSchema.parse({ newPassword: "asdf", confirmNewPassword: "qwer" });
+// .refine((data) => data.newPassword === data.confirmNewPassword, {
+//   message: "Passwords don't match",
+//   path: ["confirmNewPassword"], // path of error
+// });
+// EditProfileSchema.parse({ newPassword: "asdf", confirmNewPassword: "qwer" });
 
 const PasswordManager = () => {
   const form = useForm<z.infer<typeof EditProfileSchema>>({
