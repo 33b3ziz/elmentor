@@ -1,13 +1,27 @@
 import { useForm } from "react-hook-form";
 import { Input } from '@/components/ui/input';
-import { Label } from '@radix-ui/react-dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { AiOutlineClose } from "react-icons/ai";
-import { Dialog, DialogTrigger } from '@radix-ui/react-dialog';
-import { FormField } from './ui/form';
+import {
+  Dialog,
+  DialogHeader,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  // DialogDescription,
+  DialogClose,
+} from '@/components/ui/dialog';
 
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form"
 
-// add proptype
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Textarea } from "./ui/textarea";
 
 interface profile {
   name: string;
@@ -32,7 +46,7 @@ const EditProfileSchema = z.object({
 });
 
 
-const EditProfileMentor = () => {
+const EditMentorProfile = () => {
   const form = useForm<z.infer<typeof EditProfileSchema>>({
     resolver: zodResolver(EditProfileSchema),
     defaultValues: {
@@ -64,7 +78,7 @@ const EditProfileMentor = () => {
           </DialogTrigger>
           <DialogContent className="dialog-content overflow-y-scroll h-screen ">
             <DialogHeader>
-              <DialogTitle>Edit Profile</DialogTitle>
+              <DialogTitle className="text-center">Edit Profile</DialogTitle>
               {/* <DialogDescription>Edit your profile</DialogDescription> */}
             </DialogHeader>
 
@@ -179,7 +193,6 @@ const EditProfileMentor = () => {
                 </FormItem>
               )}
             />
-
             <FormField
               name="description"
               control={form.control}
@@ -198,9 +211,8 @@ const EditProfileMentor = () => {
                 </FormItem>
               )}
             />
-
-            <DialogClose className="flex justify-end">
-              <Button type="button">Update Pofile</Button>
+            <DialogClose className="flex justify-center pt-2">
+              <Button type="button" className="w-full">Update Pofile</Button>
             </DialogClose>
           </DialogContent>
         </Dialog>
@@ -209,4 +221,4 @@ const EditProfileMentor = () => {
   );
 };
 
-export default EditProfileMentor;
+export default EditMentorProfile;
