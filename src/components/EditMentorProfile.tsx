@@ -145,27 +145,10 @@ const EditMentorProfile = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm">Service</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      id="yearsOfExperience"
-                      {...field}
-                      className="py-4"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="yearsOfExperience"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
                   <FormLabel className="text-sm">Years of Experience</FormLabel>
                   <FormControl>
                     <Input
-                      type="url"
+                      type="number"
                       id="linkedInURL"
                       {...field}
                       className="py-4"

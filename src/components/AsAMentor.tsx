@@ -67,7 +67,7 @@ const EditMentorProfile = () => {
             >
                 <Dialog>
                     <DialogTrigger asChild>
-                        <button>As Mentor</button>
+                        <button className='text-secondary-foreground'>As Mentor</button>
                     </DialogTrigger>
                     <DialogContent className="dialog-content overflow-y-scroll h-screen py-10 ">
                         <DialogHeader >

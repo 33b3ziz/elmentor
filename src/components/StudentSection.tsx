@@ -7,7 +7,9 @@ import {
   AiOutlineLogout,
   AiOutlineSetting,
 } from "react-icons/ai";
-
+import {
+  Form,
+} from "@/components/ui/form"
 import EditStudentProfile from "@/components/EditStudentProfile";
 import AsAMentor from "@/components/AsAMentor";
 import Settings from "@/components/Settings";
@@ -21,14 +23,12 @@ const StudentSection: React.FC = () => {
     name: "John Doe",
   });
   return (
-    <div className="max-w-md mx-auto bg-white w-full md:w-1/3  overflow-hidden my-10 text-gray-500 ">
+    <div className="max-w-md mx-auto border shadow w-full md:w-1/3  overflow-hidden my-10 text-gray-500 ">
       <div className="px-4 py-2 my-5 ">
         <ProfilePic />
-        <div className="ml-4 text-center ">
-          <h2 className="text-2xl font-semibold text-[#272444] mt-2">
-            {profile.name}
-          </h2>
-        </div>
+        <h2 className="text-2xl font-semibold text-primary mt-2 text-center">
+          {profile.name}
+        </h2>
       </div>
       <div className="px-4 py-2 my-3">
         <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]">
@@ -44,14 +44,14 @@ const StudentSection: React.FC = () => {
           <Settings />
         </div>
         <button className="w-full">
-          <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]">
+          <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-secondary-foreground">
             <AiOutlineLogout className="w-6 h-6 text-[#DCDCDC]" />
             Share App
           </div>
         </button>
 
         <button className="w-full">
-          <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-[#272444]">
+          <div className="border p-5  flex justify-content gap-4 w-full rounded mb-2 text-secondary-foreground">
             <AiOutlineShareAlt className="w-6 h-6 text-[#DCDCDC]" />
             Log Out
           </div>

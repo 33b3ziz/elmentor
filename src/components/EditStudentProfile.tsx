@@ -57,7 +57,7 @@ const EditStudentProfile = () => {
             >
                 <Dialog>
                     <DialogTrigger asChild>
-                        <button>Edit Profile</button>
+                        <button className='text-secondary-foreground'>Edit Profile</button>
                     </DialogTrigger>
                     <DialogContent className="dialog-content overflow-y-scroll h-screen">
                         <DialogHeader>

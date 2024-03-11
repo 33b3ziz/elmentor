@@ -23,15 +23,6 @@ interface profile {
   newPassword: string;
   confirmNewPassword: string;
 }
-// const EditProfileSchema = z.object({
-//   currentPassword: z.string().min(4),
-//   newPassword: z.string().min(4),
-//   confirmNewPassword: z.string().min(4),
-// })
-// .refine((data) => data.newPassword === data.confirmNewPassword, {
-//   message: "Passwords don't match",
-//   path: ["confirmNewPassword"], // path of error
-// });
 
 const EditProfileSchema = z
   .object({
