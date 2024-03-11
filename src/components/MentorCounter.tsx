@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import { AiFillLinkedin } from "react-icons/ai";
 const MentorCounter = () => {
   return (
     <div className="flex justify-center">
@@ -17,7 +17,9 @@ const MentorCounter = () => {
           <p className="font-bold">Active student</p>
         </div>
       </div>
-      <Link to={"https://www.linkedin.com/"} className="flex justify-center items-center pl-10"><img src="" alt="" /></Link>
+      <Link to={"https://www.linkedin.com/"} className="flex justify-center items-center pl-10 ">
+        <AiFillLinkedin size={30} color="#0A66C2" style={{ borderRadius: 50 }} />
+      </Link>
     </div >
   );
 };

@@ -2,7 +2,7 @@ import EditMentorProfile from "@/components/EditMentorProfile";
 
 export default function MentorSection() {
   return (
-    <div className="w-full px-32 py-96 text-start">
+    <div className="w-full px-20 py-40 text-start">
       <h4 className="mb-5 text-foreground ">Description about me</h4>
       <p className="mb-10 text-foreground w-full ">
         I've been working with Students remotely for seven years . My experience
