@@ -1,8 +1,46 @@
 import MentorCounter from "@/components/MentorCounter";
 import MentorDescription from "@/components/MentorDescription";
 import MentorList from "@/components/MentorList";
+import { Loader } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+async function getMentor(id: any) {
+  try {
+    const response = await fetch(
+      `https://radwan.up.railway.app/listMentor/${id}`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch mentors");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching mentors:", error);
+    throw error;
+  }
+}
 
 const Mentor = () => {
+  const { id } = useParams();
+  const [mentor, setMentor] = useState(null); // State to hold mentor data
+
+  useEffect(() => {
+    const fetchMentor = async () => {
+      try {
+        const mentorData = await getMentor(id);
+        setMentor(mentorData.mentor);
+      } catch (error) {
+        console.error("Error fetching mentor:", error);
+      }
+    };
+
+    fetchMentor();
+  }, [id]);
+
+  if (!mentor) {
+    return <Loader />;
+  }
   return (
     <section className="py-12  px-4 md:px-12">
       <div className="relative w-full h-96 flex flex-col justify-evenly mb-6">
@@ -12,8 +50,8 @@ const Mentor = () => {
           </h2>
         </div>
         <div className="px-5">
-          <p className="font-bold text-xl text-slate-900">Mentor Name</p>
-          <p className="text-slate-700">Mentor track</p>
+          <p className="font-bold text-xl text-slate-900">{mentor.userName}</p>
+          <p className="text-slate-700">{mentor.specialization}</p>
         </div>
         <img
           src="/src/assets/mentor-1.webp"
