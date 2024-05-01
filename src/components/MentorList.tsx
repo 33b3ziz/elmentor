@@ -1,17 +1,17 @@
 import MentorCard from "./MentorCard";
 
-const MentorList = ({ mentors }: any) => {
+const MentorList = ({ mentors }) => {
   return (
     <div className="py-6 mx-auto">
       <div className="flex flex-wrap justify-center gap-4">
         {mentors.map((mentor, index) => (
           <MentorCard
             key={index}
-            mentorImg={mentor.mentorImg}
-            mentorName={mentor.mentorName}
-            mentorTrack={mentor.mentorTrack}
-            MentorRate={mentor.MentorRate}
-            mentorExp={mentor.mentorExp}
+            mentorImg={mentor.imageUrl}
+            mentorName={mentor.userName}
+            mentorTrack={mentor.specialization}
+            MentorRate={mentor.averageStars}
+            mentorExp={mentor.levelOfExperience}
           ></MentorCard>
         ))}
       </div>
