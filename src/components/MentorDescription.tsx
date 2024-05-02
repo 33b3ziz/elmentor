@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 
 const MentorDescription = () => {
@@ -17,9 +18,11 @@ const MentorDescription = () => {
         <Button className="mr-5 text-primary bg-white border-2 border-primary hover:text-white">
           Message
         </Button>
-        <Button className="mr-5 text-primary bg-white border-2 border-primary hover:text-white">
-          Book a session
-        </Button>
+        <Link to="/selectavailable">
+          <Button className="mr-5 text-primary bg-white border-2 border-primary hover:text-white">
+            Book a session
+          </Button>
+        </Link>
       </div>
     </div>
   );

@@ -35,18 +35,8 @@ const MentorCard = (props: {
                 <FaStar key={index} className="text-yellow-300" />
               )
             ).reverse()}
-            {/* {Array.from(
-              { length: 5 - Math.floor(Number(props.MentorRate)) },
-              (_, index: number) => (
-                <FaRegStar key={index} className="text-yellow-300" />
-              )
-            )} */}
           </span>
-          <span>
-            {Number(props.mentorExp) > 1
-              ? `${props.mentorExp} years`
-              : `${props.mentorExp} year`}
-          </span>
+          <span>{`${props.mentorExp ? props.mentorExp + " years" : ""}`}</span>
         </div>
       </div>
     </div>

@@ -10,14 +10,23 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { getMentorsList } from "@/services/apiMentors";
+import { useQuery } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
 
 const Homepage = () => {
+  const { isLoading, data: mentorsList } = useQuery({
+    queryKey: ["mentorsList"],
+    queryFn: getMentorsList,
+  });
+  if (isLoading) return <Loader />;
+
   return (
     <section id="home" className="py-12 flex flex-col items-center">
       <h1 className="text-center font-bold text-xl">Find Your Best Mentor</h1>
       <Search />
       <Filter />
-      <MentorList mentors={mentors} />
+      <MentorList mentors={mentorsList} />
       <Pagination>
         <PaginationContent>
           <PaginationItem>
@@ -37,85 +46,5 @@ const Homepage = () => {
     </section>
   );
 };
-
-const mentors = [
-  {
-    mentorImg: "/src/assets/mentor-8.webp",
-    mentorName: "sara hamdy",
-    mentorTrack: "flutter",
-    MentorRate: "3",
-    mentorExp: "3",
-  },
-  {
-    mentorImg: "/src/assets/mentor-4.webp",
-    mentorName: "Yomna Hegazy",
-    mentorTrack: "flutter",
-    MentorRate: "3",
-    mentorExp: "3",
-  },
-  {
-    mentorImg: "/src/assets/mentor-2.webp",
-    mentorName: "Aya Etman",
-    mentorTrack: "ui/ux",
-    MentorRate: "4.5",
-    mentorExp: "1",
-  },
-  {
-    mentorImg: "/src/assets/mentor-3.webp",
-    mentorName: "Ahmed Nagy",
-    mentorTrack: "frontend",
-    MentorRate: "3.5",
-    mentorExp: "3",
-  },
-  {
-    mentorImg: "/src/assets/mentor-10.webp",
-    mentorName: "Mahmoud Radwan",
-    mentorTrack: "flutter",
-    MentorRate: "3",
-    mentorExp: "5",
-  },
-  {
-    mentorImg: "/src/assets/mentor-9.webp",
-    mentorName: "Asmaa Shawky",
-    mentorTrack: "flutter",
-    MentorRate: "3",
-    mentorExp: "9",
-  },
-  {
-    mentorImg: "/src/assets/mentor-8.webp",
-    mentorName: "sara hamdy",
-    mentorTrack: "flutter",
-    MentorRate: "3",
-    mentorExp: "7",
-  },
-  {
-    mentorImg: "/src/assets/mentor-7.webp",
-    mentorName: "sara hamdy",
-    mentorTrack: "flutter",
-    MentorRate: "3",
-    mentorExp: "6",
-  },
-  {
-    mentorImg: "/src/assets/mentor-6.webp",
-    mentorName: "sara hamdy",
-    mentorTrack: "flutter",
-    MentorRate: "3",
-    mentorExp: "10",
-  },
-  {
-    mentorImg: "/src/assets/mentor-5.webp",
-    mentorName: "sara hamdy",
-    mentorTrack: "flutter",
-    MentorRate: "3",
-    mentorExp: "6",
-  },
-  {
-    mentorImg: "/src/assets/mentor-4.webp",
-    mentorName: "sara hamdy",
-    mentorTrack: "data science",
-    MentorRate: "3",
-    mentorExp: "8",
-  },
-];
 
 export default Homepage;

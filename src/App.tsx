@@ -60,9 +60,8 @@ const App = () => {
                 <Route path="mentornotifications" element={<MentorNotifications />} />
               </Route>
               <Route path="login" element={<Login />} />
-              <Route path="sign-up" element={<SignUp />}>
-                <Route path="mentor" element={<MentorSignup />} />
-              </Route>
+              <Route path="sign-up" element={<SignUp />} />
+              <Route path="sign-up/mentor" element={<MentorSignup />} />
               <Route path="forget-password" element={<ForgetPassword />} />
             </Routes>
           </BrowserRouter>

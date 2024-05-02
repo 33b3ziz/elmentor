@@ -12,7 +12,7 @@ const ForgetPassword = () => {
   return (
     <LoginLayout>
       <div className="flex flex-col justify-center items-center gap-7">
-        <h1 className="font-bold text-primary text-foreground">4 Digits OTP</h1>
+        <h1 className="font-bold text-foreground">4 Digits OTP</h1>
         <p className="">Enter the 4 digits OTP sent to your mail</p>
         <InputOTP
           maxLength={4}
@@ -26,7 +26,7 @@ const ForgetPassword = () => {
                       {...slot}
                       className="border rounded-md text-primary"
                     />
-                    {index < 3 ? <InputOTPSeparator key={index} /> : null}
+                    {index < 3 ? <InputOTPSeparator key={index + 1} /> : null}
                   </>
                 ))}{" "}
               </InputOTPGroup>
