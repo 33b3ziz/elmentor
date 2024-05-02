@@ -1,9 +1,18 @@
+import { useState, useEffect } from 'react';
 import MentorCounter from "@/components/MentorCounter";
 import MentorDescription from "@/components/MentorDescription";
 import MentorList from "@/components/MentorList";
 import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import data from '../display-mentor.json';
+
+
+interface MentorData {
+  linkedin: string;
+  levelOfExperience: string;
+}
+
 
 async function getMentor(id: any) {
   try {
@@ -24,6 +33,11 @@ async function getMentor(id: any) {
 const Mentor = () => {
   const { id } = useParams();
   const [mentor, setMentor] = useState(null); // State to hold mentor data
+  const [mentorData, setMentorData] = useState<MentorData | null>(null);
+  useEffect(() => {
+    setMentorData(data.mentor);
+  }, []);
+
 
   useEffect(() => {
     const fetchMentor = async () => {
@@ -41,6 +55,7 @@ const Mentor = () => {
   if (!mentor) {
     return <Loader />;
   }
+
   return (
     <section className="py-12  px-4 md:px-12">
       <div className="relative w-full h-96 flex flex-col justify-evenly mb-6">
@@ -59,7 +74,14 @@ const Mentor = () => {
           className="absolute -z-10 w-full h-96 object-cover"
         />
       </div>
-      <MentorCounter />
+      {mentorData && (
+
+        <MentorCounter
+          linkedin={mentorData.linkedin}
+          levelOfExperience={mentorData.levelOfExperience}
+        />
+
+      )}
       <MentorDescription />
       <h2 className="font-bold text-xl md:text-2xl text-primary">
         Suggestions
