@@ -21,32 +21,53 @@ import {
     FormLabel,
 } from "@/components/ui/form"
 
-
-
-interface profile {
+interface Profile {
     name: string;
-    phone: number;
-    email: number | string;
-
+    phone: string;
+    email: string;
 }
+
 const EditProfileSchema = z.object({
     name: z.string(),
-    phone: z.number(),
-    email: z.string(),
-})
+    phone: z.string(),
+    email: z.string().email(),
+});
 
 const EditStudentProfile = () => {
-    const form = useForm<z.infer<typeof EditProfileSchema>>({
+    const form = useForm<Profile>({
         resolver: zodResolver(EditProfileSchema),
         defaultValues: {
             name: "John Doe",
             email: "john@example.com",
-            phone: 12345678910,
+            phone: "12345678910",
         }
     });
 
-    const onSubmit = (data: profile) => {
-        console.log(data); // Handle form submission here
+    const onSubmit = async (data: Profile) => {
+        try {
+            const response = await fetch('https://radwan.up.railway.app/updateOne', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    'X-Powered-By': 'Express',
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Length': '92',
+                    'ETag': 'W/"5c-XE4LqSKK8lMBgnDPfq7vp2yCSG8"',
+                    'Date': 'Fri, 01 Mar 2024 17:54:16 GMT',
+                    'Connection': 'keep-alive',
+                    'Keep-Alive': 'timeout=5'
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                console.log('Profile updated successfully');
+            } else {
+                console.error('Failed to update profile:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
     };
 
     return (
@@ -106,7 +127,7 @@ const EditStudentProfile = () => {
                             )}
                         />
                         <DialogClose className="flex justify-center ">
-                            <Button type="button" className="w-full py-6 ">Submit</Button>
+                            <Button type="submit" className="w-full py-6 ">Submit</Button>
                         </DialogClose>
                     </DialogContent>
                 </Dialog>

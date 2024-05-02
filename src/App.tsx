@@ -19,6 +19,8 @@ import StudentProfile from "./pages/StudentProfile";
 import MentorProfile from "./pages/MentorProfile";
 import Loader from "./components/Loader";
 import ForgetPassword from "./pages/ForgetPassword";
+import StudentNotifications from "./pages/StudentNotifications";
+import MentorNotifications from "./pages/MentorNotifications";
 
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const Login = lazy(() => import("./pages/Login"));
@@ -52,8 +54,10 @@ const App = () => {
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="payment" element={<Payment />} />
                 <Route path="studentprofile" element={<StudentProfile />} />
-                <Route path="mentorprofile" element={<MentorProfile />} />
+                <Route path="mentorprofile" element={<MentorProfile _id="65dd99b0e731f3477cb5bcb4" />} />
                 <Route path="selectavailable" element={<SelectAvailable />} />
+                <Route path="studentnotifications" element={<StudentNotifications />} />
+                <Route path="mentornotifications" element={<MentorNotifications />} />
               </Route>
               <Route path="login" element={<Login />} />
               <Route path="sign-up" element={<SignUp />}>

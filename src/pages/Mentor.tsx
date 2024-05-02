@@ -1,8 +1,17 @@
+import { useState, useEffect } from 'react';
 import MentorCounter from "@/components/MentorCounter";
 import MentorDescription from "@/components/MentorDescription";
 import MentorList from "@/components/MentorList";
-
+import data from '../display-mentor.json';
+interface MentorData {
+  linkedin: string;
+  levelOfExperience: string;
+}
 const Mentor = () => {
+  const [mentorData, setMentorData] = useState<MentorData | null>(null);
+  useEffect(() => {
+    setMentorData(data.mentor);
+  }, []);
   return (
     <section className="py-12  px-4 md:px-12">
       <div className="relative w-full h-96 flex flex-col justify-evenly mb-6">
@@ -21,7 +30,14 @@ const Mentor = () => {
           className="absolute -z-10 w-full h-96 object-cover"
         />
       </div>
-      <MentorCounter />
+      {mentorData && (
+
+        <MentorCounter
+          linkedin={mentorData.linkedin}
+          levelOfExperience={mentorData.levelOfExperience}
+        />
+
+      )}
       <MentorDescription />
       <h2 className="font-bold text-xl md:text-2xl text-primary">
         Suggestions
