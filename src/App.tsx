@@ -19,6 +19,7 @@ import StudentProfile from "./pages/StudentProfile";
 import MentorProfile from "./pages/MentorProfile";
 import Loader from "./components/Loader";
 import ForgetPassword from "./pages/ForgetPassword";
+import SignupProvider from "./contexts/SignupContext";
 
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const Login = lazy(() => import("./pages/Login"));
@@ -39,49 +40,51 @@ const App = () => {
     <Suspense fallback={<Loader />}>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
-        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-          <BrowserRouter>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route path="mentor/:id" element={<Mentor />} />
-                <Route path="/" element={<LandingPage />} />
-                <Route index element={<Navigate replace to="/welcome" />} />
-                <Route path="contact" element={<Contact />} />
-                <Route path="/welcome" element={<LandingPage />} />
-                <Route path="home" element={<Homepage />} />
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="payment" element={<Payment />} />
-                <Route path="studentprofile" element={<StudentProfile />} />
-                <Route path="mentorprofile" element={<MentorProfile />} />
-                <Route path="selectavailable" element={<SelectAvailable />} />
-              </Route>
-              <Route path="login" element={<Login />} />
-              <Route path="sign-up" element={<SignUp />} />
-              <Route path="sign-up/mentor" element={<MentorSignup />} />
-              <Route path="forget-password" element={<ForgetPassword />} />
-            </Routes>
-          </BrowserRouter>
-          <Toaster
-            position="top-center"
-            gutter={12}
-            containerStyle={{ margin: "8px" }}
-            toastOptions={{
-              success: {
-                duration: 3000,
-              },
-              error: {
-                duration: 5000,
-              },
-              style: {
-                fontSize: "16px",
-                maxWidth: "500px",
-                padding: "16px 24px",
-                backgroundColor: "white",
-                color: "black",
-              },
-            }}
-          />
-        </ThemeProvider>
+        <SignupProvider>
+          <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+            <BrowserRouter>
+              <Routes>
+                <Route element={<Layout />}>
+                  <Route path="mentor/:id" element={<Mentor />} />
+                  <Route path="/" element={<LandingPage />} />
+                  <Route index element={<Navigate replace to="/welcome" />} />
+                  <Route path="contact" element={<Contact />} />
+                  <Route path="/welcome" element={<LandingPage />} />
+                  <Route path="home" element={<Homepage />} />
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="payment" element={<Payment />} />
+                  <Route path="studentprofile" element={<StudentProfile />} />
+                  <Route path="mentorprofile" element={<MentorProfile />} />
+                  <Route path="selectavailable" element={<SelectAvailable />} />
+                </Route>
+                <Route path="login" element={<Login />} />
+                <Route path="sign-up" element={<SignUp />} />
+                <Route path="sign-up/mentor" element={<MentorSignup />} />
+                <Route path="forget-password" element={<ForgetPassword />} />
+              </Routes>
+            </BrowserRouter>
+            <Toaster
+              position="top-center"
+              gutter={12}
+              containerStyle={{ margin: "8px" }}
+              toastOptions={{
+                success: {
+                  duration: 3000,
+                },
+                error: {
+                  duration: 5000,
+                },
+                style: {
+                  fontSize: "16px",
+                  maxWidth: "500px",
+                  padding: "16px 24px",
+                  backgroundColor: "white",
+                  color: "black",
+                },
+              }}
+            />
+          </ThemeProvider>
+        </SignupProvider>
       </QueryClientProvider>
     </Suspense>
   );

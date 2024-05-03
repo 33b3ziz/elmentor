@@ -24,6 +24,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useNavigate } from "react-router-dom";
+import { useSignup } from "@/contexts/SignupContext";
 
 const tracks = [
   {
@@ -95,6 +96,7 @@ const SignUpForm = () => {
   });
 
   const navigate = useNavigate();
+  const { value, setValue } = useSignup()!;
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -113,6 +115,9 @@ const SignUpForm = () => {
     //     console.error(err);
     //   });
     console.log(values);
+    setValue({ ...value, ...values });
+    console.log(value);
+    navigate("/sign-up/mentor");
   }
 
   return (
@@ -291,9 +296,11 @@ const SignUpForm = () => {
                       onValueChange={field.onChange}
                     >
                       {levels.map((level) => (
-                        <div className="flex items-center space-x-2 p-4 border-t">
+                        <div
+                          className="flex items-center space-x-2 p-4 border-t"
+                          key={level.id}
+                        >
                           <RadioGroupItem
-                            key={level.id}
                             value={level.id}
                             id={level.id}
                             checked={field.value?.includes(level.id)}
@@ -318,12 +325,7 @@ const SignUpForm = () => {
           <Checkbox id="terms" />
           <Label htmlFor="terms">I Agree to the terms and conditions</Label>
         </div>
-        <Button
-          type="submit"
-          size="lg"
-          className="w-full bg-primary"
-          onClick={() => navigate("/sign-up/mentor")}
-        >
+        <Button type="submit" size="lg" className="w-full bg-primary">
           Continue
         </Button>
       </form>
