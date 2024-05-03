@@ -12,7 +12,8 @@ const MentorList = ({ mentors }) => {
             mentorTrack={mentor.specialization}
             MentorRate={mentor.averageStars}
             mentorExp={mentor.levelOfExperience}
-          ></MentorCard>
+            mentorId={mentor._id}
+          />
         ))}
       </div>
     </div>

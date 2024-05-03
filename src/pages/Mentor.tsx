@@ -1,58 +1,53 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import MentorCounter from "@/components/MentorCounter";
 import MentorDescription from "@/components/MentorDescription";
 import MentorList from "@/components/MentorList";
 import { Loader } from "lucide-react";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import data from '../display-mentor.json';
-
+import { useQuery } from "@tanstack/react-query";
+import { socket } from "@/socket";
+// import data from "../display-mentor.json";
 
 interface MentorData {
   linkedin: string;
   levelOfExperience: string;
 }
 
+type Mentor = {
+  mentor: {
+    _id: string;
+    userName: string;
+    specialization: string;
+    services: string[];
+    linkedin: string;
+    levelOfExperience: string;
+    profissionalTitle: string;
+    image: string;
+    imageUrl: string;
+    description: string;
+    email: string;
+    techStack: string[];
+    mentor: boolean;
+  };
+};
 
-async function getMentor(id: any) {
-  try {
-    const response = await fetch(
-      `https://radwan.up.railway.app/listMentor/${id}`
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch mentors");
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching mentors:", error);
-    throw error;
-  }
-}
-
-const Mentor = () => {
+const Mentor = ({ messageEvent }: { messageEvent: [] }) => {
   const { id } = useParams();
-  const [mentor, setMentor] = useState(null); // State to hold mentor data
-  const [mentorData, setMentorData] = useState<MentorData | null>(null);
-  useEffect(() => {
-    setMentorData(data.mentor);
-  }, []);
 
+  const { data, isLoading } = useQuery<Mentor>({
+    queryKey: ["mentor", id],
+    queryFn: async () => {
+      const res = await fetch(`https://radwan.up.railway.app/listMentor/${id}`);
+      const data = await res.json();
+      return data;
+    },
+  });
 
-  useEffect(() => {
-    const fetchMentor = async () => {
-      try {
-        const mentorData = await getMentor(id);
-        setMentor(mentorData.mentor);
-      } catch (error) {
-        console.error("Error fetching mentor:", error);
-      }
-    };
+  const mentor = data?.mentor;
 
-    fetchMentor();
-  }, [id]);
+  console.log(mentor);
 
-  if (!mentor) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -65,8 +60,8 @@ const Mentor = () => {
           </h2>
         </div>
         <div className="px-5">
-          <p className="font-bold text-xl text-slate-900">{mentor.userName}</p>
-          <p className="text-slate-700">{mentor.specialization}</p>
+          <p className="font-bold text-xl text-slate-900">{mentor?.userName}</p>
+          <p className="text-slate-700">{mentor?.specialization}</p>
         </div>
         <img
           src="/src/assets/mentor-1.webp"
@@ -74,14 +69,7 @@ const Mentor = () => {
           className="absolute -z-10 w-full h-96 object-cover"
         />
       </div>
-      {mentorData && (
-
-        <MentorCounter
-          linkedin={mentorData.linkedin}
-          levelOfExperience={mentorData.levelOfExperience}
-        />
-
-      )}
+      {mentor && <MentorCounter />}
       <MentorDescription />
       <h2 className="font-bold text-xl md:text-2xl text-primary">
         Suggestions

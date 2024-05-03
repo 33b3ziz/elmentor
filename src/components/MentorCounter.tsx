@@ -18,10 +18,17 @@ const MentorCounter: React.FC = () => {
           <p className="font-bold">Active student</p>
         </div>
       </div>
-      <Link to="https://linkedin.com" className="flex justify-center items-center pl-10 ">
-        <AiFillLinkedin size={30} color="#0A66C2" style={{ borderRadius: 50 }} />
+      <Link
+        to="https://linkedin.com"
+        className="flex justify-center items-center pl-10 "
+      >
+        <AiFillLinkedin
+          size={30}
+          color="#0A66C2"
+          style={{ borderRadius: 50 }}
+        />
       </Link>
-    </div >
+    </div>
   );
 };
 
