@@ -7,16 +7,14 @@ const MentorCard = (props: {
   mentorTrack: string;
   MentorRate: string;
   mentorExp: string;
+  mentorId: string;
 }) => {
   const navigate = useNavigate();
 
   return (
-    <div
-      className=" md:w-[250px] w-56 rounded-[1rem]"
-      onClick={() => navigate("/mentor/1")}
-    >
+    <div className=" md:w-[250px] w-56 rounded-[1rem]">
       <div>
-        <Link to="/">
+        <Link to={`/mentor/${props.mentorId}`}>
           <img
             src={props.mentorImg}
             className="block  md:w-72 md:h-72 w-56 h-56 rounded-t-[1rem] object-cover"

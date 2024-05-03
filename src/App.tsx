@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import { Toaster } from "react-hot-toast";
 import Layout from "./components/Layout";
@@ -24,6 +24,9 @@ import SignupProvider from "./contexts/SignupContext";
 
 import StudentNotifications from "./pages/StudentNotifications";
 import MentorNotifications from "./pages/MentorNotifications";
+import { socket } from "./socket";
+import EditMentorProfile from "./components/EditMentorProfile";
+import TestChat from "./components/realtime/TestChat";
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const Login = lazy(() => import("./pages/Login"));
 const SignUp = lazy(() => import("./pages/SignUp"));
@@ -39,6 +42,40 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  const [isConnected, setIsConnected] = useState(socket.connected);
+  const [messageEvent, setMessageEvent] = useState<any[]>([]);
+
+  useEffect(() => {
+    socket.connect();
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    function onConnect() {
+      setIsConnected(true);
+    }
+
+    function onDisconnect() {
+      setIsConnected(false);
+    }
+
+    function onMessageEvent(value) {
+      setMessageEvent(value);
+    }
+
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
+    socket.on("get chats", onMessageEvent);
+
+    return () => {
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
+      socket.off("get chats", onMessageEvent);
+    };
+  }, [messageEvent]);
+
   return (
     <Suspense fallback={<Loader />}>
       <QueryClientProvider client={queryClient}>
@@ -48,7 +85,10 @@ const App = () => {
             <BrowserRouter>
               <Routes>
                 <Route element={<Layout />}>
-                  <Route path="mentor/:id" element={<Mentor />} />
+                  <Route
+                    path="mentor/:id"
+                    element={<Mentor messageEvent={messageEvent} />}
+                  />
                   <Route path="/" element={<LandingPage />} />
                   <Route index element={<Navigate replace to="/welcome" />} />
                   <Route path="contact" element={<Contact />} />
@@ -57,8 +97,29 @@ const App = () => {
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="payment" element={<Payment />} />
                   <Route path="studentprofile" element={<StudentProfile />} />
-                  <Route path="mentorprofile" element={<MentorProfile />} />
+                  <Route
+                    path="testchat"
+                    element={
+                      <TestChat
+                        isConnected={isConnected}
+                        messageEvent={messageEvent}
+                      />
+                    }
+                  />
+                  <Route
+                    path="mentorprofile"
+                    element={<MentorProfile _id="65dd99b0e731f3477cb5bcb4" />}
+                  />
+
                   <Route path="selectavailable" element={<SelectAvailable />} />
+                  <Route
+                    path="studentnotifications"
+                    element={<StudentNotifications />}
+                  />
+                  <Route
+                    path="mentornotifications"
+                    element={<MentorNotifications />}
+                  />
                 </Route>
                 <Route path="login" element={<Login />} />
                 <Route path="sign-up" element={<SignUp />} />

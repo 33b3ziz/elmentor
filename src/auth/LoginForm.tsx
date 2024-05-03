@@ -17,6 +17,7 @@ import * as z from "zod";
 import Separator from "@/components/Separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+// import { login } from "@/services/apiAuth";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -30,14 +31,23 @@ const LoginForm = () => {
     defaultValues: {
       email: "",
       password: "",
-      remember: false,
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+    const res = await fetch("https://radwan.up.railway.app/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    const data = await res.json();
+    console.log(data);
+    return data;
   }
 
   return (
