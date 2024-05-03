@@ -19,8 +19,11 @@ import StudentProfile from "./pages/StudentProfile";
 import MentorProfile from "./pages/MentorProfile";
 import Loader from "./components/Loader";
 import ForgetPassword from "./pages/ForgetPassword";
+
 import SignupProvider from "./contexts/SignupContext";
 
+import StudentNotifications from "./pages/StudentNotifications";
+import MentorNotifications from "./pages/MentorNotifications";
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const Login = lazy(() => import("./pages/Login"));
 const SignUp = lazy(() => import("./pages/SignUp"));
