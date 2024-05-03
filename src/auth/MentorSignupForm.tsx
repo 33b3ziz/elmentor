@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
+import { useSignup } from "@/contexts/SignupContext";
 // import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 // const tracks = [
@@ -93,6 +94,7 @@ const formSchema = z.object({
 });
 
 const MentorSignupForm = () => {
+  const { value, setValue } = useSignup()!;
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -106,23 +108,20 @@ const MentorSignupForm = () => {
 
   const navigate = useNavigate();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setValue({ ...value, ...values });
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    // fetch("http://localhost:3000/users", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(values),
-    // })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
-    console.log(values);
+    const res = await fetch("https://radwan.up.railway.app/mentor/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(value),
+    });
+    const data = await res.json();
+    console.log(data);
+    navigate("/home");
   }
 
   return (
@@ -398,12 +397,7 @@ const MentorSignupForm = () => {
           </DialogContent>
         </Dialog> */}
 
-        <Button
-          type="submit"
-          size="lg"
-          className="w-full bg-primary"
-          onClick={() => navigate("../home")}
-        >
+        <Button type="submit" size="lg" className="w-full bg-primary">
           Sign up
         </Button>
       </form>
