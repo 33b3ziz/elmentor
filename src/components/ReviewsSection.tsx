@@ -7,7 +7,7 @@ const ReviewsSection = () => {
   const landingReviews = reviews.slice(0, 4);
 
   return (
-    <section className="text-center pt-10 pb-28">
+    <section id="reviews" className="text-center pt-10 pb-28">
       <p
         className={`uppercase mb-4 ${
           theme === "dark" ? "text-primary" : "text-[#608DC4]"

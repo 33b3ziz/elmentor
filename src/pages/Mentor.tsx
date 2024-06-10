@@ -6,6 +6,7 @@ import { Loader } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { socket } from "@/socket";
+import Reviews from "@/components/Reviews";
 // import data from "../display-mentor.json";
 
 interface MentorData {
@@ -75,6 +76,9 @@ const Mentor = ({ messageEvent }: { messageEvent: [] }) => {
         Suggestions
       </h2>
       <MentorList mentors={mentors} />
+
+      <h2 className="font-bold text-xl md:text-2xl text-primary">Reviews</h2>
+      <Reviews mentorId={id} />
     </section>
   );
 };

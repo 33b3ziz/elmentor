@@ -21,13 +21,11 @@ const Homepage = () => {
   });
   if (isLoading) return <Loader />;
 
-  console.log(mentorsList);
-
   return (
     <section id="home" className="py-12 flex flex-col items-center">
       <h1 className="text-center font-bold text-xl">Find Your Best Mentor</h1>
       <Search />
-      <Filter />
+      {/* <Filter /> */}
       <MentorList mentors={mentorsList} />
       <Pagination>
         <PaginationContent>
