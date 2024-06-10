@@ -31,18 +31,18 @@ const Navbar = ({ auth }: NavbarProps) => {
         <>
           <ul className="hidden lg:flex">
             <li className="py-2 px-4 hover:text-primary transition">
-              <a href="#home" className="active font-semibold">
+              <a href="/home" className="active font-semibold">
                 Home
               </a>
             </li>
-            <li className="py-2 px-4 hover:text-primary transition font-semibold">
+            {/* <li className="py-2 px-4 hover:text-primary transition font-semibold">
               <a href="#about-us">About Us</a>
+            </li> */}
+            <li className="py-2 px-4 hover:text-primary transition font-semibold">
+              <a href="/#services">Services</a>
             </li>
             <li className="py-2 px-4 hover:text-primary transition font-semibold">
-              <a href="#services">Services</a>
-            </li>
-            <li className="py-2 px-4 hover:text-primary transition font-semibold">
-              <a href="#reviews">Reviews</a>
+              <a href="/#reviews">Reviews</a>
             </li>
             <li className="py-2 px-4 hover:text-primary transition font-semibold">
               <Link to="contact">Contact Us</Link>

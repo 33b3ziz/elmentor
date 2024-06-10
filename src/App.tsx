@@ -1,15 +1,10 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import { Toaster } from "react-hot-toast";
 import Layout from "./components/Layout";
-// import Login from "./pages/Login";
-// import SignUp from "./pages/SignUp";
-// import Contact from "./pages/Contact";
-// import Homepage from "./pages/Homepage";
-// import LandingPage from "./pages/LandingPage";
 import Mentor from "./pages/Mentor";
 import Dashboard from "./pages/Dashboard";
 import Payment from "./pages/Payment";
@@ -89,10 +84,8 @@ const App = () => {
                     path="mentor/:id"
                     element={<Mentor messageEvent={messageEvent} />}
                   />
-                  <Route path="/" element={<LandingPage />} />
-                  <Route index element={<Navigate replace to="/welcome" />} />
+                  <Route index path="/" element={<LandingPage />} />
                   <Route path="contact" element={<Contact />} />
-                  <Route path="/welcome" element={<LandingPage />} />
                   <Route path="home" element={<Homepage />} />
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="payment" element={<Payment />} />
