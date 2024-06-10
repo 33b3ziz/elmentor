@@ -86,7 +86,7 @@ const Reviews = ({
   return (
     <section className="text-center pt-10 pb-28 flex justify-between items-start">
       <div className="w-1/2">
-        {data.reviews &&
+        {data.reviews.length > 0 ? (
           data.reviews.map((el: any) => (
             <div key={el._id} className="border p-4 m-2 rounded-lg flex">
               <div className="flex items-center gap-2">
@@ -114,7 +114,12 @@ const Reviews = ({
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <p className="p-4 m-2 rounded-lg flex font-bold text-2xl">
+            no reviews yet
+          </p>
+        )}
       </div>
 
       {/* {data.map((el: any) => (
