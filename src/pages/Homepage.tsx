@@ -1,6 +1,4 @@
 import MentorList from "@/components/MentorList";
-import Search from "@/components/Search";
-import { Button } from "@/components/ui/button";
 import {
   Pagination,
   PaginationContent,
@@ -19,6 +17,9 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import { useState } from "react";
+
+import Search from "@/components/Search";
+import Filter from "@/components/Filter";
 
 const Homepage = () => {
   const [filter, setFilter] = useState("all");
@@ -46,37 +47,7 @@ const Homepage = () => {
     <section id="home" className="py-12 flex flex-col items-center">
       <h1 className="text-center font-bold text-xl">Find Your Best Mentor</h1>
       <Search />
-
-      <div className="flex gap-2 flex-wrap justify-center">
-        <Button
-          onClick={() => setFilter("all")}
-          className={`bg-muted border-2 border-border text-primary hover:text-white hover:border-primary px-4 md:px-10 
-              ${filter === "all" ? "bg-slate-800 text-white" : " "}`}
-        >
-          All
-        </Button>
-        <Button
-          onClick={() => setFilter("mock")}
-          className={`bg-muted border-2 border-border text-primary hover:text-white hover:border-primary px-4 md:px-10 
-            ${filter === "mock" ? "bg-slate-800 text-white" : " "}`}
-        >
-          Mock interview
-        </Button>
-        <Button
-          onClick={() => setFilter("consultation")}
-          className={`bg-muted border-2 border-border text-primary hover:text-white hover:border-primary px-4 md:px-10 
-            ${filter === "consultation" ? "bg-slate-800 text-white" : " "}`}
-        >
-          Consultation
-        </Button>
-        <Button
-          onClick={() => setFilter("mentoring")}
-          className={`bg-muted border-2 border-border text-primary hover:text-white hover:border-primary px-4 md:px-10 
-            ${filter === "mentoring" ? "bg-slate-800 text-white" : " "}`}
-        >
-          Mentoring
-        </Button>
-      </div>
+      <Filter filter={filter} setFilter={setFilter} />
       <MentorList mentors={mentorsList} />
       <Pagination>
         <PaginationContent>
