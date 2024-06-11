@@ -47,6 +47,12 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
+    --chat-background-secondary: 0 0% 96%;
+    --message: 0 0% 100%;
+    --message-skeleton-main: 212 48% 80%;
+    --message-skeleton-main-foreground: 212 48% 88%;
+    --message-skeleton-secondary: 0 0% 80%;
+    --message-skeleton-secondary-foreground: 0 0% 85%;
   }
 
   .dark {
@@ -69,6 +75,12 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
+    --chat-background-secondary: 222.2 50% 10%;
+    --message: 222.2 15% 75%;
+    --message-skeleton-main: 220 49% 15%;
+    --message-skeleton-main-foreground: 220 40% 21%;
+    --message-skeleton-secondary: 217 33% 18%;
+    --message-skeleton-secondary-foreground: 215 25% 27%;
   }
 }
 
