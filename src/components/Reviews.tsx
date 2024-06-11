@@ -26,7 +26,13 @@ const formSchema = z.object({
     .min(6, { message: "Comment must be at least 6 characters" }),
 });
 
-const Reviews = ({ mentorId }: { mentorId: string }) => {
+const Reviews = ({
+  mentorId,
+  mentorService,
+}: {
+  mentorId: string;
+  mentorService: string;
+}) => {
   const [cookie, setCookie] = useCookies();
   const { isLoading, data } = useQuery({
     queryKey: ["mentorReviews", mentorId],
@@ -49,7 +55,10 @@ const Reviews = ({ mentorId }: { mentorId: string }) => {
   console.log();
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
-    values = { ...values, service: "mentoring" };
+    values = {
+      ...values,
+      service: mentorService ? mentorService : data.reviews[0].service,
+    };
     console.log(values);
 
     fetch(`https://radwan.up.railway.app/review/${mentorId}`, {
@@ -58,11 +67,14 @@ const Reviews = ({ mentorId }: { mentorId: string }) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${cookie.io}`,
       },
+      credentials: "include",
 
       body: JSON.stringify(values),
     })
       .then((res) => {
-        console.log(res);
+        if (res.ok) {
+          window.location.reload();
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -72,36 +84,43 @@ const Reviews = ({ mentorId }: { mentorId: string }) => {
   if (isLoading) return <Loader />;
 
   return (
-    <section className="text-center pt-10 pb-28">
-      {data.reviews &&
-        data.reviews.map((el: any) => (
-          <div key={el._id} className="border p-4 m-2 rounded-lg flex">
-            <div className="flex items-center gap-2">
-              <img
-                className="w-[60px] rounded-full h-[60px]"
-                src={el.reviewerAvatar || "/src/assets/mentor-1.webp"}
-                alt={`${el.reviewerName}'s avatar`}
-              />
-              <div className="flex flex-col items-start justify-between gap-2">
-                <div>
-                  <p className="text-black font-bold text-lg">
-                    {el.reviewerName}
-                  </p>
-                  <p className="flex">
-                    {Array.from({ length: 5 }, (_, index: number) =>
-                      5 - index > Number(el.stars) ? (
-                        <FaRegStar key={index} className="text-yellow-300" />
-                      ) : (
-                        <FaStar key={index} className="text-yellow-300" />
-                      )
-                    ).reverse()}
-                  </p>
+    <section className="text-center pt-10 pb-28 flex justify-between items-start">
+      <div className="w-1/2">
+        {data.reviews.length > 0 ? (
+          data.reviews.map((el: any) => (
+            <div key={el._id} className="border p-4 m-2 rounded-lg flex">
+              <div className="flex items-center gap-2">
+                <img
+                  className="w-[60px] rounded-full h-[60px]"
+                  src={el.reviewerAvatar || "/src/assets/mentor-1.webp"}
+                  alt={`${el.reviewerName}'s avatar`}
+                />
+                <div className="flex flex-col items-start justify-between gap-2">
+                  <div>
+                    <p className="text-black font-bold text-lg">
+                      {el.reviewerName}
+                    </p>
+                    <p className="flex">
+                      {Array.from({ length: 5 }, (_, index: number) =>
+                        5 - index > Number(el.stars) ? (
+                          <FaRegStar key={index} className="text-yellow-300" />
+                        ) : (
+                          <FaStar key={index} className="text-yellow-300" />
+                        )
+                      ).reverse()}
+                    </p>
+                  </div>
+                  <p>{el.comment}</p>
                 </div>
-                <p>{el.comment}</p>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="p-4 m-2 rounded-lg flex font-bold text-2xl">
+            no reviews yet
+          </p>
+        )}
+      </div>
 
       {/* {data.map((el: any) => (
         <div key={el._id} className="border p-4 m-2 rounded-lg flex">

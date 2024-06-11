@@ -70,7 +70,7 @@ const Mentor = ({ messageEvent }: { messageEvent: [] }) => {
           className="absolute -z-10 w-full h-96 object-cover"
         />
       </div>
-      {mentor && <MentorCounter />}
+      {mentor && <MentorCounter linkedIn={mentor.linkedin} />}
       <MentorDescription />
       <h2 className="font-bold text-xl md:text-2xl text-primary">
         Suggestions
@@ -78,7 +78,7 @@ const Mentor = ({ messageEvent }: { messageEvent: [] }) => {
       <MentorList mentors={mentors} />
 
       <h2 className="font-bold text-xl md:text-2xl text-primary">Reviews</h2>
-      <Reviews mentorId={id} />
+      <Reviews mentorId={id} mentorService={mentor?.services} />
     </section>
   );
 };

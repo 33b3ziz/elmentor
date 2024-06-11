@@ -1,6 +1,4 @@
-import Filter from "@/components/Filter";
 import MentorList from "@/components/MentorList";
-import Search from "@/components/Search";
 import {
   Pagination,
   PaginationContent,
@@ -10,22 +8,46 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { getMentorsList } from "@/services/apiMentors";
+import {
+  getConsultMentors,
+  getMentoringMentors,
+  getMentorsList,
+  getMockMentors,
+} from "@/services/apiMentors";
 import { useQuery } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
+import { useState } from "react";
+
+import Search from "@/components/Search";
+import Filter from "@/components/Filter";
 
 const Homepage = () => {
+  const [filter, setFilter] = useState("all");
+
   const { isLoading, data: mentorsList } = useQuery({
-    queryKey: ["mentorsList"],
-    queryFn: getMentorsList,
+    queryKey: ["mentorsList", filter],
+    queryFn: () => {
+      if (filter === "all") {
+        return getMentorsList();
+      } else if (filter === "mock") {
+        return getMockMentors();
+      } else if (filter === "consultation") {
+        return getConsultMentors();
+      } else if (filter === "mentoring") {
+        return getMentoringMentors();
+      } else {
+        return getMentorsList();
+      }
+    },
   });
+
   if (isLoading) return <Loader />;
 
   return (
     <section id="home" className="py-12 flex flex-col items-center">
       <h1 className="text-center font-bold text-xl">Find Your Best Mentor</h1>
       <Search />
-      {/* <Filter /> */}
+      <Filter filter={filter} setFilter={setFilter} />
       <MentorList mentors={mentorsList} />
       <Pagination>
         <PaginationContent>
