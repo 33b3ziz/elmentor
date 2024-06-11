@@ -3,13 +3,21 @@ import { Outlet } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 
 const Layout = () => {
-  return (
-    <main className="p-4">
-      <Navbar />
-      <Outlet />
-      <Footer />
-    </main>
-  );
+	if (!location.pathname.startsWith("/chats")) {
+		return (
+			<main className="p-4">
+				<Navbar />
+				<Outlet />
+				<Footer />
+			</main>
+		);
+	} else {
+		return (
+			<main className="">
+				<Outlet />
+			</main>
+		);
+	}
 };
 
 export default Layout;

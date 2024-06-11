@@ -1,10 +1,10 @@
 import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  FormControl,
+	Form,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+	FormControl,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaLinkedin } from "react-icons/fa";
@@ -20,12 +20,13 @@ import { Label } from "@/components/ui/label";
 // import { login } from "@/services/apiAuth";
 
 const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8).max(50),
-  remember: z.boolean().optional(),
+	email: z.string().email(),
+	password: z.string().min(8).max(50),
+	remember: z.boolean().optional(),
 });
 
 const LoginForm = () => {
+
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -53,105 +54,100 @@ const LoginForm = () => {
     return data;
   }
 
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-3 basis-full sm:basis-1/4 "
-      >
-        <h2 className="text-center font-bold">Welcome Back !</h2>
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter your email"
-                  {...field}
-                  type="email"
-                  className="px-4 py-6"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="*********"
-                  {...field}
-                  type="password"
-                  className="px-4 py-6"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="remember"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem className="flex items-center justify-between">
-              <div className="flex items-center justify-start gap-2">
-                <Checkbox
-                  id={field.name}
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-                <Label htmlFor={field.name} className="font-medium">
-                  Remember me
-                </Label>
-              </div>
-              <Link
-                to="/forget-password"
-                className="text-primary hover:text-primary/90 -translate-y-[0.3rem] font-medium"
-              >
-                Forget password ?
-              </Link>
-            </FormItem>
-          )}
-        />
-        <Button type="submit" size="lg" className="w-full bg-primary">
-          Login
-        </Button>
-        <Separator />
-        <div className="flex gap-6 items-center translate-y-6">
-          <Button
-            size="lg"
-            className="bg-background text-primary hover:text-white border border-primary flex basis-1/2 items-center justify-center"
-          >
-            <FcGoogle size={20} className="mr-2" />
-            Google
-          </Button>
-          <Button
-            size="lg"
-            className="bg-background text-primary hover:text-white border border-primary flex basis-1/2 items-center justify-center"
-          >
-            <FaLinkedin size={20} className="mr-2" />
-            LinkedIn
-          </Button>
-        </div>
-        <p className="translate-y-6 flex justify-center items-center gap-2">
-          Don’t have an account ?{" "}
-          <Link
-            className="text-primary hover:text-primary/90 text-sm font-bold"
-            to="/sign-up"
-          >
-            sign up
-          </Link>
-        </p>
-      </form>
-    </Form>
-  );
+	return (
+		<Form {...form}>
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className="space-y-3 basis-full sm:basis-1/4 ">
+				<h2 className="text-center font-bold">Welcome Back !</h2>
+				<FormField
+					control={form.control}
+					name="email"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Email</FormLabel>
+							<FormControl>
+								<Input
+									placeholder="Enter your email"
+									{...field}
+									type="email"
+									className="px-4 py-6"
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="password"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Password</FormLabel>
+							<FormControl>
+								<Input
+									placeholder="*********"
+									{...field}
+									type="password"
+									className="px-4 py-6"
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					name="remember"
+					control={form.control}
+					render={({ field }) => (
+						<FormItem className="flex items-center justify-between">
+							<div className="flex items-center justify-start gap-2">
+								<Checkbox
+									id={field.name}
+									checked={field.value}
+									onCheckedChange={field.onChange}
+								/>
+								<Label htmlFor={field.name} className="font-medium">
+									Remember me
+								</Label>
+							</div>
+							<Link
+								to="/forget-password"
+								className="text-primary hover:text-primary/90 -translate-y-[0.3rem] font-medium">
+								Forget password ?
+							</Link>
+						</FormItem>
+					)}
+				/>
+				<Button type="submit" size="lg" className="w-full bg-primary">
+					Login
+				</Button>
+				<Separator />
+				<div className="flex gap-6 items-center translate-y-6">
+					<Button
+						size="lg"
+						className="bg-background text-primary hover:text-white border border-primary flex basis-1/2 items-center justify-center">
+						<FcGoogle size={20} className="mr-2" />
+						Google
+					</Button>
+					<Button
+						size="lg"
+						className="bg-background text-primary hover:text-white border border-primary flex basis-1/2 items-center justify-center">
+						<FaLinkedin size={20} className="mr-2" />
+						LinkedIn
+					</Button>
+				</div>
+				<p className="translate-y-6 flex justify-center items-center gap-2">
+					Don’t have an account ?{" "}
+					<Link
+						className="text-primary hover:text-primary/90 text-sm font-bold"
+						to="/sign-up">
+						sign up
+					</Link>
+				</p>
+			</form>
+		</Form>
+	);
 };
 
 export default LoginForm;
