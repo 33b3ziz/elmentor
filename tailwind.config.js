@@ -23,6 +23,20 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        chat: {
+          DEFAULT: "hsl(var( --chat-background-secondary))",
+        },
+        messageSkeletonMain: {
+          DEFAULT: "hsl(var( --message-skeleton-main))",
+          foreground: "hsl(var( --message-skeleton-main-foreground))",
+        },
+        messageSkeletonSecondary: {
+          DEFAULT: "hsl(var( --message-skeleton-secondary))",
+          foreground: "hsl(var( --message-skeleton-secondary-foreground))",
+        },
+        message: {
+          DEFAULT: "hsl(var(--message))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -66,10 +80,15 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "errorMessage-down": {
+          "0%": { transform: "translate(-50%,0rem)" },
+          "100%": { transform: "translate(-50%,4remx)" },
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "errorMessage-down": "errorMessage-down 0.5s ease-in-out",
       },
     },
   },
