@@ -25,6 +25,7 @@ const TopMentorsSection = () => {
       <div className="flex flex-wrap justify-center gap-6 mt-16 ">
         {landingMentors.map((mentor) => (
           <MentorCard
+            mentorId={mentor._id}
             key={mentor.name}
             mentorName={mentor.name}
             mentorImg={mentor.image}

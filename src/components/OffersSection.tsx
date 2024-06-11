@@ -6,7 +6,7 @@ const OffersSection = () => {
   const { theme } = useTheme();
 
   return (
-    <section className="pt-40 pb-20 text-center md:text-start">
+    <section id="services" className="pt-40 pb-20 text-center md:text-start">
       <p
         className={`uppercase mb-4 ${
           theme === "dark" ? "text-primary" : "text-[#608DC4]"
