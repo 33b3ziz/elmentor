@@ -12,7 +12,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as z from "zod";
 import Separator from "@/components/Separator";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -26,30 +26,33 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
-		defaultValues: {
-			email: "",
-			password: "",
-		},
-	});
 
-	async function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		console.log(values);
-		const res = await fetch("https://radwan.up.railway.app/login", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(values),
-			credentials: "include",
-		});
-		const data = await res.json();
-		console.log(data);
-		return data;
-	}
+  const navigate = useNavigate();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const res = await fetch("https://radwan.up.railway.app/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(values),
+    });
+    const data = await res.json();
+    localStorage.setItem("user", JSON.stringify(data.user));
+    if (res.ok) {
+      navigate("/");
+    }
+    return data;
+  }
 
 	return (
 		<Form {...form}>
