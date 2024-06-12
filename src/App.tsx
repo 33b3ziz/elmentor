@@ -24,6 +24,8 @@ import SignupProvider from "./contexts/SignupContext";
 
 import StudentNotifications from "./pages/StudentNotifications";
 import Chats from "./pages/Chats";
+import Meeting from "./pages/Meeting";
+
 import MentorNotifications from "./pages/MentorNotifications";
 import { socket } from "./socket";
 import EditMentorProfile from "./components/EditMentorProfile";
@@ -110,6 +112,7 @@ const App = () => {
 											path="chats/:id"
 											element={<Chats isConnected={isConnected} />}
 										/>
+										<Route path="meeting/:id" element={<Meeting />} />
 										<Route path="chatTest" element={<ChatTest />} />
 										<Route
 											path="testchat"
