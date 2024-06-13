@@ -19,6 +19,8 @@ import SignupProvider from "./contexts/SignupContext";
 
 import StudentNotifications from "./pages/StudentNotifications";
 import Chats from "./pages/Chats";
+import Meeting from "./pages/Meeting";
+
 import MentorNotifications from "./pages/MentorNotifications";
 import { socket } from "./socket";
 import EditMentorProfile from "./components/EditMentorProfile";
