@@ -51,3 +51,26 @@ export async function getMentoringMentors() {
     throw error;
   }
 }
+
+export async function getMentorAvailablity(values) {
+  try {
+    console.log(values);
+    const response = await fetch(
+      `https://ali.up.railway.app/api/v1/availability/check`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch mentor's time slots");
+    }
+    const data = await response.json();
+    return data.dta;
+  } catch (error) {
+    console.error("Error fetching mentor's time slots:", error);
+    throw error;
+  }
+}

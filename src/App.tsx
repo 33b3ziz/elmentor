@@ -1,14 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { SetStateAction, Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import { Toaster } from "react-hot-toast";
 import Layout from "./components/Layout";
 import Mentor from "./pages/Mentor";
 import Dashboard from "./pages/Dashboard";
 import Payment from "./pages/Payment";
-import SelectAvailable from "./pages/SelectAvailable";
+import SelectTimeAvailable from "./pages/SelectTimeAvailable";
 import MentorSignup from "./pages/MentorSignup";
 import StudentProfile from "./pages/StudentProfile";
 import MentorProfile from "./pages/MentorProfile";
@@ -25,6 +25,8 @@ import EditMentorProfile from "./components/EditMentorProfile";
 import TestChat from "./components/realtime/TestChat";
 import ChatTest from "./pages/ChatTest";
 import { SmallScreenProvider } from "./contexts/SmallScreenContext";
+import SelectDate from "./pages/SelectDate";
+import BookingsMentorProvider from "./contexts/BookingsMentorContext";
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const Login = lazy(() => import("./pages/Login"));
 const SignUp = lazy(() => import("./pages/SignUp"));
@@ -80,97 +82,110 @@ const App = () => {
         <ReactQueryDevtools initialIsOpen={false} />
         <SignupProvider>
           <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-            <BrowserRouter>
-              <SmallScreenProvider>
-                <Routes>
-                  <Route element={<Layout />}>
-                    <Route
-                      path="mentor/:id"
-                      element={<Mentor messageEvent={messageEvent} />}
-                    />
-                    <Route index path="/" element={<LandingPage />} />
-                    <Route path="contact" element={<Contact />} />
-                    <Route path="home" element={<Homepage />} />
-                    <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="payment" element={<Payment />} />
-                    <Route path="studentprofile" element={<StudentProfile />} />
-                    <Route
-                      path="testchat"
-                      element={
-                        <TestChat
-                          isConnected={isConnected}
-                          messageEvent={messageEvent}
-                        />
-                      }
-                    />
-                    <Route
-                      path="mentorprofile"
-                      element={<MentorProfile _id="65dd99b0e731f3477cb5bcb4" />}
-                    />
+            <BookingsMentorProvider>
+              <BrowserRouter>
+                <SmallScreenProvider>
+                  <Routes>
+                    <Route element={<Layout />}>
+                      <Route
+                        path="mentor/:id"
+                        element={<Mentor messageEvent={messageEvent} />}
+                      />
+                      <Route index path="/" element={<LandingPage />} />
+                      <Route path="contact" element={<Contact />} />
+                      <Route path="home" element={<Homepage />} />
+                      <Route path="dashboard" element={<Dashboard />} />
+                      <Route path="payment" element={<Payment />} />
+                      <Route
+                        path="studentprofile"
+                        element={<StudentProfile />}
+                      />
+                      <Route
+                        path="testchat"
+                        element={
+                          <TestChat
+                            isConnected={isConnected}
+                            messageEvent={messageEvent}
+                          />
+                        }
+                      />
+                      <Route
+                        path="mentorprofile"
+                        element={
+                          <MentorProfile _id="65dd99b0e731f3477cb5bcb4" />
+                        }
+                      />
 
-                    <Route
-                      path="chats"
-                      element={<Chats isConnected={isConnected} />}
-                    />
-                    <Route
-                      path="chats/:id"
-                      element={<Chats isConnected={isConnected} />}
-                    />
-                    <Route path="chatTest" element={<ChatTest />} />
-                    <Route
-                      path="testchat"
-                      element={
-                        <TestChat
-                          isConnected={isConnected}
-                          messageEvent={messageEvent}
-                        />
-                      }
-                    />
-                    <Route
-                      path="mentorprofile"
-                      element={<MentorProfile _id="65dd99b0e731f3477cb5bcb4" />}
-                    />
+                      <Route
+                        path="chats"
+                        element={<Chats isConnected={isConnected} />}
+                      />
+                      <Route
+                        path="chats/:id"
+                        element={<Chats isConnected={isConnected} />}
+                      />
+                      <Route path="chatTest" element={<ChatTest />} />
+                      <Route
+                        path="testchat"
+                        element={
+                          <TestChat
+                            isConnected={isConnected}
+                            messageEvent={messageEvent}
+                          />
+                        }
+                      />
+                      <Route
+                        path="mentorprofile"
+                        element={
+                          <MentorProfile _id="65dd99b0e731f3477cb5bcb4" />
+                        }
+                      />
 
+                      <Route
+                        path="selectavailable"
+                        element={<SelectTimeAvailable />}
+                      />
+                      <Route
+                        path="studentnotifications"
+                        element={<StudentNotifications />}
+                      />
+                      <Route
+                        path="mentornotifications"
+                        element={<MentorNotifications />}
+                      />
+                      <Route path="selectdate" element={<SelectDate />} />
+                    </Route>
+                    <Route path="login" element={<Login />} />
+                    <Route path="sign-up" element={<SignUp />} />
+                    <Route path="sign-up/mentor" element={<MentorSignup />} />
                     <Route
-                      path="selectavailable"
-                      element={<SelectAvailable />}
+                      path="forget-password"
+                      element={<ForgetPassword />}
                     />
-                    <Route
-                      path="studentnotifications"
-                      element={<StudentNotifications />}
-                    />
-                    <Route
-                      path="mentornotifications"
-                      element={<MentorNotifications />}
-                    />
-                  </Route>
-                  <Route path="login" element={<Login />} />
-                  <Route path="sign-up" element={<SignUp />} />
-                  <Route path="sign-up/mentor" element={<MentorSignup />} />
-                  <Route path="forget-password" element={<ForgetPassword />} />
-                </Routes>
-              </SmallScreenProvider>
-            </BrowserRouter>
-            <Toaster
-              position="top-center"
-              gutter={12}
-              containerStyle={{ margin: "8px" }}
-              toastOptions={{
-                success: {
-                  duration: 3000,
-                },
-                error: {
-                  duration: 5000,
-                },
-                style: {
-                  fontSize: "16px",
-                  maxWidth: "500px",
-                  padding: "16px 24px",
-                  backgroundColor: "white",
-                  color: "black",
-                },
-              }}
-            />
+                  </Routes>
+                </SmallScreenProvider>
+              </BrowserRouter>
+              <Toaster
+                position="top-center"
+                gutter={12}
+                containerStyle={{ margin: "8px" }}
+                toastOptions={{
+                  success: {
+                    duration: 3000,
+                  },
+                  error: {
+                    duration: 5000,
+                  },
+                  style: {
+                    fontSize: "16px",
+                    maxWidth: "500px",
+                    padding: "16px 24px",
+                    backgroundColor: "white",
+                    color: "black",
+                  },
+                }}
+              />
+            </BookingsMentorProvider>
           </ThemeProvider>
         </SignupProvider>
       </QueryClientProvider>
