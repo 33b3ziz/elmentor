@@ -3,7 +3,10 @@ import { Outlet } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 
 const Layout = () => {
-	if (!location.pathname.startsWith("/chats")) {
+	if (
+		!location.pathname.startsWith("/chats") &&
+		!location.pathname.startsWith("/meeting")
+	) {
 		return (
 			<main className="p-4">
 				<Navbar />
