@@ -49,13 +49,13 @@ const LoginForm = () => {
         body: JSON.stringify(values),
       });
       const data = await res.json();
-      localStorage.setItem("user", JSON.stringify(data.user));
 
       return data;
     },
     onSuccess: (data) => {
       console.log(data);
       toast.success("Logged in successfully");
+      localStorage.setItem("user", JSON.stringify(data.user));
 
       navigate("/home");
     },

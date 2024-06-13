@@ -33,7 +33,7 @@ type Mentor = {
   };
 };
 
-const Mentor = ({ messageEvent }: { messageEvent: [] }) => {
+const Mentor = () => {
   const { id } = useParams();
 
   const { data: mentors, isLoading: isLoadingMentors } = useQuery({

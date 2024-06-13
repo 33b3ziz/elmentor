@@ -82,9 +82,11 @@ const formSchema = z.object({
     .string()
     .min(8, { message: "password must be at least 3 characters" })
     .max(50, { message: "password is too long!" }),
-  tracks: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: "You have to select at least one item.",
-  }),
+  specialization: z
+    .array(z.string())
+    .refine((value) => value.some((item) => item), {
+      message: "You have to select at least one item.",
+    }),
   levels: z.enum(["entry", "beginner", "intermediate", "professional"], {
     required_error: "You have to select one level.",
   }),
@@ -101,7 +103,7 @@ const SignUpForm = () => {
       email: "",
       password: "",
       confirmPassword: "",
-      tracks: [],
+      specialization: [],
       levels: "entry",
       role: "student",
     },
@@ -125,6 +127,7 @@ const SignUpForm = () => {
     onSuccess: (data) => {
       console.log(data);
       toast.success("Account created successfully");
+      navigate("/login");
     },
     onError: (error) => {
       console.error(error);
@@ -150,7 +153,7 @@ const SignUpForm = () => {
     //   });
     if (form.getValues("role") === "student") {
       signup(values);
-      navigate("/login");
+      // navigate("/login");
       return;
     } else {
       console.log(values);
@@ -247,8 +250,8 @@ const SignUpForm = () => {
               variant="outline"
               className="w-full flex justify-start text-[#79859a] font-normal px-4 py-6"
             >
-              {form.getValues("tracks").length
-                ? form.getValues("tracks").join(", ")
+              {form.getValues("specialization").length
+                ? form.getValues("specialization").join(", ")
                 : "Enter your track"}
             </Button>
           </DialogTrigger>
@@ -262,14 +265,14 @@ const SignUpForm = () => {
             <div className="grid  py-4">
               <FormField
                 control={form.control}
-                name="tracks"
+                name="specialization"
                 render={() => (
                   <FormItem>
                     {tracks.map((track) => (
                       <FormField
                         key={track.id}
                         control={form.control}
-                        name="tracks"
+                        name="specialization"
                         render={({ field }) => (
                           <FormItem key={track.id}>
                             <div className="grid grid-cols-4 items-center gap-4 p-3 border-b">

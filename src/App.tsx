@@ -121,14 +121,6 @@ const App = () => {
                           }
                         />
 
-                        <Route
-                          path="chats"
-                          element={<Chats isConnected={isConnected} />}
-                        />
-                        <Route
-                          path="chats/:id"
-                          element={<Chats isConnected={isConnected} />}
-                        />
                         <Route path="meeting/:id" element={<Meeting />} />
                         <Route path="chatTest" element={<ChatTest />} />
                         <Route
@@ -173,6 +165,16 @@ const App = () => {
                       path="forget-password"
                       element={<ForgetPassword />}
                     />
+                    <Route element={<ProtectedRoutes />}>
+                      <Route
+                        path="chats"
+                        element={<Chats isConnected={isConnected} />}
+                      />
+                      <Route
+                        path="chats/:id"
+                        element={<Chats isConnected={isConnected} />}
+                      />
+                    </Route>
                   </Routes>
                 </SmallScreenProvider>
               </BrowserRouter>

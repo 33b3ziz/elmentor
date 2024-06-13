@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useBookingsMentor } from "@/contexts/BookingsMentorContext";
 import { useEffect, useState } from "react";
 
 const MentorDescription = ({ mentorId }: { mentorId: string }) => {
+  const navigate = useNavigate();
   const { value, setValue } = useBookingsMentor()!;
   const [menteeId, setMenteeId] = useState();
   useEffect(() => {
@@ -25,10 +26,13 @@ const MentorDescription = ({ mentorId }: { mentorId: string }) => {
         </p>
       </div>
       <div className="my-6">
-        <Button className="mr-5 text-primary bg-white border-2 border-primary hover:text-white">
+        <Button
+          className="mr-5 text-primary bg-white border-2 border-primary hover:text-white"
+          onClick={() => navigate("/chats")}
+        >
           Message
         </Button>
-        <Link to={`/booking/${mentorId}`}>
+        <Link to={`/booking/calendar/${mentorId}`}>
           <Button
             onClick={() => {
               setValue({ ...value, mentorId: mentorId, menteeId: menteeId });
