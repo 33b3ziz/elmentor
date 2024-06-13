@@ -26,6 +26,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useNavigate } from "react-router-dom";
 import { useSignup } from "@/contexts/SignupContext";
 
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+
 const tracks = [
   {
     id: "ui/ux",
@@ -60,6 +63,11 @@ const levels = [
   { id: "professional", label: "Professional" },
 ];
 
+const roles = [
+  { id: "student", label: "Student" },
+  { id: "mentor", label: "Mentor" },
+];
+
 const formSchema = z.object({
   userName: z
     .string()
@@ -80,6 +88,9 @@ const formSchema = z.object({
   levels: z.enum(["entry", "beginner", "intermediate", "professional"], {
     required_error: "You have to select one level.",
   }),
+  role: z.enum(["student", "mentor"], {
+    required_error: "You have to select one role.",
+  }),
 });
 
 const SignUpForm = () => {
@@ -92,11 +103,34 @@ const SignUpForm = () => {
       confirmPassword: "",
       tracks: [],
       levels: "entry",
+      role: "student",
     },
   });
 
   const navigate = useNavigate();
   const { value, setValue } = useSignup()!;
+
+  const { mutate: signup, isPending: isSigningUp } = useMutation({
+    mutationFn: async (values: z.infer<typeof formSchema>) => {
+      const res = await fetch("https://radwan.up.railway.app/student/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      const data = await res.json();
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      toast.success("Account created successfully");
+    },
+    onError: (error) => {
+      console.error(error);
+      toast.error("An error occurred");
+    },
+  });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -114,17 +148,23 @@ const SignUpForm = () => {
     //   .catch((err) => {
     //     console.error(err);
     //   });
-    console.log(values);
-    setValue({ ...value, ...values });
-    console.log(value);
-    navigate("/sign-up/mentor");
+    if (form.getValues("role") === "student") {
+      signup(values);
+      navigate("/login");
+      return;
+    } else {
+      console.log(values);
+      setValue({ ...value, ...values });
+      console.log(value);
+      navigate("/sign-up/mentor");
+    }
   }
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-2 basis-full sm:basis-1/3 relative"
+        className="space-y-1 basis-full sm:basis-1/3 relative"
       >
         <h2 className="text-center font-bold">Create account</h2>
         <FormField
@@ -300,11 +340,13 @@ const SignUpForm = () => {
                           className="flex items-center space-x-2 p-4 border-t"
                           key={level.id}
                         >
-                          <RadioGroupItem
-                            value={level.id}
-                            id={level.id}
-                            checked={field.value?.includes(level.id)}
-                          />
+                          <FormControl>
+                            <RadioGroupItem
+                              value={level.id}
+                              id={level.id}
+                              checked={field.value?.includes(level.id)}
+                            />
+                          </FormControl>
                           <Label htmlFor={level.id} className="cursor-pointer">
                             {level.label}
                           </Label>
@@ -320,14 +362,98 @@ const SignUpForm = () => {
             </DialogClose>
           </DialogContent>
         </Dialog>
+        <Label htmlFor="role" className="relative top-2.5">
+          Your role
+        </Label>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              variant="outline"
+              className="w-full flex justify-start text-[#79859a] font-normal px-4 py-6"
+            >
+              {form.getValues("role")}
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Enter your role</DialogTitle>
+              <DialogDescription>
+                Choose whether you are a mentor or a student.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid py-4">
+              <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem>
+                    <RadioGroup
+                      key={field.name}
+                      defaultValue="student"
+                      className="gap-0"
+                      onValueChange={field.onChange}
+                    >
+                      {roles.map((role) => (
+                        <div
+                          className="flex items-center space-x-2 p-4 border-t"
+                          key={role.id}
+                        >
+                          <FormControl>
+                            <RadioGroupItem
+                              value={role.id}
+                              id={role.id}
+                              checked={field.value?.includes(role.id)}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                          <Label htmlFor={role.id} className="cursor-pointer">
+                            {role.label}
+                          </Label>
+                        </div>
+                      ))}
+                    </RadioGroup>
+                  </FormItem>
+                )}
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
 
         <div className="flex items-center space-x-2">
           <Checkbox id="terms" />
           <Label htmlFor="terms">I Agree to the terms and conditions</Label>
         </div>
-        <Button type="submit" size="lg" className="w-full bg-primary">
+        <Button
+          type="submit"
+          size="lg"
+          className="w-full bg-primary"
+          disabled={isSigningUp}
+        >
           Continue
         </Button>
+        {/* <Dialog>
+          <DialogTrigger asChild>
+            <Button type="submit" size="lg" className="w-full bg-primary">
+              Continue
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Select your role</DialogTitle>
+              <DialogDescription>
+                please choose whether you are a mentor or a student.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="flex justify-end">
+              <Button type="button" onClick={() => setRole("mentor")}>
+                Mentor
+              </Button>
+              <Button type="button" onClick={() => setRole("student")}>
+                Student
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog> */}
       </form>
     </Form>
   );

@@ -52,16 +52,17 @@ export async function getMentoringMentors() {
   }
 }
 
-export async function getMentorAvailablity(values) {
+export async function getMentorAvailablity(mentorId: { mentorId: string }) {
   try {
-    console.log(values);
+    console.log(mentorId);
     const response = await fetch(
       `https://ali.up.railway.app/api/v1/availability/check`,
       {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(mentorId),
       }
     );
     if (!response.ok) {

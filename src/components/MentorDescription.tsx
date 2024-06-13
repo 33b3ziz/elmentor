@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { useBookingsMentor } from "@/contexts/BookingsMentorContext";
 import { useEffect, useState } from "react";
 
-const MentorDescription = ({ mentorId }) => {
+const MentorDescription = ({ mentorId }: { mentorId: string }) => {
   const { value, setValue } = useBookingsMentor()!;
   const [menteeId, setMenteeId] = useState();
   useEffect(() => {
@@ -28,7 +28,7 @@ const MentorDescription = ({ mentorId }) => {
         <Button className="mr-5 text-primary bg-white border-2 border-primary hover:text-white">
           Message
         </Button>
-        <Link to="/selectavailable">
+        <Link to={`/booking/${mentorId}`}>
           <Button
             onClick={() => {
               setValue({ ...value, mentorId: mentorId, menteeId: menteeId });

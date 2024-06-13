@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { socket } from "@/socket";
 import Reviews from "@/components/Reviews";
+import Spinner from "@/components/Spinner";
 // import data from "../display-mentor.json";
 
 interface MentorData {
@@ -35,6 +36,17 @@ type Mentor = {
 const Mentor = ({ messageEvent }: { messageEvent: [] }) => {
   const { id } = useParams();
 
+  const { data: mentors, isLoading: isLoadingMentors } = useQuery({
+    queryKey: ["mentors"],
+    queryFn: async () => {
+      const res = await fetch("https://radwan.up.railway.app/listMentors");
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  console.log(mentors);
+
   const { data, isLoading } = useQuery<Mentor>({
     queryKey: ["mentor", id],
     queryFn: async () => {
@@ -46,8 +58,8 @@ const Mentor = ({ messageEvent }: { messageEvent: [] }) => {
 
   const mentor = data?.mentor;
 
-  if (isLoading) {
-    return <Loader />;
+  if (isLoading || isLoadingMentors) {
+    return <Spinner />;
   }
 
   return (
@@ -73,41 +85,12 @@ const Mentor = ({ messageEvent }: { messageEvent: [] }) => {
       <h2 className="font-bold text-xl md:text-2xl text-primary">
         Suggestions
       </h2>
-      <MentorList mentors={mentors} />
+      <MentorList mentors={mentors?.mentorsData.slice(0, 4)} />
 
       <h2 className="font-bold text-xl md:text-2xl text-primary">Reviews</h2>
       <Reviews mentorId={id} mentorService={mentor?.services} />
     </section>
   );
 };
-const mentors = [
-  {
-    mentorImg: "/src/assets/mentor-1.webp",
-    mentorName: "sara hamdy",
-    mentorTrack: "flutter",
-    MentorRate: "3",
-    mentorExp: "3",
-  },
-  {
-    mentorImg: "/src/assets/mentor-1.webp",
-    mentorName: "sara hamdy",
-    mentorTrack: "flutter",
-    MentorRate: "3",
-    mentorExp: "3",
-  },
-  {
-    mentorImg: "/src/assets/mentor-2.webp",
-    mentorName: "sara hamdy",
-    mentorTrack: "ui/ux",
-    MentorRate: "4.5",
-    mentorExp: "1",
-  },
-  {
-    mentorImg: "/src/assets/mentor-3.webp",
-    mentorName: "sara hamdy",
-    mentorTrack: "frontend",
-    MentorRate: "3.5",
-    mentorExp: "3",
-  },
-];
+
 export default Mentor;

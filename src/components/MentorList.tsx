@@ -4,7 +4,7 @@ const MentorList = ({ mentors }) => {
   return (
     <div className="py-6 mx-auto">
       <div className="flex flex-wrap justify-center gap-4">
-        {mentors.map((mentor, index) => (
+        {mentors?.map((mentor, index) => (
           <MentorCard
             key={index}
             mentorImg={mentor.imageUrl}
