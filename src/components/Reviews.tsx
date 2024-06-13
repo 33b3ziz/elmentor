@@ -154,7 +154,7 @@ const Reviews = ({
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="space-y-2 basis-full sm:basis-1/3 w-[400px] mx-auto relative border p-4 mt-4 rounded-sm"
+          className="space-y-2 basis-full sm:basis-1/3 w-[400px] mx-auto relative border p-4 mt-2 rounded-sm"
         >
           <h2 className="text-center font-bold">Add Review</h2>
           <div>

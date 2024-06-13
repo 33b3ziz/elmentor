@@ -15,11 +15,12 @@ import {
   getMockMentors,
 } from "@/services/apiMentors";
 import { useQuery } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
+
 import { useState } from "react";
 
 import Search from "@/components/Search";
 import Filter from "@/components/Filter";
+import Spinner from "@/components/Spinner";
 
 const Homepage = () => {
   const [filter, setFilter] = useState("all");
@@ -41,7 +42,7 @@ const Homepage = () => {
     },
   });
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Spinner />;
 
   return (
     <section id="home" className="py-12 flex flex-col items-center">
