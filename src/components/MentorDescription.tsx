@@ -1,7 +1,17 @@
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
+import { useBookingsMentor } from "@/contexts/BookingsMentorContext";
+import { useEffect, useState } from "react";
 
-const MentorDescription = () => {
+const MentorDescription = ({ mentorId }) => {
+  const { value, setValue } = useBookingsMentor()!;
+  const [menteeId, setMenteeId] = useState();
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      setMenteeId(JSON.parse(localStorage.getItem("user")!)._id);
+    }
+  }, []);
+
   return (
     <div className="py-4">
       <div>
@@ -19,7 +29,13 @@ const MentorDescription = () => {
           Message
         </Button>
         <Link to="/selectavailable">
-          <Button className="mr-5 text-primary bg-white border-2 border-primary hover:text-white">
+          <Button
+            onClick={() => {
+              setValue({ ...value, mentorId: mentorId, menteeId: menteeId });
+              console.log(value);
+            }}
+            className="mr-5 text-primary bg-white border-2 border-primary hover:text-white"
+          >
             Book a session
           </Button>
         </Link>
