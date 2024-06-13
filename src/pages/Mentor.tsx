@@ -46,8 +46,6 @@ const Mentor = ({ messageEvent }: { messageEvent: [] }) => {
 
   const mentor = data?.mentor;
 
-  console.log(mentor);
-
   if (isLoading) {
     return <Loader />;
   }
@@ -70,15 +68,15 @@ const Mentor = ({ messageEvent }: { messageEvent: [] }) => {
           className="absolute -z-10 w-full h-96 object-cover"
         />
       </div>
-      {mentor && <MentorCounter />}
-      <MentorDescription />
+      {mentor && <MentorCounter linkedIn={mentor.linkedin} />}
+      <MentorDescription mentorId={mentor?._id} />
       <h2 className="font-bold text-xl md:text-2xl text-primary">
         Suggestions
       </h2>
       <MentorList mentors={mentors} />
 
       <h2 className="font-bold text-xl md:text-2xl text-primary">Reviews</h2>
-      <Reviews mentorId={id} />
+      <Reviews mentorId={id} mentorService={mentor?.services} />
     </section>
   );
 };

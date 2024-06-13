@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { AiFillLinkedin } from "react-icons/ai";
 
-const MentorCounter: React.FC = () => {
+const MentorCounter: React.FC = ({ linkedIn }) => {
   return (
     <div className="flex justify-center">
       <div className="flex border-2 text-center rounded-lg">
@@ -18,8 +18,9 @@ const MentorCounter: React.FC = () => {
           <p className="font-bold">Active student</p>
         </div>
       </div>
-      <Link
-        to="https://linkedin.com"
+      <a
+        href={`${linkedIn}`}
+        target="_blank"
         className="flex justify-center items-center pl-10 "
       >
         <AiFillLinkedin
@@ -27,7 +28,7 @@ const MentorCounter: React.FC = () => {
           color="#0A66C2"
           style={{ borderRadius: 50 }}
         />
-      </Link>
+      </a>
     </div>
   );
 };
