@@ -155,12 +155,12 @@ const Navbar = () => {
             </li>
           </ul> */}
           <div className="flex items-center">
-            <Link to="login">
+            <Link to="/login">
               <Button className="bg-white text-primary border border-primary hover:text-white">
                 Login
               </Button>
             </Link>
-            <Link to="sign-up">
+            <Link to="/sign-up">
               <Button className="mx-2 md:mx-4">Sign up</Button>
             </Link>
 
