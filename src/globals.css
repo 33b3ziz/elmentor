@@ -12,6 +12,10 @@
   width: 12px;
 }
 
+* {
+  scroll-behavior: smooth;
+}
+
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--primary));
 }

@@ -1,7 +1,7 @@
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Suspense, lazy, useEffect, useState } from "react";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import { Toaster } from "react-hot-toast";
 import Layout from "./components/Layout";
@@ -29,6 +29,8 @@ import ChatTest from "./pages/ChatTest";
 import { SmallScreenProvider } from "./contexts/SmallScreenContext";
 import SelectDate from "./pages/SelectDate";
 import BookingsMentorProvider from "./contexts/BookingsMentorContext";
+import ProtectedRoutes from "./pages/ProtectedRoutes";
+import CalendarPage from "./pages/Calendar";
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const Login = lazy(() => import("./pages/Login"));
 const SignUp = lazy(() => import("./pages/SignUp"));
@@ -89,81 +91,67 @@ const App = () => {
                 <SmallScreenProvider>
                   <Routes>
                     <Route element={<Layout />}>
-                      <Route
-                        path="mentor/:id"
-                        element={<Mentor messageEvent={messageEvent} />}
-                      />
                       <Route index path="/" element={<LandingPage />} />
-                      <Route path="contact" element={<Contact />} />
-                      <Route path="home" element={<Homepage />} />
-                      <Route path="dashboard" element={<Dashboard />} />
-                      <Route path="payment" element={<Payment />} />
+                      <Route element={<ProtectedRoutes />}>
+                        <Route
+                          path="mentor/:id"
+                          element={<Mentor messageEvent={messageEvent} />}
+                        />
+                        <Route path="contact" element={<Contact />} />
+                        <Route path="home" element={<Homepage />} />
+                        <Route path="dashboard" element={<Dashboard />} />
+                        <Route path="payment" element={<Payment />} />
+                        <Route
+                          path="studentprofile"
+                          element={<StudentProfile />}
+                        />
+                        <Route
+                          path="testchat"
+                          element={
+                            <TestChat
+                              isConnected={isConnected}
+                              messageEvent={messageEvent}
+                            />
+                          }
+                        />
+                        <Route
+                          path="mentorprofile"
+                          element={
+                            <MentorProfile _id="65dd99b0e731f3477cb5bcb4" />
+                          }
+                        />
+                        <Route path="meeting/:id" element={<Meeting />} />
+                        <Route path="chatTest" element={<ChatTest />} />
+                        <Route
+                          path="selectavailable"
+                          element={<SelectTimeAvailable />}
+                        />
+                        <Route
+                          path="studentnotifications"
+                          element={<StudentNotifications />}
+                        />
+                        <Route
+                          path="mentornotifications"
+                          element={<MentorNotifications />}
+                        />
+                        <Route path="selectdate" element={<SelectDate />} />
+                        <Route
+                          path="chats"
+                          element={<Chats isConnected={isConnected} />}
+                        />
+                        <Route
+                          path="chats/:id"
+                          element={<Chats isConnected={isConnected} />}
+                        />
+                      </Route>
+                      <Route path="login" element={<Login />} />
+                      <Route path="sign-up" element={<SignUp />} />
+                      <Route path="sign-up/mentor" element={<MentorSignup />} />
                       <Route
-                        path="studentprofile"
-                        element={<StudentProfile />}
+                        path="forget-password"
+                        element={<ForgetPassword />}
                       />
-                      <Route
-                        path="testchat"
-                        element={
-                          <TestChat
-                            isConnected={isConnected}
-                            messageEvent={messageEvent}
-                          />
-                        }
-                      />
-                      <Route
-                        path="mentorprofile"
-                        element={
-                          <MentorProfile _id="65dd99b0e731f3477cb5bcb4" />
-                        }
-                      />
-
-                      <Route
-                        path="chats"
-                        element={<Chats isConnected={isConnected} />}
-                      />
-                      <Route
-                        path="chats/:id"
-                        element={<Chats isConnected={isConnected} />}
-                      />
-                      <Route path="chatTest" element={<ChatTest />} />
-                      <Route
-                        path="testchat"
-                        element={
-                          <TestChat
-                            isConnected={isConnected}
-                            messageEvent={messageEvent}
-                          />
-                        }
-                      />
-                      <Route
-                        path="mentorprofile"
-                        element={
-                          <MentorProfile _id="65dd99b0e731f3477cb5bcb4" />
-                        }
-                      />
-
-                      <Route
-                        path="selectavailable"
-                        element={<SelectTimeAvailable />}
-                      />
-                      <Route
-                        path="studentnotifications"
-                        element={<StudentNotifications />}
-                      />
-                      <Route
-                        path="mentornotifications"
-                        element={<MentorNotifications />}
-                      />
-                      <Route path="selectdate" element={<SelectDate />} />
                     </Route>
-                    <Route path="login" element={<Login />} />
-                    <Route path="sign-up" element={<SignUp />} />
-                    <Route path="sign-up/mentor" element={<MentorSignup />} />
-                    <Route
-                      path="forget-password"
-                      element={<ForgetPassword />}
-                    />
                   </Routes>
                 </SmallScreenProvider>
               </BrowserRouter>
