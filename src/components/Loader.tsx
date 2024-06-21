@@ -5,7 +5,7 @@ const Loader = () => {
 
   return (
     <div
-      className={`w-screen h-screen flex justify-center items-center ${
+      className={`h-screen flex justify-center items-center ${
         window.matchMedia("(prefers-color-scheme: dark)") && theme === "dark"
           ? "bg-black"
           : "bg-white"
