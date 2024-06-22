@@ -17,7 +17,7 @@ const SelectTimeAvailable = () => {
         `https://radwan.up.railway.app/listMentor/${mentorId}`
       );
       const data = await res.json();
-      return data;
+      return data.mentor;
     },
   });
 
@@ -83,11 +83,9 @@ const SelectTimeAvailable = () => {
               </Avatar>
               <div>
                 <h2 className="font-bold text-primary text-xl">
-                  {mentor?.mentor.userName}
+                  {mentor.userName}
                 </h2>
-                <span className="text-gray-500">
-                  {mentor?.mentor.specialization}
-                </span>
+                <span className="text-gray-500">{mentor.specialization}</span>
               </div>
             </div>
             <div className="flex flex-col">
@@ -98,7 +96,7 @@ const SelectTimeAvailable = () => {
               <h2 className="font-bold text-primary text-xl">30 minutes</h2>
               <p className="mt-8 text-gray-500">About</p>
               <h2 className="font-bold text-primary text-xl">
-                {mentor?.mentor.services}
+                {mentor.services}
               </h2>
             </div>
           </div>
@@ -152,7 +150,7 @@ const SelectTimeAvailable = () => {
               <Button
                 className="w-full mt-4"
                 onClick={() => {
-                  navigate(`/booking/timeslots/${mentorId}`);
+                  onSubmit();
                 }}
               >
                 Pay
