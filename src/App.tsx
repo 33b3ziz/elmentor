@@ -144,6 +144,16 @@ const App = () => {
                           element={<Chats isConnected={isConnected} />}
                         />
                       </Route>
+                      <Route path="booking">
+                        <Route
+                          path="calendar/:id"
+                          element={<CalendarPage />}
+                        ></Route>
+                        <Route
+                          path="timeslots/:id"
+                          element={<SelectTimeAvailable />}
+                        ></Route>
+                      </Route>
                       <Route path="login" element={<Login />} />
                       <Route path="sign-up" element={<SignUp />} />
                       <Route path="sign-up/mentor" element={<MentorSignup />} />
