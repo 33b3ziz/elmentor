@@ -148,7 +148,7 @@ const App = () => {
                           element={<CalendarPage />}
                         ></Route>
                         <Route
-                          path="timeslots/:id"
+                          path=":id/timeslots/:day"
                           element={<SelectTimeAvailable />}
                         ></Route>
                       </Route>

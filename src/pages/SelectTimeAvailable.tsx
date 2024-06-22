@@ -3,87 +3,98 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useBookingsMentor } from "@/contexts/BookingsMentorContext";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 const SelectTimeAvailable = () => {
   const [selected, setSelected] = useState("");
+  const [freeSlots, setFreeSlots] = useState([]);
+
   const navigate = useNavigate();
   const { value, setValue } = useBookingsMentor()!;
-  const mentorId = useParams().id;
+  const mentorID = useParams().id;
+  const day = useParams().day;
   const { data: mentor, isLoading: isLoadingMentor } = useQuery({
-    queryKey: ["mentor", mentorId],
+    queryKey: ["mentor", mentorID],
     queryFn: async () => {
       const res = await fetch(
-        `https://radwan.up.railway.app/listMentor/${mentorId}`
+        `https://radwan.up.railway.app/listMentor/${mentorID}`
       );
       const data = await res.json();
       return data.mentor;
     },
   });
-  console.log(mentor);
 
   const { data: mentorAvailability } = useQuery({
-    queryKey: ["mentorAvailability", mentorId],
+    queryKey: ["mentorAvailability", mentorID],
     queryFn: async () => {
       const res = await fetch(
         `https://ali.up.railway.app/api/v1/availability/check`,
         {
           method: "POST",
-          body: JSON.stringify({ mentorId }),
+          body: JSON.stringify({ mentorID: "ali-zaki-id" }),
           headers: {
-            ContentType: "application/json",
-            credentials: "include",
+            "Content-type": "application/json",
           },
+          credentials: "include",
         }
       );
       const data = await res.json();
-      return data;
+      return data.data;
     },
   });
 
+  useEffect(() => {
+    if (mentorAvailability) {
+      const slotsForDay = mentorAvailability.availableDates.find(
+        (el) => el.date === day
+      );
+      if (slotsForDay) {
+        setFreeSlots(slotsForDay.freeSlots);
+      }
+    }
+  }, [mentorAvailability, day]);
+
   const handleRadio = (e) => {
     setSelected(e.target.value);
-    console.log(e.target.value);
-    console.log(value);
     const user = JSON.parse(localStorage.getItem("user")!);
-    console.log(user);
     setValue({
-      ...value,
+      day: day,
       timeSlot: e.target.value,
       mentorEmail: mentor.email,
-      mentorID: mentorId,
+      mentorID: "ali-zaki-id",
       menteeID: user._id,
       menteeEmail: user.email,
     });
   };
   async function onSubmit() {
-    console.log(value);
     try {
       const res = await fetch(
         `https://ali.up.railway.app/api/v1/bookings/paymob-session`,
         {
           method: "POST",
-          body: JSON.stringify({ value }),
+          body: JSON.stringify(value),
           headers: {
-            ContentType: "application/json",
-            credentials: "include",
+            "Content-type": "application/json",
           },
+          credentials: "include",
         }
       );
       const data = await res.json();
-      console.log(data);
+      if (res.ok) {
+        navigate("/payment");
+      }
+
       return data;
     } catch (error) {
       console.log(error);
     }
   }
   const timeSlots = ["10:30", "11:45", "16:10"];
-  console.log(mentorAvailability);
+
   if (isLoadingMentor) {
     return <Loader />;
   }
-  const day = value.day ? value.day : "2024-2-5";
-  console.log(day);
+
   return (
     <>
       <section className="h- flex flex-col justify-center items-center">
@@ -128,7 +139,7 @@ const SelectTimeAvailable = () => {
                   <p className="mt-[4px] text-gray-400">{day}</p>
                   <div className="flex flex-row justify-center pt-1">
                     <a
-                      href={`/booking/calendar/${mentorId}`}
+                      href={`/booking/calendar/${mentorID}`}
                       className=" text-blue-600 font-normal"
                     >
                       Change
@@ -137,7 +148,7 @@ const SelectTimeAvailable = () => {
                 </div>
                 <h2>Selecte available time</h2>
                 <div className="flex justify-start items-center w-[98%] gap-2 pb-8">
-                  {timeSlots.map((el, index) => {
+                  {freeSlots.map((el, index) => {
                     const isCurrent = selected === el;
 
                     return (
