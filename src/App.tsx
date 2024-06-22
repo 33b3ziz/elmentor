@@ -23,11 +23,10 @@ import Meeting from "./pages/Meeting";
 
 import MentorNotifications from "./pages/MentorNotifications";
 import { socket } from "./socket";
-import EditMentorProfile from "./components/EditMentorProfile";
+// import EditMentorProfile from "./components/EditMentorProfile";
 import TestChat from "./components/realtime/TestChat";
 import ChatTest from "./pages/ChatTest";
 import { SmallScreenProvider } from "./contexts/SmallScreenContext";
-import SelectDate from "./pages/SelectDate";
 import BookingsMentorProvider from "./contexts/BookingsMentorContext";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
 import CalendarPage from "./pages/Calendar";
@@ -134,7 +133,6 @@ const App = () => {
                           path="mentornotifications"
                           element={<MentorNotifications />}
                         />
-                        <Route path="selectdate" element={<SelectDate />} />
                         <Route
                           path="chats"
                           element={<Chats isConnected={isConnected} />}

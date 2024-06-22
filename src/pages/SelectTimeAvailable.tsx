@@ -20,6 +20,7 @@ const SelectTimeAvailable = () => {
       return data.mentor;
     },
   });
+  console.log(mentor);
 
   const { data: mentorAvailability } = useQuery({
     queryKey: ["mentorAvailability", mentorId],
@@ -55,8 +56,26 @@ const SelectTimeAvailable = () => {
       menteeEmail: user.email,
     });
   };
-  function onSubmit() {
+  async function onSubmit() {
     console.log(value);
+    try {
+      const res = await fetch(
+        `https://ali.up.railway.app/api/v1/bookings/paymob-session`,
+        {
+          method: "POST",
+          body: JSON.stringify({ value }),
+          headers: {
+            ContentType: "application/json",
+            credentials: "include",
+          },
+        }
+      );
+      const data = await res.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
   const timeSlots = ["10:30", "11:45", "16:10"];
   console.log(mentorAvailability);
