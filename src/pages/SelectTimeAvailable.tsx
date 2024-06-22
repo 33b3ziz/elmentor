@@ -6,26 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 const SelectTimeAvailable = () => {
-  // const [timeSlots, setTimeSlots] = useState();
-  // const { value, setValue } = useBookingsMentor()!;
-  // const { mentorId } = useParams();
-  // const ref = useRef();
-  // console.log(value);
-
-  // const form = useForm<z.infer<typeof timeSlotsSchema>>({
-  //   resolver: zodResolver(timeSlotsSchema),
-  // });
-
-  // useEffect(() => {
-  //   if (value) {
-  //     if (value.mentorId) {
-  //       setTimeSlots(getMentorAvailablity(mentorId));
-  //     }
-  //     console.log(value.mentorId);
-  //     console.log(timeSlots);
-  //   }
-  // }, []);
-
   const [selected, setSelected] = useState("");
   const navigate = useNavigate();
   const { value, setValue } = useBookingsMentor()!;
