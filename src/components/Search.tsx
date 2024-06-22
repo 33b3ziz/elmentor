@@ -22,16 +22,23 @@ const formSchema = z.object({
   levelOfExperience: z.string().min(1),
 });
 
-const yearsExp = ["1-3", "3-7", "7-10"];
-const specializations = ["ui-ux", "frontend", "backend", "flutter", "android"];
+const yearsExp = ["1-3", "2-5", "3-6"];
+const specializations = [
+  "full stack mean",
+  "full stack mern",
+  "Full Stack Java",
+  "Full Stack MEAN",
+  "Full Stack Django",
+  "AI engineer",
+];
 
 const Search = ({ filter, setFilter }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       search: "",
-      specialization: "",
-      levelOfExperience: "",
+      specialization: filter.specialization || "",
+      levelOfExperience: filter.levelOfExperience || "",
     },
   });
 
@@ -75,7 +82,7 @@ const Search = ({ filter, setFilter }) => {
                 <FaFilter size={16} />
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-[550px] max-h-[600px] overflow-scroll">
               <DialogHeader>
                 <DialogTitle>Years Of Experience</DialogTitle>
               </DialogHeader>
@@ -96,7 +103,15 @@ const Search = ({ filter, setFilter }) => {
                           >
                             <Label className="text-right">{year}</Label>
                             <FormControl>
-                              <RadioGroupItem value={year} id={year} />
+                              <RadioGroupItem
+                                onClick={() => {
+                                  setFilter(() => ({
+                                    levelOfExperience: year,
+                                  }));
+                                }}
+                                value={year}
+                                id={year}
+                              />
                             </FormControl>
                           </div>
                         ))}
@@ -126,12 +141,9 @@ const Search = ({ filter, setFilter }) => {
                             <FormControl>
                               <RadioGroupItem
                                 onClick={() => {
-                                  console.log(filter);
-                                  setFilter((prev) => ({
-                                    ...prev,
+                                  setFilter(() => ({
                                     specialization: el,
                                   }));
-                                  console.log(filter);
                                 }}
                                 value={el}
                                 id={el}
@@ -145,7 +157,18 @@ const Search = ({ filter, setFilter }) => {
                   )}
                 />
               </div>
-              <DialogClose className="flex justify-end">Done</DialogClose>
+              <div className="flex justify-between items-center">
+                <Button
+                  onClick={() => {
+                    setFilter(() => ({
+                      specialization: "",
+                      levelOfExperience: "",
+                    }));
+                  }}
+                >
+                  Clear
+                </Button>
+              </div>
             </DialogContent>
           </Dialog>
         </form>

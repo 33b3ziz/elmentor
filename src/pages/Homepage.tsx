@@ -15,63 +15,51 @@ import {
   getMockMentors,
 } from "@/services/apiMentors";
 import { useQuery } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
 import { useState } from "react";
-
 import Search from "@/components/Search";
 import Filter from "@/components/Filter";
+import Loader from "@/components/Loader";
 
 const Homepage = () => {
   const [filter, setFilter] = useState("all");
-  const [efilter, seteFilter] = useState();
+  const [efilter, seteFilter] = useState({
+    specialization: "",
+    levelOfExperience: "",
+  });
+
+  const filterMentors = async (mentors) => {
+    const { specialization, levelOfExperience } = efilter;
+
+    if (specialization) {
+      mentors = mentors.filter(
+        (mentor) => mentor.specialization === specialization
+      );
+    }
+
+    if (levelOfExperience) {
+      mentors = mentors.filter(
+        (mentor) => mentor.levelOfExperience === levelOfExperience
+      );
+    }
+
+    return mentors;
+  };
 
   const { isLoading, data: mentorsList } = useQuery({
-    queryKey: ["mentorsList", filter],
+    queryKey: ["mentorsList", filter, efilter],
     queryFn: async () => {
-      if (filter === "all") {
-        // const { specialization, levelOfExperience } = efilter;
-        // let filteredMentors = await getMentorsList();
-
-        // if (specialization) {
-        //   filteredMentors = filteredMentors.filter(
-        //     (mentor) => mentor.specialization === specialization
-        //   );
-        // }
-
-        // if (levelOfExperience) {
-        //   filteredMentors = filteredMentors.filter(
-        //     (mentor) => mentor.levelOfExperience === levelOfExperience
-        //   );
-        // }
-
-        const { specialization, levelOfExperience } = efilter;
-        let filteredMentors = await getMentorsList();
-
-        if (specialization) {
-          filteredMentors = filteredMentors.filter(
-            (mentor) => (mentor.specialization = specialization)
-          );
-        }
-
-        if (levelOfExperience) {
-          filteredMentors = filteredMentors.filter(
-            (mentor) => (mentor.levelOfExperience = levelOfExperience)
-          );
-        }
-        console.log(filteredMentors);
-
-        return filteredMentors;
-        return getMentorsList();
-        console.log(filteredMentors);
-      } else if (filter === "mock") {
-        return getMockMentors();
+      let mentors;
+      if (filter === "mock") {
+        mentors = await getMockMentors();
       } else if (filter === "consultation") {
-        return getConsultMentors();
+        mentors = await getConsultMentors();
       } else if (filter === "mentoring") {
-        return getMentoringMentors();
+        mentors = await getMentoringMentors();
       } else {
-        return getMentorsList();
+        mentors = await getMentorsList();
       }
+
+      return filterMentors(mentors);
     },
   });
 
@@ -80,7 +68,7 @@ const Homepage = () => {
   return (
     <section id="home" className="py-12 flex flex-col items-center">
       <h1 className="text-center font-bold text-xl">Find Your Best Mentor</h1>
-      <Search />
+      <Search filter={efilter} setFilter={seteFilter} />
       <Filter filter={filter} setFilter={setFilter} />
       <MentorList mentors={mentorsList} />
       <Pagination>
