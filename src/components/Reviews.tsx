@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
 import { useForm, FormProvider } from "react-hook-form";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { z } from "zod";
@@ -15,6 +14,7 @@ import { Input } from "./ui/input";
 import StarRating from "./StarRating";
 import { Button } from "./ui/button";
 import { useCookies } from "react-cookie";
+import Loader from "./Loader";
 
 const formSchema = z.object({
   stars: z

@@ -11,7 +11,7 @@ function CalendarPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const navigate = useNavigate();
   const { value, setValue } = useBookingsMentor()!;
-  const { mentorId } = useParams();
+  const mentorId = useParams().id;
   const { data: mentor, isLoading: isLoadingMentor } = useQuery({
     queryKey: ["mentor", mentorId],
     queryFn: async () => {
@@ -33,6 +33,7 @@ function CalendarPage() {
           body: JSON.stringify({ mentorId }),
           headers: {
             ContentType: "application/json",
+            credentials: "include",
           },
         }
       );
@@ -48,7 +49,7 @@ function CalendarPage() {
   }
 
   return (
-    <section className="h-screen flex flex-col justify-center items-center">
+    <section className="py-6 flex flex-col justify-center items-center">
       <h2>Step 1 of 2</h2>
       <div className="flex gap-28 w-full">
         <div className="flex basis-1/2 flex-col gap-3 justify-center items-center border-b p-2">
