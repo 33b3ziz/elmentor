@@ -1,35 +1,10 @@
 import Loader from "@/components/Loader";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-// import {
-//   Form,
-//   FormControl,
-//   FormField,
-//   FormItem,
-//   FormMessage,
-// } from "@/components/ui/form";
-
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useBookingsMentor } from "@/contexts/BookingsMentorContext";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-
-// import { useBookingsMentor } from "@/contexts/BookingsMentorContext";
-// import { getMentorAvailablity } from "@/services/apiMentors";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { useEffect, useRef, useState } from "react";
-// import { useForm } from "react-hook-form";
-import { BiChevronRight } from "react-icons/bi";
 import { useNavigate, useParams } from "react-router-dom";
-// import { z } from "zod";
-
-// const timeSlotsSchema = z.object({
-//   timeslot: z.string({
-//     required_error: "Please select a time slot",
-//   }),
-// });
-
 const SelectTimeAvailable = () => {
   // const [timeSlots, setTimeSlots] = useState();
   // const { value, setValue } = useBookingsMentor()!;
@@ -51,7 +26,6 @@ const SelectTimeAvailable = () => {
   //   }
   // }, []);
 
-  const [date, setDate] = useState<Date | undefined>(new Date());
   const [selected, setSelected] = useState("");
   const navigate = useNavigate();
   const { value, setValue } = useBookingsMentor()!;
@@ -198,10 +172,6 @@ const SelectTimeAvailable = () => {
               <Button
                 className="w-full mt-4"
                 onClick={() => {
-                  setValue({
-                    ...value,
-                    day: date?.toISOString().split("T")[0],
-                  });
                   navigate(`/booking/timeslots/${mentorId}`);
                 }}
               >
