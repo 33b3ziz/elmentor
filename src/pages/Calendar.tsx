@@ -11,12 +11,12 @@ function CalendarPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const navigate = useNavigate();
   const { value, setValue } = useBookingsMentor()!;
-  const mentorId = useParams().id;
+  const mentorID = useParams().id;
   const { data: mentor, isLoading: isLoadingMentor } = useQuery({
-    queryKey: ["mentor", mentorId],
+    queryKey: ["mentor", mentorID],
     queryFn: async () => {
       const res = await fetch(
-        `https://radwan.up.railway.app/listMentor/${mentorId}`
+        `https://radwan.up.railway.app/listMentor/${mentorID}`
       );
       const data = await res.json();
       return data;
@@ -24,25 +24,35 @@ function CalendarPage() {
   });
 
   const { data: mentorAvailability } = useQuery({
-    queryKey: ["mentorAvailability", mentorId],
+    queryKey: ["mentorAvailability", mentorID],
     queryFn: async () => {
       const res = await fetch(
         `https://ali.up.railway.app/api/v1/availability/check`,
         {
           method: "POST",
-          body: JSON.stringify({ mentorId }),
+          body: JSON.stringify({ mentorID: "ali-zaki-id" }),
           headers: {
-            ContentType: "application/json",
-            credentials: "include",
+            "Content-type": "application/json",
           },
+          credentials: "include",
         }
       );
       const data = await res.json();
-      return data;
+      return data.data;
     },
   });
 
   console.log(mentorAvailability);
+
+  const availableDates = mentorAvailability?.availableDates.map(
+    (entry) => new Date(entry.date)
+  );
+
+  const isDateAvailable = (date) => {
+    return availableDates?.some(
+      (availableDate) => availableDate.toDateString() === date.toDateString()
+    );
+  };
 
   if (isLoadingMentor) {
     return <Spinner />;
@@ -92,13 +102,20 @@ function CalendarPage() {
               selected={date}
               onSelect={setDate}
               className="rounded-md border"
+              disabled={(date) => !isDateAvailable(date)}
             />
             <Button
               className="w-full mt-4"
               onClick={() => {
                 setValue({ ...value, day: date?.toISOString().split("T")[0] });
-                navigate(`/booking/timeslots/${mentorId}`);
+
+                navigate(
+                  `/booking/${mentorID}/timeslots/${
+                    date?.toISOString().split("T")[0]
+                  }`
+                );
               }}
+              disabled={!date || !isDateAvailable(date)}
             >
               Next
             </Button>
