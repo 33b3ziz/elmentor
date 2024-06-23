@@ -13,6 +13,7 @@ const SelectTimeAvailable = () => {
   const { value, setValue } = useBookingsMentor()!;
   const mentorID = useParams().id;
   const day = useParams().day;
+
   const { data: mentor, isLoading: isLoadingMentor } = useQuery({
     queryKey: ["mentor", mentorID],
     queryFn: async () => {
@@ -55,18 +56,21 @@ const SelectTimeAvailable = () => {
   }, [mentorAvailability, day]);
 
   const handleRadio = (e) => {
-    setSelected(e.target.value);
     const user = JSON.parse(localStorage.getItem("user")!);
-    setValue({
-      day: day,
-      timeslot: e.target.value,
-      mentorEmail: mentor.email,
-      mentorID: "ali-zaki-id",
-      menteeID: user._id,
-      menteeEmail: user.email,
-    });
+    if (mentor) {
+      setSelected(e.target.value);
+      setValue({
+        day: day,
+        timeslot: e.target.value,
+        mentorEmail: mentor.email,
+        mentorID: mentorID,
+        menteeID: user._id,
+        menteeEmail: user.email,
+      });
+    }
   };
-  async function onSubmit() {
+
+  const onSubmit = async () => {
     try {
       const res = await fetch(
         `https://ali.up.railway.app/api/v1/bookings/paymob-session`,
@@ -83,18 +87,15 @@ const SelectTimeAvailable = () => {
       if (res.ok) {
         window.location.href = data.payURL;
       }
-
       return data;
     } catch (error) {
       console.log(error);
     }
-  }
-  const timeSlots = ["10:30", "11:45", "16:10"];
+  };
 
   if (isLoadingMentor) {
     return <Loader />;
   }
-
   return (
     <>
       <section className="h- flex flex-col justify-center items-center">
