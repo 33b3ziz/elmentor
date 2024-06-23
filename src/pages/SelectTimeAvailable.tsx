@@ -81,7 +81,6 @@ const SelectTimeAvailable = () => {
       );
       const data = await res.json();
       if (res.ok) {
-        navigate("/payment");
       }
 
       return data;

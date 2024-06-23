@@ -5,7 +5,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Reviews from "@/components/Reviews";
 import Loader from "@/components/Loader";
-import { getMentorsList } from "@/services/apiMentors";
+import { getMentorsList, getRecommended } from "@/services/apiMentors";
+import { useEffect, useState } from "react";
 
 type Mentor = {
   mentor: {
@@ -26,6 +27,8 @@ type Mentor = {
 };
 
 const Mentor = () => {
+  const [recommendedMentors, setRecommendedMentors] = useState([]);
+
   const { id } = useParams();
 
   const { data: mentors, isLoading: isLoadingMentors } = useQuery({
@@ -45,6 +48,33 @@ const Mentor = () => {
   });
 
   const mentor = data?.mentor;
+  // const fetchRecommended = async () => {
+  //   try {
+  //     const response = await getRecommended(mentor._id);
+  //     const mentors = response["recommended mentors "]; // Accessing the key with spaces
+  //     setRecommendedMentors(mentors);
+  //   } catch (error) {
+  //     console.error("Error fetching recommended mentors:", error);
+  //   }
+  // };
+
+  // fetchRecommended();
+
+  useEffect(() => {
+    const fetchRecommended = async () => {
+      if (mentor?._id) {
+        try {
+          const response = await getRecommended(mentor._id);
+          const mentors = response["recommended mentors "]; // Accessing the key with spaces
+          setRecommendedMentors(mentors);
+        } catch (error) {
+          console.error("Error fetching recommended mentors:", error);
+        }
+      }
+    };
+
+    fetchRecommended();
+  }, [mentor?._id]);
 
   if (isLoading || isLoadingMentors) {
     return <Loader />;
@@ -75,7 +105,7 @@ const Mentor = () => {
         <h2 className="font-bold text-xl md:text-2xl text-primary">
           Suggestions
         </h2>
-        <MentorList mentors={mentors.slice(0, 4)} />
+        <MentorList mentors={recommendedMentors} />
 
         <h2 className="font-bold text-xl md:text-2xl text-primary">Reviews</h2>
         <Reviews mentorId={id} mentorService={mentor?.services} />
