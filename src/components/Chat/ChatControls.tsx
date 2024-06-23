@@ -38,12 +38,29 @@ const ChatControls = ({ ChatID, setChat }) => {
 		setInputValue("");
 	}, [ChatID]);
 
+	useEffect(() => {
+		if (inputValue && inputRef.current === document.activeElement) {
+			socket.emit("typing", {
+				chatID: ChatID,
+			});
+		} else {
+			handleNotTyping();
+		}
+	}, [inputValue]);
+
+	const handleNotTyping = () => {
+		socket.emit("typing done", {
+			chatID: ChatID,
+		});
+	};
+
 	const sendMessage = () => {
 		socket.emit("message", {
 			chatID: ChatID,
 			msg: inputValue,
 		});
 		const date = new Date();
+		const dateSection = date.toISOString().split("T")[0];
 		const newMessage = {
 			sender: "",
 			received: { done: false, time: `${date}` },
@@ -53,7 +70,10 @@ const ChatControls = ({ ChatID, setChat }) => {
 		};
 		setChat((prevChat: { messages: any }) => ({
 			...prevChat,
-			messages: [newMessage, ...prevChat.messages],
+			messages: {
+				...prevChat.messages,
+				[dateSection]: [newMessage, ...(prevChat.messages[dateSection] || [])],
+			},
 		}));
 		setInputValue("");
 	};
@@ -80,15 +100,20 @@ const ChatControls = ({ ChatID, setChat }) => {
 					</svg>
 				</div>
 				<input
-					className="bg-transparent w-full focus:outline-none py-2"
+					className="bg-transparent w-full focus:outline-none py-2 "
 					type="text"
 					ref={inputRef}
 					value={inputValue}
 					onChange={handleInputChange}
+					onBlur={handleNotTyping}
 					onKeyDown={(e) => {
 						if (e.key === "Enter") {
 							e.preventDefault();
-							sendMessage();
+							if (e.shiftKey) {
+								setInputValue((prevMessage) => prevMessage + "\n");
+							} else {
+								sendMessage();
+							}
 						}
 					}}
 					placeholder="type your message..."

@@ -1,4 +1,4 @@
-import { MutableRefObject, RefObject, SetStateAction } from "react";
+import { MutableRefObject, RefObject, SetStateAction, useState} from "react";
 import { socket } from "../socket";
 
 const iceServers = {
@@ -35,11 +35,7 @@ const iceServers = {
 }
 
 const mediaConstraints = {
-    audio: {
-        echoCancellation: true,
-        noiseSuppression: true,
-        autoGainControl: true
-    },
+    audio: true,
     video: {
     width: { ideal: 1280 },
     height: { ideal: 720 },
@@ -59,11 +55,11 @@ export async function setLocalStream(
     try {
         const stream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
         stream.getVideoTracks().forEach((track) => {
-				track.enabled = video;
-			});
-			stream.getAudioTracks().forEach((track) => {
-				track.enabled = mic;
-			});
+			track.enabled = video;
+		});
+		stream.getAudioTracks().forEach((track) => {
+			track.enabled = mic;
+		});
         localStreamRef.current = stream;
         if (localVideoComponent.current) {
             localVideoComponent.current.srcObject = stream;
@@ -109,7 +105,8 @@ export async function createAnswer(rtcPeerConnection: RTCPeerConnection, roomId:
     }
 }
 
-export function setRemoteStream(event: RTCTrackEvent, remoteVideoComponent: React.RefObject<HTMLVideoElement>) {
+export function setRemoteStream(event: RTCTrackEvent, remoteVideoComponent: React.RefObject<HTMLVideoElement>,remoteStream: MutableRefObject<MediaStream | null>) {
+    remoteStream.current = event.streams[0];
     if (remoteVideoComponent.current) {
         remoteVideoComponent.current.srcObject = event.streams[0];
     }
@@ -125,24 +122,24 @@ export function sendIceCandidate(event: RTCPeerConnectionIceEvent, roomId: strin
     }
 }
 
-export const handleStartCall = async(isRoomCreator: MutableRefObject<boolean>, rtcPeerConnection: MutableRefObject<RTCPeerConnection | null>, localStream: MutableRefObject<MediaStream | null>, roomId: string | undefined, remoteVideoComponent: RefObject<HTMLVideoElement>) => {
+export const handleStartCall = async(isRoomCreator: MutableRefObject<boolean>, rtcPeerConnection: MutableRefObject<RTCPeerConnection | null>, localStream: MutableRefObject<MediaStream | null>, remoteStream: MutableRefObject<MediaStream | null>, roomId: string | undefined, remoteVideoComponent: RefObject<HTMLVideoElement>) => {
     if (isRoomCreator.current) {
         rtcPeerConnection.current = new RTCPeerConnection(iceServers);
         addLocalTracks(localStream.current, rtcPeerConnection.current);
         rtcPeerConnection.current.ontrack = (event: RTCTrackEvent) =>
-            setRemoteStream(event, remoteVideoComponent);
+            setRemoteStream(event, remoteVideoComponent, remoteStream);
         rtcPeerConnection.current.onicecandidate = (event: RTCPeerConnectionIceEvent) =>
             sendIceCandidate(event, roomId);
         await createOffer(rtcPeerConnection.current, roomId);
     }
 };
 
-export const handleWebRtcOffer = async (event: RTCSessionDescriptionInit,isRoomCreator: MutableRefObject<boolean>, rtcPeerConnection: MutableRefObject<RTCPeerConnection | null>, localStream: MutableRefObject<MediaStream | null>, roomId: string | undefined, remoteVideoComponent: RefObject<HTMLVideoElement>) => {
+export const handleWebRtcOffer = async (event: RTCSessionDescriptionInit,isRoomCreator: MutableRefObject<boolean>, rtcPeerConnection: MutableRefObject<RTCPeerConnection | null>, localStream: MutableRefObject<MediaStream | null>, remoteStream: MutableRefObject<MediaStream | null>, roomId: string | undefined, remoteVideoComponent: RefObject<HTMLVideoElement>) => {
     if (!isRoomCreator.current) {
         rtcPeerConnection.current = new RTCPeerConnection(iceServers);
         addLocalTracks(localStream.current, rtcPeerConnection.current);
         rtcPeerConnection.current.ontrack = (event: RTCTrackEvent) =>
-            setRemoteStream(event, remoteVideoComponent);
+            setRemoteStream(event, remoteVideoComponent, remoteStream);
         rtcPeerConnection.current.onicecandidate = (event: RTCPeerConnectionIceEvent) =>
             sendIceCandidate(event, roomId);
         rtcPeerConnection.current.setRemoteDescription(

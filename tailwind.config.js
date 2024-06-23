@@ -83,12 +83,23 @@ export default {
         "errorMessage-down": {
           "0%": { transform: "translate(-50%,0rem)" },
           "100%": { transform: "translate(-50%,4remx)" },
-        }
+        },
+        "bounce": {
+          '0%, 100%': {
+            transform: 'translateY(0)',
+          },
+          '50%': {
+            transform: 'translateY(-5px)',
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "errorMessage-down": "errorMessage-down 0.5s ease-in-out",
+        'bounce-1': 'bounce 1s infinite 0.2s',
+        'bounce-2': 'bounce 1s infinite 0.4s',
+        'bounce-3': 'bounce 1s infinite 0.6s',
       },
     },
   },

@@ -16,17 +16,22 @@ import { socket } from "../../socket";
 
 const MeetingBody = () => {
 	const { video, mic, screenShare, setScreenShare } = useVideo();
-	const { id } = useParams();
 
 	const localVideoComponent = useRef<HTMLVideoElement | null>(null);
 	const remoteVideoComponent = useRef<HTMLVideoElement | null>(null);
 	const localStream = useRef<MediaStream | null>(null);
 	const remoteStream = useRef<MediaStream | null>(null);
+	const [remoteStreamActive, setRemoteStreamActive] = useState(false);
 	const isRoomCreator = useRef<boolean>(false);
 	const rtcPeerConnection = useRef<RTCPeerConnection | null>(null);
-	const [roomId, setRoomId] = useState(id);
+	const [roomId, setRoomId] = useState(null);
+
+	const { id } = useParams();
 
 	useEffect(() => {
+		socket.on("notification", (message) => {
+			console.log("notification:", message);
+		});
 		socket.on("room_created", async () => {
 			await setLocalStream(localStream, localVideoComponent, { video, mic });
 			isRoomCreator.current = true;
@@ -46,23 +51,27 @@ const MeetingBody = () => {
 				isRoomCreator,
 				rtcPeerConnection,
 				localStream,
+				remoteStream,
 				roomId,
 				remoteVideoComponent
 			);
 		});
 
 		socket.on("webrtc_offer", async (event) => {
+			setRemoteStreamActive(true);
 			await handleWebRtcOffer(
 				event,
 				isRoomCreator,
 				rtcPeerConnection,
 				localStream,
+				remoteStream,
 				roomId,
 				remoteVideoComponent
 			);
 		});
 
 		socket.on("webrtc_answer", (event) => {
+			setRemoteStreamActive(true);
 			rtcPeerConnection.current?.setRemoteDescription(
 				new RTCSessionDescription(event)
 			);
@@ -132,22 +141,31 @@ const MeetingBody = () => {
 	}, [screenShare]);
 
 	useEffect(() => {
-		socket.emit("join", roomId);
+		setRoomId(id);
+	}, []);
+
+	useEffect(() => {
+		if (roomId) {
+			socket.emit("join", roomId);
+		}
 	}, [roomId]);
 
 	return (
 		<div className="center mx-auto h-screen flex flex-col">
-			<Header />
-			<div className="w-full flex-1">
-				<div className="w-full h-full flex px-5 space-x-5">
-					<div className="flex flex-col my-5 w-1/2">
-						<Videos
-							localVideoComponent={localVideoComponent}
-							remoteVideoComponent={remoteVideoComponent}
-						/>
-						<Controls />
-					</div>
-					<Chat />
+			<div className="hidden sm:block">
+				<Header />
+			</div>
+			<div className="w-full flex-1 flex">
+				<div className="flex flex-col w-full sm:p-5">
+					<Videos
+						localVideoComponent={localVideoComponent}
+						remoteVideoComponent={remoteVideoComponent}
+						remoteStreamActive={remoteStreamActive}
+					/>
+					<Controls />
+				</div>
+				<div className="hidden lg:block w-2/5 my-5 mr-5 bg-chat rounded-xl">
+					<Chat Sheet={false} roomId={roomId} />
 				</div>
 			</div>
 		</div>

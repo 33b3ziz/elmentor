@@ -76,40 +76,39 @@ const App = () => {
 		};
 	}, [messageEvent]);
 
-
-  return (
-    <Suspense fallback={<Loader />}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <SignupProvider>
-          <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-            <BrowserRouter>
-              <Routes>
-                <Route element={<Layout />}>
-                  <Route
-                    path="mentor/:id"
-                    element={<Mentor messageEvent={messageEvent} />}
-                  />
-                  <Route index path="/" element={<LandingPage />} />
-                  <Route path="contact" element={<Contact />} />
-                  <Route path="home" element={<Homepage />} />
-                  <Route path="dashboard" element={<Dashboard />} />
-                  <Route path="payment" element={<Payment />} />
-                  <Route path="studentprofile" element={<StudentProfile />} />
-                  <Route
-                    path="testchat"
-                    element={
-                      <TestChat
-                        isConnected={isConnected}
-                        messageEvent={messageEvent}
-                      />
-                    }
-                  />
-                  <Route
-                    path="mentorprofile"
-                    element={<MentorProfile _id="65dd99b0e731f3477cb5bcb4" />}
-                  />
-
+	return (
+		<Suspense fallback={<Loader />}>
+			<QueryClientProvider client={queryClient}>
+				<ReactQueryDevtools initialIsOpen={false} />
+				<SignupProvider>
+					<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+						<BrowserRouter>
+							<SmallScreenProvider>
+								<Routes>
+									<Route element={<Layout />}>
+										<Route
+											path="mentor/:id"
+											element={<Mentor messageEvent={messageEvent} />}
+										/>
+										<Route index path="/" element={<LandingPage />} />
+										<Route path="contact" element={<Contact />} />
+										<Route path="home" element={<Homepage />} />
+										<Route path="dashboard" element={<Dashboard />} />
+										<Route path="payment" element={<Payment />} />
+										<Route path="studentprofile" element={<StudentProfile />} />
+										<Route
+											path="testchat"
+											element={
+												<TestChat
+													isConnected={isConnected}
+													messageEvent={messageEvent}
+												/>
+											}
+										/>
+										<Route
+											path="mentorprofile"
+											element={<MentorProfile _id="65dd99b0e731f3477cb5bcb4" />}
+										/>
 
 										<Route
 											path="chats"

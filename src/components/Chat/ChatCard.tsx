@@ -2,13 +2,17 @@ import { Link } from "react-router-dom";
 import { formatDate } from "../../services/formatDate";
 import ChatBodySheet from "./ChatBodySheet";
 import { useSmallScreen } from "../../contexts/SmallScreenContext";
+import Picture from "./Picture";
 
 function ChatCard({ chat }) {
 	const { smallScreen } = useSmallScreen();
 
-	const userID: any = "663513b7b3e15785e556d3ba";
+	const user = JSON.parse(localStorage.getItem("user"));
+
+	const userID: any = user._id || "";
+
 	let sender = { name: "", ID: "" };
-	let receiver = { name: "", ID: "" };
+	let receiver = { name: "", ID: "", image: null };
 
 	const dateStringify = (date: string) => {
 		return formatDate(new Date(date));
@@ -18,16 +22,12 @@ function ChatCard({ chat }) {
 		if (user.user != userID) {
 			receiver.name = user.userName;
 			receiver.ID = user.user;
+			receiver.image = user.image;
 		} else {
 			sender.name = user.userName;
 			sender.ID = user.user;
 		}
 	}
-
-	const getInitial = () => {
-		return receiver ? receiver.name.charAt(0).toUpperCase() : "";
-	};
-
 	return (
 		<div>
 			{smallScreen && (
@@ -36,9 +36,12 @@ function ChatCard({ chat }) {
 						to={`/chats/${chat._id}`}
 						className="px-3 flex items-center bg-grey-400 flex items-center space-x-4"
 						id={`${chat._id}`}>
-						<div className="h-16 w-16 rounded-full bg-gray-400 text-white text-xl font-bold flex items-center justify-center">
-							{getInitial()}
-						</div>
+						<Picture
+							name={receiver.name}
+							image={receiver.image}
+							size={16}
+							fontSize={"lg"}
+						/>
 						<div className="ml-4 flex-1 border-b border-grey-lighter py-4">
 							<div className="flex items-bottom justify-between">
 								<p className="text-grey-darkest">{receiver.name}</p>
@@ -58,9 +61,12 @@ function ChatCard({ chat }) {
 					to={`/chats/${chat._id}`}
 					className="px-3 flex items-center bg-grey-400 flex items-center space-x-4"
 					id={`${chat._id}`}>
-					<div className="h-16 w-16 rounded-full bg-gray-400 text-white text-xl font-bold flex items-center justify-center">
-						{getInitial()}
-					</div>
+					<Picture
+						name={receiver.name}
+						image={receiver.image}
+						size={16}
+						fontSize={"lg"}
+					/>
 					<div className="ml-4 flex-1 border-b border-grey-lighter py-4">
 						<div className="flex items-bottom justify-between">
 							<p className="text-grey-darkest">{receiver.name}</p>

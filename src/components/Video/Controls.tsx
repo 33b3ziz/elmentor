@@ -5,8 +5,10 @@ import { Video } from "lucide-react";
 import { VideoOff } from "lucide-react";
 import { MonitorUp } from "lucide-react";
 import { PhoneOff } from "lucide-react";
+import { MessageSquareMore } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useVideo } from "../../contexts/VideoContext";
+import ChatSheet from "./ChatSheet";
 
 const Controls = () => {
 	const { video, setVideo, mic, setMic, screenShare, setScreenShare } =
@@ -23,7 +25,7 @@ const Controls = () => {
 
 	return (
 		<div className="flex w-full items-center">
-			<div className=" flex justify-center space-x-3 flex-1 w-full">
+			<div className="flex justify-between space-x-3 flex-1 w-full pb-4 px-7 sm:pb-0 sm:px-0 sm:justify-center">
 				{!mic && (
 					<Button
 						variant="destructive"
@@ -83,6 +85,13 @@ const Controls = () => {
 						<MonitorUp className="h-[1.2rem] w-[1.2rem]" />
 					</Button>
 				)}
+				<div className="lg:hidden">
+					<ChatSheet>
+						<Button size="icon" variant="video">
+							<MessageSquareMore className="h-[1.2rem] w-[1.2rem]" />
+						</Button>
+					</ChatSheet>
+				</div>
 				<div className="float-right">
 					<Link to={`/`} className="">
 						<Button variant="destructive" size="icon" onClick={() => {}}>

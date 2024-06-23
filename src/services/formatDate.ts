@@ -1,4 +1,4 @@
-export function formatDate(date: Date): string {
+export function formatDate(date: Date, dateTime: boolean = true): string {
   const now = new Date();
   const diffInMs = now.getTime() - date.getTime();
   const diffInHours = diffInMs / (1000 * 60 * 60);
@@ -15,8 +15,7 @@ export function formatDate(date: Date): string {
 
   const formatDateOnly = (date: Date): string => {
     const day = date.getDate();
-    const month = date.getMonth() + 1; // Months are zero-indexed
-    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
     const formattedDay = day < 10 ? `0${day}` : day;
     const formattedMonth = month < 10 ? `0${month}` : month;
     return `${formattedDay}/${formattedMonth}`;
@@ -28,8 +27,17 @@ export function formatDate(date: Date): string {
     return `${formattedDate}/${year}`;
   };
 
-  if (diffInHours < 24) {
-    return formatTime(date);
+
+  const today = new Date(now);
+  if (date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()) {
+    if (dateTime) {
+      return formatTime(date);
+    }
+    else {
+      return "today"
+    }
   }
 
   const yesterday = new Date(now);

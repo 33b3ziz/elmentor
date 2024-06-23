@@ -26,33 +26,32 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
+	const navigate = useNavigate();
 
-  const navigate = useNavigate();
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			email: "",
+			password: "",
+		},
+	});
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await fetch("https://radwan.up.railway.app/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(values),
-    });
-    const data = await res.json();
-    localStorage.setItem("user", JSON.stringify(data.user));
-    if (res.ok) {
-      navigate("/");
-    }
-    return data;
-  }
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		const res = await fetch("https://radwan.up.railway.app/login", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			credentials: "include",
+			body: JSON.stringify(values),
+		});
+		const data = await res.json();
+		localStorage.setItem("user", JSON.stringify(data.user));
+		if (res.ok) {
+			navigate("/");
+		}
+		return data;
+	}
 
 	return (
 		<Form {...form}>
