@@ -12,8 +12,31 @@ export const ChatList = () => {
 	const [page, setPage] = useState<number>(1);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
-	const { chat, setChat } = useChat();
+	const { chat, setChat, typing, setTyping } = useChat();
 
+	const user = JSON.parse(localStorage.getItem("user"));
+	const userID: any = user._id || "";
+
+	useEffect(() => {
+		const handleTyping = ({ chatID, userID }) => {
+			if (!typing && chatID == chat._id) {
+				setTyping(true);
+			}
+		};
+
+		const handleNotTyping = ({ chatID, userID }) => {
+			if (typing && chatID == chat._id) {
+				setTyping(false);
+			}
+		};
+
+		socket.on("typing", handleTyping);
+		socket.on("typing done", handleNotTyping);
+		return () => {
+			socket.off("typing", handleTyping);
+			socket.off("typing done", handleNotTyping);
+		};
+	}, [chat, typing]);
 	useEffect(() => {
 		const fetchChats = async () => {
 			if (page == 1) {
@@ -24,7 +47,6 @@ export const ChatList = () => {
 					setError(response.error);
 				} else {
 					setChats([...chats, ...response]);
-					console.log(response);
 				}
 				setLoading(false);
 			});
@@ -35,10 +57,26 @@ export const ChatList = () => {
 
 	useEffect(() => {
 		const handleMessage = ({ message }) => {
-			setChat((prevChat) => ({
-				...prevChat,
-				messages: [message.message, ...prevChat.messages],
-			}));
+			if (
+				chat &&
+				chat._id == message.chatID &&
+				message.message.sender != userID
+			) {
+				const date = new Date(message.message.time);
+				const dateSection = date.toISOString().split("T")[0];
+
+				setChat((prevChat: { messages: any }) => ({
+					...prevChat,
+					messages: {
+						...prevChat.messages,
+						[dateSection]: [
+							message.message,
+							...(prevChat.messages[dateSection] || []),
+						],
+					},
+				}));
+			}
+
 			const updateChat = chats.find((x) => x._id === message.chatID);
 			const chatsArray = chats.filter((x) => x._id !== message.chatID);
 			if (updateChat) {
@@ -48,14 +86,15 @@ export const ChatList = () => {
 			} else {
 			}
 
-			chatsArray.push(updateChat);
+			chatsArray.unshift(updateChat);
+
 			setChats(chatsArray);
 		};
 		socket.on("message", handleMessage);
 		return () => {
 			socket.off("message", handleMessage);
 		};
-	}, [chats, setChat]);
+	}, [chat, chats]);
 	useEffect(() => {
 		const handleScroll = () => {
 			const div = divRef.current;
@@ -68,12 +107,6 @@ export const ChatList = () => {
 		if (div) {
 			div.addEventListener("scroll", handleScroll);
 		}
-
-		return () => {
-			if (div) {
-				div.removeEventListener("scroll", handleScroll);
-			}
-		};
 	}, []);
 	return (
 		<div

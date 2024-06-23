@@ -5,4 +5,5 @@ const URL = "https://radwan.up.railway.app";
 
 export const socket = io(URL, {
   withCredentials: true,
+  transports: ['websocket', 'polling']
 });
