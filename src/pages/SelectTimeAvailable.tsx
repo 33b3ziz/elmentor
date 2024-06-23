@@ -59,7 +59,7 @@ const SelectTimeAvailable = () => {
     const user = JSON.parse(localStorage.getItem("user")!);
     setValue({
       day: day,
-      timeSlot: e.target.value,
+      timeslot: e.target.value,
       mentorEmail: mentor.email,
       mentorID: "ali-zaki-id",
       menteeID: user._id,
@@ -81,7 +81,7 @@ const SelectTimeAvailable = () => {
       );
       const data = await res.json();
       if (res.ok) {
-        navigate("/payment");
+        window.location.href = data.payURL;
       }
 
       return data;
