@@ -52,23 +52,46 @@ export async function getMentoringMentors() {
   }
 }
 
-export async function getMentorAvailablity(values) {
+export async function getMentorAvailablity(mentorId: { mentorId: string }) {
   try {
-    console.log(values);
     const response = await fetch(
       `https://ali.up.railway.app/api/v1/availability/check`,
       {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(mentorId),
       }
     );
     if (!response.ok) {
       throw new Error("Failed to fetch mentor's time slots");
     }
     const data = await response.json();
-    return data.dta;
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching mentor's time slots:", error);
+    throw error;
+  }
+}
+
+export async function getRecommended(mentorId: { mentorId: string }) {
+  try {
+    const response = await fetch(
+      `https://deployment-2-1.onrender.com/recommend`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ mentor_id: mentorId }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch recommended");
+    }
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error("Error fetching mentor's time slots:", error);
     throw error;

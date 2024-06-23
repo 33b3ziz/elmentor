@@ -11,27 +11,34 @@ import {
 import { Button } from "./ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { Label } from "@radix-ui/react-dropdown-menu";
-import { Checkbox } from "./ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group"; // Assume you have these components
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 const formSchema = z.object({
   search: z.string().min(3),
-  specialization: z.array(z.string()).min(1),
-  levelOfExperience: z.array(z.string()).min(1),
+  specialization: z.string().min(1),
+  levelOfExperience: z.string().min(1),
 });
 
-const yearsExp = ["1-3", "3-7", "7-10"];
-const specializations = ["ui-ux", "frontend", "backend", "flutter", "android"];
+const yearsExp = ["1-3", "2-5", "3-6"];
+const specializations = [
+  "full stack mean",
+  "full stack mern",
+  "Full Stack Java",
+  "Full Stack MEAN",
+  "Full Stack Django",
+  "AI engineer",
+];
 
-const Search = () => {
+const Search = ({ filter, setFilter }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       search: "",
-      specialization: [],
-      levelOfExperience: [],
+      specialization: filter.specialization || "",
+      levelOfExperience: filter.levelOfExperience || "",
     },
   });
 
@@ -75,64 +82,93 @@ const Search = () => {
                 <FaFilter size={16} />
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-[550px] max-h-[600px] overflow-scroll">
               <DialogHeader>
                 <DialogTitle>Years Of Experience</DialogTitle>
               </DialogHeader>
               <div className="grid py-4">
-                {yearsExp.map((year) => (
-                  <FormField
-                    key={year}
-                    control={form.control}
-                    name="levelOfExperience"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="grid grid-cols-4 items-center gap-4 p-3 border-b">
-                          <Label className="text-right">{year}</Label>
-                          <Checkbox
-                            id={year}
-                            checked={field.value.includes(year)}
-                            onCheckedChange={(checked) => {
-                              const newValue = checked
-                                ? [...field.value, year]
-                                : field.value.filter((value) => value !== year);
-                              field.onChange(newValue);
-                            }}
-                          />
-                        </div>
-                      </FormItem>
-                    )}
-                  />
-                ))}
+                <FormField
+                  control={form.control}
+                  name="levelOfExperience"
+                  render={({ field }) => (
+                    <FormItem>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        {yearsExp.map((year) => (
+                          <div
+                            key={year}
+                            className="grid grid-cols-4 items-center gap-4 p-3 border-b"
+                          >
+                            <Label className="text-right">{year}</Label>
+                            <FormControl>
+                              <RadioGroupItem
+                                onClick={() => {
+                                  setFilter(() => ({
+                                    levelOfExperience: year,
+                                  }));
+                                }}
+                                value={year}
+                                id={year}
+                              />
+                            </FormControl>
+                          </div>
+                        ))}
+                      </RadioGroup>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
               <div className="grid py-4">
                 <h2 className="font-bold">Specialization</h2>
-                {specializations.map((el) => (
-                  <FormField
-                    key={el}
-                    control={form.control}
-                    name="specialization"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="grid grid-cols-4 items-center gap-4 p-3 border-b">
-                          <Label className="text-right">{el}</Label>
-                          <Checkbox
-                            id={el}
-                            checked={field.value.includes(el)}
-                            onCheckedChange={(checked) => {
-                              const newValue = checked
-                                ? [...field.value, el]
-                                : field.value.filter((value) => value !== el);
-                              field.onChange(newValue);
-                            }}
-                          />
-                        </div>
-                      </FormItem>
-                    )}
-                  />
-                ))}
+                <FormField
+                  control={form.control}
+                  name="specialization"
+                  render={({ field }) => (
+                    <FormItem>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        {specializations.map((el) => (
+                          <div
+                            key={el}
+                            className="grid grid-cols-4 items-center gap-4 p-3 border-b"
+                          >
+                            <Label className="text-right">{el}</Label>
+                            <FormControl>
+                              <RadioGroupItem
+                                onClick={() => {
+                                  setFilter(() => ({
+                                    specialization: el,
+                                  }));
+                                }}
+                                value={el}
+                                id={el}
+                              />
+                            </FormControl>
+                          </div>
+                        ))}
+                      </RadioGroup>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
-              <DialogClose className="flex justify-end">Done</DialogClose>
+              <div className="flex justify-between items-center">
+                <Button
+                  onClick={() => {
+                    setFilter(() => ({
+                      specialization: "",
+                      levelOfExperience: "",
+                    }));
+                  }}
+                >
+                  Clear
+                </Button>
+              </div>
             </DialogContent>
           </Dialog>
         </form>

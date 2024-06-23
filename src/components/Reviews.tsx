@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
 import { useForm, FormProvider } from "react-hook-form";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { z } from "zod";
@@ -15,6 +14,7 @@ import { Input } from "./ui/input";
 import StarRating from "./StarRating";
 import { Button } from "./ui/button";
 import { useCookies } from "react-cookie";
+import Loader from "./Loader";
 
 const formSchema = z.object({
   stars: z
@@ -154,7 +154,7 @@ const Reviews = ({
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="space-y-2 basis-full sm:basis-1/3 w-[400px] mx-auto relative border p-4 mt-4 rounded-sm"
+          className="space-y-2 basis-full sm:basis-1/3 w-[400px] mx-auto relative border p-4 mt-2 rounded-sm"
         >
           <h2 className="text-center font-bold">Add Review</h2>
           <div>

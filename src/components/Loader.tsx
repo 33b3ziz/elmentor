@@ -1,11 +1,13 @@
 import { useTheme } from "./ui/theme-provider";
+import logo from "../assets/logo.svg";
+import darkLogo from "../assets/logo-dark.svg";
 
 const Loader = () => {
   const { theme } = useTheme();
 
   return (
     <div
-      className={`w-screen h-screen flex justify-center items-center ${
+      className={`h-screen flex justify-center items-center ${
         window.matchMedia("(prefers-color-scheme: dark)") && theme === "dark"
           ? "bg-black"
           : "bg-white"
@@ -14,8 +16,8 @@ const Loader = () => {
       <img
         src={`${
           window.matchMedia("(prefers-color-scheme: dark)") && theme === "dark"
-            ? "/src/assets/logo-dark.svg"
-            : "/src/assets/logo.svg"
+            ? darkLogo
+            : logo
         }`}
         alt="logo"
         className="animate-pulse"
