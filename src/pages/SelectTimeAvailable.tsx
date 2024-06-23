@@ -1,12 +1,28 @@
 import { Button } from "@/components/ui/button";
-import React from "react";
+import { Calendar } from "@/components/ui/calendar";
+import { useBookingsMentor } from "@/contexts/BookingsMentorContext";
+import { getMentorAvailablity } from "@/services/apiMentors";
+import { useEffect, useState } from "react";
 import { BiChevronRight } from "react-icons/bi";
 
-const SelectAvailable = () => {
+const SelectTimeAvailable = () => {
+  const [timeSlots, setTimeSlots] = useState();
+  const { value, setValue } = useBookingsMentor()!;
+
+  useEffect(() => {
+    if (value) {
+      if (value.mentorId) {
+        setTimeSlots(getMentorAvailablity(value.mentorId!));
+      }
+      console.log(value.mentorId);
+      console.log(timeSlots);
+    }
+  }, []);
+
   return (
     <>
       <div className=" flex flex-col items-center justify-start w-auto gap-[49%] p-10 bg-white-A700 ">
-        <p className="mt-[17px] text-base text-slate-600">STEP 3 of 3</p>
+        <p className="mt-[17px] text-base text-slate-600">STEP 2 of 3</p>
         <div className="flex flex-row justify-between items-start w-full pl-20 max-w-[1677px]">
           <div className="flex flex-col items-start justify-start w-[27%] gap-[55px]">
             <div className="flex flex-col items-start justify-start w-full gap-10">
@@ -100,7 +116,7 @@ const SelectAvailable = () => {
               size="lg"
               className="font-bold  w-[550px]"
             >
-              Confirm
+              Next
             </Button>
           </div>
         </div>
@@ -108,4 +124,4 @@ const SelectAvailable = () => {
     </>
   );
 };
-export default SelectAvailable;
+export default SelectTimeAvailable;
