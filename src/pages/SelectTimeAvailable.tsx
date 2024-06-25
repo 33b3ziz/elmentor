@@ -5,7 +5,9 @@ import { useBookingsMentor } from "@/contexts/BookingsMentorContext";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
 const SelectTimeAvailable = () => {
+  const time = ["10:20", "12:50"];
   const [selected, setSelected] = useState("");
   const [freeSlots, setFreeSlots] = useState([]);
 
@@ -148,8 +150,8 @@ const SelectTimeAvailable = () => {
                   </div>
                 </div>
                 <h2>Selecte available time</h2>
-                <div className="flex justify-start items-center w-[98%] gap-2 pb-8">
-                  {freeSlots.map((el, index) => {
+                <div className="flex justify-start items-center w-[98%] gap-2 pb-1">
+                  {time.map((el, index) => {
                     const isCurrent = selected === el;
 
                     return (

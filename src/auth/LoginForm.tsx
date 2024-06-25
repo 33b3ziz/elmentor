@@ -28,7 +28,6 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
-
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,10 +40,10 @@ const LoginForm = () => {
 
   const { mutate: login, isPending: isLoggingIn } = useMutation({
     mutationFn: async (values: z.infer<typeof formSchema>) => {
-      const res = await fetch("https://radwan.up.railway.app/login", {
+      const res = await fetch(`https://radwan.up.railway.app/login`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-type": "application/json",
         },
         credentials: "include",
         body: JSON.stringify(values),
@@ -69,7 +68,6 @@ const LoginForm = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     login(values);
   }
-  
 
   return (
     <Form {...form}>
