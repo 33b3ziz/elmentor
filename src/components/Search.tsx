@@ -2,7 +2,6 @@ import { Input } from "./ui/input";
 import { FaFilter, FaSearch } from "react-icons/fa";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
