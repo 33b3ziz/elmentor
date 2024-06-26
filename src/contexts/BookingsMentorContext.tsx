@@ -12,7 +12,6 @@ const BookingsMentorContext = createContext<BookingsMentorContextType | null>(
 
 function BookingsMentorProvider({ children }: { children: React.ReactNode }) {
   const [value, setValue] = useState<Record<string, any>>({});
-  console.log(value);
   return (
     <BookingsMentorContext.Provider value={{ value, setValue }}>
       {children}
