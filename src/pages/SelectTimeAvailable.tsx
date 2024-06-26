@@ -7,11 +7,9 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const SelectTimeAvailable = () => {
-  const time = ["10:20", "12:50"];
   const [selected, setSelected] = useState("");
   const [freeSlots, setFreeSlots] = useState([]);
 
-  const navigate = useNavigate();
   const { value, setValue } = useBookingsMentor()!;
   const mentorID = useParams().id;
   const day = useParams().day;
@@ -151,7 +149,7 @@ const SelectTimeAvailable = () => {
                 </div>
                 <h2>Selecte available time</h2>
                 <div className="flex justify-start items-center w-[98%] gap-2 pb-1">
-                  {time.map((el, index) => {
+                  {freeSlots.map((el, index) => {
                     const isCurrent = selected === el;
 
                     return (
