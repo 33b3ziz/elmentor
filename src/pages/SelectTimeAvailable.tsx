@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useBookingsMentor } from "@/contexts/BookingsMentorContext";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const SelectTimeAvailable = () => {
   const [selected, setSelected] = useState("");
@@ -32,7 +32,7 @@ const SelectTimeAvailable = () => {
         `https://ali.up.railway.app/api/v1/availability/check`,
         {
           method: "POST",
-          body: JSON.stringify({ mentorID: "ali-zaki-id" }),
+          body: JSON.stringify({ mentorID: mentorID }),
           headers: {
             "Content-type": "application/json",
           },
@@ -55,7 +55,7 @@ const SelectTimeAvailable = () => {
     }
   }, [mentorAvailability, day]);
 
-  const handleRadio = (e) => {
+  const handleRadio = (e: any) => {
     const user = JSON.parse(localStorage.getItem("user")!);
     if (mentor) {
       setSelected(e.target.value);
@@ -68,10 +68,19 @@ const SelectTimeAvailable = () => {
         menteeEmail: user.email,
       });
     }
+    console.log(value);
   };
 
   const onSubmit = async () => {
     try {
+      const mentorres = await fetch(
+        `https://radwan.up.railway.app/listMentor/${mentorID}`
+      );
+      const mentorData = await mentorres.json();
+      setValue({
+        ...value,
+        mentorEmail: mentorData.email,
+      });
       const res = await fetch(
         `https://ali.up.railway.app/api/v1/bookings/paymob-session`,
         {

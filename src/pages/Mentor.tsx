@@ -27,16 +27,17 @@ type Mentor = {
 };
 
 const Mentor = () => {
-  const [recommendedMentors, setRecommendedMentors] = useState([]);
+  // const [recommendedMentors, setRecommendedMentors] = useState([]);
 
   const { id } = useParams();
 
   const { data: mentors, isLoading: isLoadingMentors } = useQuery({
     queryKey: ["mentors"],
     queryFn: () => {
-      return getMentorsList();
+      return getRecommended(id!);
     },
   });
+  console.log(mentors);
 
   const { data, isLoading } = useQuery<Mentor>({
     queryKey: ["mentor", id],
@@ -60,21 +61,21 @@ const Mentor = () => {
 
   // fetchRecommended();
 
-  useEffect(() => {
-    const fetchRecommended = async () => {
-      if (mentor?._id) {
-        try {
-          const response = await getRecommended(mentor._id);
-          const mentors = response["recommended mentors "]; // Accessing the key with spaces
-          setRecommendedMentors(mentors);
-        } catch (error) {
-          console.error("Error fetching recommended mentors:", error);
-        }
-      }
-    };
+  // useEffect(() => {
+  //   const fetchRecommended = async () => {
+  //     if (mentor?._id) {
+  //       try {
+  //         const response = await getRecommended(mentor._id);
+  //         const mentors = response["recommended mentors "]; // Accessing the key with spaces
+  //         setRecommendedMentors(mentors);
+  //       } catch (error) {
+  //         console.error("Error fetching recommended mentors:", error);
+  //       }
+  //     }
+  //   };
 
-    fetchRecommended();
-  }, [mentor?._id]);
+  //   fetchRecommended();
+  // }, [mentor?._id]);
 
   if (isLoading || isLoadingMentors) {
     return <Loader />;
@@ -84,18 +85,18 @@ const Mentor = () => {
       <section className="py-12  px-4 md:px-12">
         <div className="relative w-full h-96 flex flex-col justify-evenly mb-6">
           <div className="w-full flex h-2/3  justify-center items-center">
-            <h2 className="font-bold text-2xl md:text-4xl text-rose-100 ">
+            <h2 className="font-bold text-2xl md:text-4xl ">
               Work With Out Me
             </h2>
           </div>
           <div className="px-5">
-            <p className="font-bold text-xl text-slate-900">
-              {mentor?.userName}
+            <p className="font-bold text-xl ">{mentor?.userName}</p>
+            <p className="text-slate-700 dark:text-slate-200">
+              {mentor?.specialization}
             </p>
-            <p className="text-slate-700">{mentor?.specialization}</p>
           </div>
           <img
-            src="/src/assets/mentor-1.webp"
+            src={mentor.imageUrl}
             alt="landing-1"
             className="absolute -z-10 w-full h-96 object-cover"
           />
@@ -105,7 +106,7 @@ const Mentor = () => {
         <h2 className="font-bold text-xl md:text-2xl text-primary">
           Suggestions
         </h2>
-        <MentorList mentors={recommendedMentors} />
+        <MentorList mentors={mentors["recommended mentors "]} />
 
         <h2 className="font-bold text-xl md:text-2xl text-primary">Reviews</h2>
         <Reviews mentorId={id} mentorService={mentor?.services} />

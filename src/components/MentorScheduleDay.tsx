@@ -39,36 +39,39 @@ const days = [
   "Saturdays",
 ];
 
-const MentorScheduleDay = ({ day }) => {
+const MentorScheduleDay = ({ day }: { day: any }) => {
   const { value, setValue } = useScheduleMentor();
   const dayIndex = days.indexOf(day);
   const [selected, setSelected] = useState(value[dayIndex]?.slots || []);
   const [checked, setChecked] = useState(value[dayIndex]?.available || false);
+  const user = JSON.parse(localStorage.getItem("user")!);
 
-  const handleCheckbox = (e) => {
+  const handleCheckbox = (e: any) => {
     const slot = e.target.value;
-    setSelected((prevSelected) =>
+    setSelected((prevSelected: any) =>
       prevSelected.includes(slot)
-        ? prevSelected.filter((time) => time !== slot)
+        ? prevSelected.filter((time: any) => time !== slot)
         : [...prevSelected, slot]
     );
   };
   useEffect(() => {
-    setValue((prevValue) => ({
-      ...prevValue,
-      day: dayIndex,
-      sessionPrice: 200,
-      mentorID: "ali-zaki-id",
-      availablity: [
-        ...(prevValue.availablity || []),
-        {
-          day: dayIndex,
-          available: checked,
-          slots: selected,
-        },
-      ],
-    }));
-  }, [checked, selected, setValue, dayIndex]);
+    if (user) {
+      setValue((prevValue: any) => ({
+        ...prevValue,
+        day: dayIndex,
+        sessionPrice: 200,
+        mentorID: user._id,
+        availablity: [
+          ...(prevValue.availablity || []),
+          {
+            day: dayIndex,
+            available: checked,
+            slots: selected,
+          },
+        ],
+      }));
+    }
+  }, [checked, selected, setValue, user, dayIndex]);
 
   const handleChecked = () => {
     setChecked(!checked);

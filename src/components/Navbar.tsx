@@ -25,7 +25,7 @@ import {
 
 const Navbar = () => {
   const { theme } = useTheme();
-  const user = localStorage.getItem("user");
+  const user = JSON.parse(localStorage.getItem("user")!);
   const navigate = useNavigate();
 
   return (
@@ -85,25 +85,54 @@ const Navbar = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
                 <DropdownMenuGroup className="list-none">
-                  <DropdownMenuItem className="py-2 px-4 hover:text-primary transition">
-                    <a href="/home" className="active font-semibold">
-                      Home
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="py-2 px-4 hover:text-primary transition">
-                    <Link to="/home" className="active font-semibold">
-                      Mentors
-                    </Link>
-                  </DropdownMenuItem>
-                  {/* <li className="py-2 px-4 hover:text-primary transition font-semibold">
-              <a href="#about-us">About Us</a>
-              </li> */}
-                  <DropdownMenuItem className="py-2 px-4 hover:text-primary transition font-semibold">
-                    <a href="#services">Services</a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="py-2 px-4 hover:text-primary transition font-semibold">
-                    <a href="#reviews">Reviews</a>
-                  </DropdownMenuItem>
+                  {user?.student && (
+                    <>
+                      <DropdownMenuItem className="py-2 px-4 hover:text-primary transition">
+                        <a href="/home" className="active font-semibold">
+                          Home
+                        </a>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="py-2 px-4 hover:text-primary transition">
+                        <a
+                          href="/your-bookings"
+                          className="active font-semibold"
+                        >
+                          Your Bookings
+                        </a>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="py-2 px-4 hover:text-primary transition">
+                        <Link to="/home" className="active font-semibold">
+                          Mentors
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="py-2 px-4 hover:text-primary transition">
+                        <Link to="/profile" className="active font-semibold">
+                          Profile
+                        </Link>
+                      </DropdownMenuItem>
+                      {/* <li className="py-2 px-4 hover:text-primary transition font-semibold">
+                        <a href="#about-us">About Us</a>
+                        </li> */}
+                      <DropdownMenuItem className="py-2 px-4 hover:text-primary transition font-semibold">
+                        <a href="/#services">Services</a>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="py-2 px-4 hover:text-primary transition font-semibold">
+                        <a href="/#reviews">Reviews</a>
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                  {user?.mentor && (
+                    <>
+                      <DropdownMenuItem className="py-2 px-4 hover:text-primary transition">
+                        <Link to="/profile" className="active font-semibold">
+                          Profile
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="py-2 px-4 hover:text-primary transition font-semibold">
+                        <Link to="setYourSchedule">Set Your Schedule</Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
                   <DropdownMenuItem className="py-2 px-4 hover:text-primary transition font-semibold">
                     <Link to="contact">Contact Us</Link>
                   </DropdownMenuItem>

@@ -30,7 +30,7 @@ function CalendarPage() {
         `https://ali.up.railway.app/api/v1/availability/check`,
         {
           method: "POST",
-          body: JSON.stringify({ mentorID: "ali-zaki-id" }),
+          body: JSON.stringify({ mentorID: mentorID }),
           headers: {
             "Content-type": "application/json",
           },
