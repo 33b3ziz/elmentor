@@ -11,7 +11,6 @@ import Payment from "./pages/Payment";
 import SelectTimeAvailable from "./pages/SelectTimeAvailable";
 import MentorSignup from "./pages/MentorSignup";
 import StudentProfile from "./pages/StudentProfile";
-import MentorProfile from "./pages/MentorProfile";
 import Loader from "./components/Loader";
 import ForgetPassword from "./pages/ForgetPassword";
 import SignupProvider from "./contexts/SignupContext";
@@ -29,6 +28,9 @@ import ProtectedRoutes from "./pages/ProtectedRoutes";
 import CalendarPage from "./pages/Calendar";
 import MentorSchedule from "./pages/MentorSchedule";
 import ScheduleMentorProvider from "./contexts/ScheduleContext";
+import EditProfile from "./pages/MentorProfile";
+import YourBookings from "./pages/YourBookings";
+import MentorProfile from "./pages/MentorProfile";
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const Login = lazy(() => import("./pages/Login"));
 const SignUp = lazy(() => import("./pages/SignUp"));
@@ -99,10 +101,10 @@ const App = () => {
                           <Route path="home" element={<Homepage />} />
                           <Route path="dashboard" element={<Dashboard />} />
                           <Route path="payment" element={<Payment />} />
-                          <Route
+                          {/* <Route
                             path="studentprofile"
                             element={<StudentProfile />}
-                          />
+                          /> */}
                           <Route
                             path="testchat"
                             element={
@@ -112,11 +114,10 @@ const App = () => {
                               />
                             }
                           />
+                          <Route path="profile" element={<MentorProfile />} />
                           <Route
-                            path="mentorprofile"
-                            element={
-                              <MentorProfile _id="65dd99b0e731f3477cb5bcb4" />
-                            }
+                            path="your-bookings"
+                            element={<YourBookings />}
                           />
                           <Route path="meeting/:id" element={<Meeting />} />
                           <Route path="chatTest" element={<ChatTest />} />

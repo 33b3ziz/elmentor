@@ -1,6 +1,8 @@
 import MentorScheduleDay from "@/components/MentorScheduleDay";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useScheduleMentor } from "@/contexts/ScheduleContext";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -15,18 +17,26 @@ const days = [
 ];
 
 const MentorSchedule = () => {
-  const { value } = useScheduleMentor();
+  const { value, setValue } = useScheduleMentor();
   const navigate = useNavigate();
+  const [sessionPrice, setSessionPrice] = useState("");
 
+  const handlePriceChange = (e: any) => {
+    const inputPrice = e.target.value;
+
+    const regex = /^[0-9]*\.?[0-9]*$/;
+
+    if (regex.test(inputPrice)) {
+      setSessionPrice(inputPrice);
+    }
+  };
   const handleSubmit = async () => {
-    console.log("Submitted Schedule:", value);
     try {
       const res = await fetch(
-        `https://ali.up.railway.app/api/v1/availability
-`,
+        `https://ali.up.railway.app/api/v1/availability/set`,
         {
           method: "POST",
-          body: JSON.stringify(value),
+          body: JSON.stringify({ ...value, sessionPrice: sessionPrice }),
           headers: {
             "Content-type": "application/json",
           },
@@ -36,11 +46,12 @@ const MentorSchedule = () => {
       const data = await res.json();
       if (res.ok) {
         navigate("/");
-        toast.success("Your Schedule saved Succefully");
+        toast.success("Your Schedule saved Successfully");
       }
       return data;
     } catch (error) {
       console.log(error);
+      toast.error("Failed to save schedule");
     }
   };
 
@@ -66,6 +77,15 @@ const MentorSchedule = () => {
         {days.map((day, index) => (
           <MentorScheduleDay key={index} day={day} />
         ))}
+      </div>
+      <div className="flex items-center gap-2">
+        <label htmlFor="sessionPrice">Session Price:</label>
+        <Input
+          id="sessionPrice"
+          value={sessionPrice}
+          onChange={handlePriceChange}
+          className="border rounded p-2"
+        />
       </div>
       <Button
         onClick={handleSubmit}

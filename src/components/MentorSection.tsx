@@ -1,8 +1,8 @@
-import EditMentorProfile from "@/components/EditMentorProfile";
+import EditProfile from "@/components/EditProfile";
 
 export default function MentorSection() {
   return (
-    <div className="w-full px-20 py-40 text-start">
+    <div className="w-full px-20 py-20 text-start">
       <h4 className="mb-5 text-foreground ">Description about me</h4>
       <p className="mb-10 text-foreground w-full ">
         I've been working with Students remotely for seven years . My experience
@@ -11,7 +11,7 @@ export default function MentorSection() {
         deliver effective and <br></br>inspiring sessions. My goal is support
         stutends in achieving their educational and professional objectives .
       </p>
-      <EditMentorProfile />
+      <EditProfile />
     </div>
   );
 }
