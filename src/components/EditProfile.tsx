@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const EditProfileSchema = z.object({
   userName: z.string().nonempty("Name is required"),
@@ -26,6 +26,7 @@ const EditProfileSchema = z.object({
 
 const EditMentorProfile = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const user = JSON.parse(localStorage.getItem("user")!);
 
   const form = useForm<z.infer<typeof EditProfileSchema>>({
@@ -44,6 +45,14 @@ const EditMentorProfile = () => {
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
   const onSubmit = async (data: z.infer<typeof EditProfileSchema>) => {
     const formData = new FormData();
     formData.append("userName", data.userName);
@@ -55,20 +64,20 @@ const EditMentorProfile = () => {
       const res = await fetch("https://radwan.up.railway.app/updateOne", {
         method: "PATCH",
         body: formData,
-        headers: {
-          "Content-type": "application/json",
-        },
         credentials: "include",
       });
 
       if (res.ok) {
         const result = await res.json();
+        setFeedbackMessage("Profile updated successfully");
         console.log("Profile updated successfully", result);
       } else {
         const errorText = await res.text();
+        setFeedbackMessage(`Failed to update profile: ${errorText}`);
         console.error("Failed to update profile:", errorText);
       }
     } catch (error) {
+      setFeedbackMessage(`Error submitting the form: ${error.message}`);
       console.error("Error submitting the form:", error);
     }
   };
@@ -78,7 +87,7 @@ const EditMentorProfile = () => {
       <DialogTrigger asChild>
         <Button variant="outline">Edit Profile</Button>
       </DialogTrigger>
-      <DialogContent className="dialog-content overflow-y-scrol py-8">
+      <DialogContent className="dialog-content overflow-y-scroll py-8">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -121,6 +130,9 @@ const EditMentorProfile = () => {
             <Button type="submit" className="w-full">
               Update Profile
             </Button>
+            {feedbackMessage && (
+              <p className="mt-2 text-center text-red-500">{feedbackMessage}</p>
+            )}
           </form>
         </Form>
       </DialogContent>
